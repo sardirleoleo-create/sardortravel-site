@@ -653,6 +653,17 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
      ["Day 1: flight Phuket–Kuala Lumpur", "Hindu temple in the Batu Caves", "Petronas Towers photo stop, lunch, hotel check-in", "Day 2: Independence Square and Putrajaya — PM's Palace, Pink Mosque, Palace of Justice", "Flight to Singapore, lunch", "City tour: Fountain of Wealth, Marina Bay, Raffles statue, Merlion Park, Chinatown, Orchard Road", "Day 3: free day — Sentosa, Gardens by the Bay or the zoo", "Evening at Jewel Changi, flight to Phuket"],
      ["Phuket–Kuala Lumpur–Singapore–Phuket flights", "Hotels, 2 nights", "2 breakfasts and 2 lunches", "Excursions with Russian-speaking guides", "Group transfers in Kuala Lumpur, Singapore and Phuket"]]);
 
+  var BOAT2 = { ru: "за лодку на 2 человек", en: "per boat for 2 people", qty: { ru: "Лодки", en: "Boats" }, def: 1 };
+  tour("longtail-private", "longtail-private", ["phuket", "phangnga", "krabi"], ["sea"],
+    ["Приватный лонгтейл", "Пирсы Ао По и Чалонг", "Полдня или полный день", "Лодка только для вас",
+     "Традиционная тайская лодка лонгтейл целиком под вашу компанию: свой маршрут без чужих туристов. С пирса Ао По — Джеймс Бонд и залив Пханг-Нга, острова Хонг в Краби, острова Яо. С пирса Чалонг — Коралловый остров, Рача Яй или закат у мыса Промтеп. Цена за лодку на 2 человек.",
+     ["Ао По · Джеймс Бонд и залив Пханг-Нга — остров Джеймса Бонда, плавучая деревня Ко Паньи, пещеры, скалы и лагуны. Полный день", "Ао По · Острова Хонг, Краби — Куду, Пак Биа, остров обезьян, Hong Island, лагуна Lao Landing, купание и снорклинг. 09:00–17:00", "Ао По · Яо Ной и Яо Яй — бухты и пляжи, белоснежная коса Laem Haad. Полный день, цена под вашу дату", "Чалонг · Коралловый остров — пляж, купание, снорклинг. Полдня", "Чалонг · Рача Яй и Коралловый остров — снорклинг у Рача Яй, Siam Bay, на обратном пути Коралловый. Полный день", "Чалонг · Закатный тур — мыс Промтеп, Най Харн, закат у Black Rock. Старт около 17:00"],
+     ["Лодка целиком под вашу группу", "Обед из тайских блюд (кроме закатного тура)", "Фрукты и вода"]],
+    ["Private Longtail Boat", "Ao Po and Chalong piers", "Half day or full day", "A boat just for you",
+     "A traditional Thai longtail boat for your group only: your own route, no other tourists. From Ao Po pier — James Bond Island and Phang Nga Bay, the Hong islands in Krabi, the Yao islands. From Chalong pier — Coral Island, Racha Yai or the sunset at Promthep Cape. Price is per boat for 2 people.",
+     ["Ao Po · James Bond & Phang Nga Bay — James Bond Island, Koh Panyee floating village, caves, cliffs and lagoons. Full day", "Ao Po · Hong islands, Krabi — Koh Kudu, Pak Bia, Monkey Island, Hong Island, Lao Landing lagoon, swimming and snorkelling. 09:00–17:00", "Ao Po · Yao Noi & Yao Yai — bays and beaches, the white Laem Haad sandbar. Full day, priced for your date", "Chalong · Coral Island — beach, swimming, snorkelling. Half day", "Chalong · Racha Yai & Coral Island — snorkelling at Racha Yai, Siam Bay, Coral Island on the way back. Full day", "Chalong · Sunset tour — Promthep Cape, Nai Harn, sunset at Black Rock. Starts around 17:00"],
+     ["The whole boat for your group", "Thai-style lunch (except the sunset tour)", "Fruit and water"]], { unit: BOAT2 });
+
   ["krabi-phi-phi", "krabi-hong", "krabi-4-islands", "yona-morning", "yona-evening"].forEach(function (id) { var t = window.TOURS.filter(function (z) { return z.id === id; })[0]; if (t) t.kidAge = ""; });
   /* ---------- ЦЕНЫ (CRM) ---------- */
   Object.assign(window.PRICES, {
@@ -692,6 +703,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "kuala-lumpur": [P("Стандарт (номер на двоих)", "Standard (twin share)", 16850), P("Одноместное размещение", "Single occupancy", 18700)],
     "singapore": [P("Стандарт (номер на двоих)", "Standard (twin share)", 23800), P("Одноместное размещение", "Single occupancy", 26450)],
     "angkor": [P("Стандарт (номер на двоих)", "Standard (twin share)", 21700), P("Одноместное размещение", "Single occupancy", 23300)],
+    "longtail-private": [P("Коралловый остров (полдня)", "Coral Island (half day)", 8800), P("Закатный тур", "Sunset tour", 11500), P("Рача Яй и Коралловый остров", "Racha Yai & Coral Island", 15500), P("Джеймс Бонд и залив Пханг-Нга", "James Bond & Phang Nga Bay", 16900), P("Острова Хонг, Краби", "Hong islands, Krabi", 18200)],
     "kl-singapore": [P("Стандарт (номер на двоих)", "Standard (twin share)", 37950), P("Одноместное размещение", "Single occupancy", 42450)]
   });
 
@@ -738,7 +750,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "khaolak-safari": "day", "elephants-mantra": "day", "sunrise-adventure": "day", "khaosok-2day": "twoday",
     "carnival-magic": "day", "fantasea": "day",
     "hanuman-world": null, "erawan-zipline": null, "paraglide": null, "plane-flight": "plane",
-    "bangkok-1day": "nonref", "kuala-lumpur": "nonref", "singapore": "nonref", "angkor": "nonref", "kl-singapore": "nonref"
+    "bangkok-1day": "nonref", "kuala-lumpur": "nonref", "singapore": "nonref", "angkor": "nonref", "kl-singapore": "nonref", "longtail-private": null
   });
 
   /* ---------- ОГРАНИЧЕНИЯ (дополнение) ---------- */
@@ -755,6 +767,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
       "bangkok-1day": ["Младенец (до 2 лет) — 6 000 ฿"],
       "kuala-lumpur": ["Младенец (до 2 лет) — 4 600 ฿", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
       "singapore": ["Младенец (до 2 лет) — 5 100 ฿", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
+      "longtail-private": ["Цена за лодку на 2 человек; для большей группы цену уточнит менеджер", "Яо Ной и Яо Яй — цену менеджер посчитает под вашу дату", "Трансфер до пирса не включён"],
       "kl-singapore": ["Младенец (до 2 лет) — 6 600 ฿", "Паспорт действителен не менее 6 месяцев", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
       "angkor": ["Младенец (до 2 лет) — 5 100 ฿", "Паспорт действителен не менее 6 месяцев", "При визе Таиланда нужен re-entry permit — до 2 000 ฿"],
       "khaosok-2day": ["Вторая слоновья программа — доплата 300 ฿"],
@@ -772,6 +785,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
       "bangkok-1day": ["Infant (under 2) — 6,000 ฿"],
       "kuala-lumpur": ["Infant (under 2) — 4,600 ฿", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
       "singapore": ["Infant (under 2) — 5,100 ฿", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
+      "longtail-private": ["Price is per boat for 2 people; for a larger group the manager will quote", "Yao Noi & Yao Yai — the manager quotes for your date", "Transfer to the pier not included"],
       "kl-singapore": ["Infant (under 2) — 6,600 ฿", "Passport valid for at least 6 months", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
       "angkor": ["Infant (under 2) — 5,100 ฿", "Passport valid for at least 6 months", "With a Thai visa you need a re-entry permit — up to 2,000 ฿"],
       "khaosok-2day": ["A second elephant programme — 300 ฿ extra"],

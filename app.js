@@ -507,6 +507,7 @@
     var x = byId(id);
     if (!x) { main.innerHTML = '<div class="wrap section"><div class="empty"><p>' + t('not_found_tour') + '</p><a class="btn" href="' + href('/') + '">' + t('to_home') + '</a></div></div>'; return; }
     pushRecent(x.id);
+    state.a = (x.unit && x.unit.def) || 2; state.k = 0;
     var l = L(x), R = region(x.regions[0]), fav = isFav(x.id);
     var similar = TOURS.filter(function (z) { return z.id !== x.id && z.cats.some(function (c) { return x.cats.indexOf(c) >= 0; }); })
       .sort(function (a, b) { return Math.abs(a.price - x.price) - Math.abs(b.price - x.price); }).slice(0, 4);
