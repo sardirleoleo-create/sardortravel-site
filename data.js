@@ -643,6 +643,16 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
      ["Day 1: depart Phuket 14:30, arrive Siem Reap 16:05", "Visa on arrival, meet your Russian-speaking guide", "Hotel check-in", "Dinner and Apsara cultural show", "Day 2: breakfast at 06:00, check-out", "Angkor Wat, Angkor Thom and Bayon", "Ta Keo, Ta Prohm, Elephant Terrace and Leper King Terrace", "Lunch at a local restaurant", "Depart 16:50, arrive Phuket 18:35, hotel transfer"],
      ["Phuket–Siem Reap–Phuket flights", "Cambodia visa", "Angkor entry tickets", "Hotel, 1 night", "Breakfast, lunch, dinner with show", "Russian-speaking guide", "All transfers in Cambodia and Phuket"]]);
 
+  tour("kl-singapore", "kl-singapore", ["kualalumpur", "singapore"], ["city", "overnight"],
+    ["Куала-Лумпур + Сингапур: 3 дня", "Малайзия и Сингапур · перелёты включены", "3 дня / 2 ночи", "Две страны за одну поездку",
+     "Две страны за 3 дня: пещеры Бату, башни Petronas и Путраджая в Малайзии, затем Сингапур — Марина Бэй, парк Мерлион, Чайна-таун и вечер в Jewel Changi с самым высоким водопадом в здании в мире. Перелёты, 2 ночи в отелях и русскоязычные гиды включены.",
+     ["День 1: перелёт Пхукет — Куала-Лумпур", "Индуистский храм в пещерах Бату", "Фотостоп у башен Petronas, обед, заселение в отель", "День 2: площадь Независимости и Путраджая — дворец премьер-министра, Розовая мечеть, Дворец правосудия", "Перелёт в Сингапур, обед", "Обзорная: фонтан Богатства, Марина Бэй, памятник Раффлзу, парк Мерлион, Чайна-таун, Орчард-роуд", "День 3: свободный день — Сентоза, Сады у залива или зоопарк", "Вечером Jewel Changi, перелёт на Пхукет"],
+     ["Авиабилеты Пхукет — Куала-Лумпур — Сингапур — Пхукет", "Отели, 2 ночи", "2 завтрака и 2 обеда", "Экскурсии с русскоязычными гидами", "Групповые трансферы в Куала-Лумпуре, Сингапуре и на Пхукете"]],
+    ["Kuala Lumpur + Singapore: 3 Days", "Malaysia & Singapore · flights included", "3 days / 2 nights", "Two countries in one trip",
+     "Two countries in 3 days: the Batu Caves, the Petronas Towers and Putrajaya in Malaysia, then Singapore — Marina Bay, Merlion Park, Chinatown and an evening at Jewel Changi with the world's tallest indoor waterfall. Flights, 2 hotel nights and Russian-speaking guides included.",
+     ["Day 1: flight Phuket–Kuala Lumpur", "Hindu temple in the Batu Caves", "Petronas Towers photo stop, lunch, hotel check-in", "Day 2: Independence Square and Putrajaya — PM's Palace, Pink Mosque, Palace of Justice", "Flight to Singapore, lunch", "City tour: Fountain of Wealth, Marina Bay, Raffles statue, Merlion Park, Chinatown, Orchard Road", "Day 3: free day — Sentosa, Gardens by the Bay or the zoo", "Evening at Jewel Changi, flight to Phuket"],
+     ["Phuket–Kuala Lumpur–Singapore–Phuket flights", "Hotels, 2 nights", "2 breakfasts and 2 lunches", "Excursions with Russian-speaking guides", "Group transfers in Kuala Lumpur, Singapore and Phuket"]]);
+
   ["krabi-phi-phi", "krabi-hong", "krabi-4-islands", "yona-morning", "yona-evening"].forEach(function (id) { var t = window.TOURS.filter(function (z) { return z.id === id; })[0]; if (t) t.kidAge = ""; });
   /* ---------- ЦЕНЫ (CRM) ---------- */
   Object.assign(window.PRICES, {
@@ -681,7 +691,8 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "bangkok-1day": [P("Стандарт", "Standard", 11800, 11800)],
     "kuala-lumpur": [P("Стандарт (номер на двоих)", "Standard (twin share)", 16850), P("Одноместное размещение", "Single occupancy", 18700)],
     "singapore": [P("Стандарт (номер на двоих)", "Standard (twin share)", 23800), P("Одноместное размещение", "Single occupancy", 26450)],
-    "angkor": [P("Стандарт (номер на двоих)", "Standard (twin share)", 21700), P("Одноместное размещение", "Single occupancy", 23300)]
+    "angkor": [P("Стандарт (номер на двоих)", "Standard (twin share)", 21700), P("Одноместное размещение", "Single occupancy", 23300)],
+    "kl-singapore": [P("Стандарт (номер на двоих)", "Standard (twin share)", 37950), P("Одноместное размещение", "Single occupancy", 42450)]
   });
 
   /* ---------- РЕГИОНЫ ---------- */
@@ -727,7 +738,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "khaolak-safari": "day", "elephants-mantra": "day", "sunrise-adventure": "day", "khaosok-2day": "twoday",
     "carnival-magic": "day", "fantasea": "day",
     "hanuman-world": null, "erawan-zipline": null, "paraglide": null, "plane-flight": "plane",
-    "bangkok-1day": "nonref", "kuala-lumpur": "nonref", "singapore": "nonref", "angkor": "nonref"
+    "bangkok-1day": "nonref", "kuala-lumpur": "nonref", "singapore": "nonref", "angkor": "nonref", "kl-singapore": "nonref"
   });
 
   /* ---------- ОГРАНИЧЕНИЯ (дополнение) ---------- */
@@ -744,6 +755,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
       "bangkok-1day": ["Младенец (до 2 лет) — 6 000 ฿"],
       "kuala-lumpur": ["Младенец (до 2 лет) — 4 600 ฿", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
       "singapore": ["Младенец (до 2 лет) — 5 100 ฿", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
+      "kl-singapore": ["Младенец (до 2 лет) — 6 600 ฿", "Паспорт действителен не менее 6 месяцев", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
       "angkor": ["Младенец (до 2 лет) — 5 100 ฿", "Паспорт действителен не менее 6 месяцев", "При визе Таиланда нужен re-entry permit — до 2 000 ฿"],
       "khaosok-2day": ["Вторая слоновья программа — доплата 300 ฿"],
       "jetski-tsa": ["Страховка гидроцикла — 1 000 ฿ на пирсе, по желанию"]
@@ -760,6 +772,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
       "bangkok-1day": ["Infant (under 2) — 6,000 ฿"],
       "kuala-lumpur": ["Infant (under 2) — 4,600 ฿", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
       "singapore": ["Infant (under 2) — 5,100 ฿", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
+      "kl-singapore": ["Infant (under 2) — 6,600 ฿", "Passport valid for at least 6 months", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
       "angkor": ["Infant (under 2) — 5,100 ฿", "Passport valid for at least 6 months", "With a Thai visa you need a re-entry permit — up to 2,000 ฿"],
       "khaosok-2day": ["A second elephant programme — 300 ฿ extra"],
       "jetski-tsa": ["Jet ski insurance — 1,000 ฿ at the pier, optional"]
