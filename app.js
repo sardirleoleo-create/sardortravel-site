@@ -524,7 +524,7 @@
         '<button type="button" class="round fav--big" data-fav="' + x.id + '" aria-pressed="' + fav + '" aria-label="' + (fav ? t('fav_remove') : t('fav_add')) + '">' + icon('heart', 20) + '</button></div></div>' +
       '<div class="wrap"><div class="tour-layout">' +
       '<div class="tour-main">' +
-        '<section class="panel tour-intro"><p class="crumbs"><a href="' + href('/catalog') + '">' + t('thailand') + '</a> › <a href="' + href('/catalog', catP) + '">' + esc(R[lang]) + '</a></p>' +
+        '<section class="panel tour-intro"><p class="crumbs"><a href="' + href('/catalog') + '">' + (R.country ? esc(R.country[lang]) : t('thailand')) + '</a> › <a href="' + href('/catalog', catP) + '">' + esc(R[lang]) + '</a></p>' +
         '<h1 class="tour-title">' + esc(l.name) + '</h1>' +
         '<ul class="facts"><li class="fact">' + icon('clock', 16) + esc(l.duration) + '</li><li class="fact">' + icon('pin', 16) + esc(l.place) + '</li>' + (revsFor(x.id).length ? '<li class="fact">' + icon('chat', 16) + revCount(revsFor(x.id).length) + '</li>' : '') + badges(x).map(function (b) { return '<li class="fact fact--ok">' + icon('check', 16) + t(b) + '</li>'; }).join('') + '</ul>' +
         '<p class="tour-desc">' + esc(l.desc) + '</p></section>' +

@@ -633,6 +633,16 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
      ["Day 1: flight Phuket–Singapore", "City tour and lunch", "Merlion Park and waterfront", "Chinatown and Buddha Tooth Relic Temple", "Night at a 3–4* hotel", "Day 2: breakfast, Gardens by the Bay", "Jewel Changi and flight to Phuket"],
      ["Phuket–Singapore–Phuket flights", "3–4* hotel, 1 night", "Singapore visa processing", "Lunch and breakfast", "Sightseeing tour", "Russian-speaking guide", "Group transfers"]]);
 
+  tour("angkor", "angkor", ["siemreap"], ["city", "overnight"],
+    ["Ангкор: 2 дня", "Камбоджа · перелёт включён", "2 дня / 1 ночь", "Ангкор-Ват, Байон, Та Пром",
+     "Затерянные храмы Камбоджи за 2 дня: Ангкор-Ват, Ангкор-Тхом с ликами Байона, Та Пром в корнях деревьев и Терраса слонов. Вечером — ужин и шоу апсар. Перелёт, виза, входные билеты, отель и русскоязычный гид включены.",
+     ["День 1: вылет с Пхукета в 14:30, прилёт в Сиемреап в 16:05", "Виза по прилёте, встреча с русскоязычным гидом", "Заселение в отель", "Ужин и культурное шоу апсар", "День 2: завтрак в 06:00, выселение", "Ангкор-Ват, Ангкор-Тхом и Байон", "Та Кео, Та Пром, Терраса слонов и Терраса прокажённого короля", "Обед в местном ресторане", "Вылет в 16:50, прилёт на Пхукет в 18:35, трансфер в отель"],
+     ["Авиабилеты Пхукет — Сиемреап — Пхукет", "Виза в Камбоджу", "Входные билеты в Ангкор", "Отель, 1 ночь", "Завтрак, обед, ужин с шоу", "Русскоязычный гид", "Все трансферы в Камбодже и на Пхукете"]],
+    ["Angkor: 2 Days", "Cambodia · flights included", "2 days / 1 night", "Angkor Wat, Bayon, Ta Prohm",
+     "The lost temples of Cambodia in 2 days: Angkor Wat, Angkor Thom with the faces of Bayon, Ta Prohm wrapped in tree roots and the Elephant Terrace. Dinner and an Apsara show in the evening. Flights, visa, entry tickets, hotel and a Russian-speaking guide included.",
+     ["Day 1: depart Phuket 14:30, arrive Siem Reap 16:05", "Visa on arrival, meet your Russian-speaking guide", "Hotel check-in", "Dinner and Apsara cultural show", "Day 2: breakfast at 06:00, check-out", "Angkor Wat, Angkor Thom and Bayon", "Ta Keo, Ta Prohm, Elephant Terrace and Leper King Terrace", "Lunch at a local restaurant", "Depart 16:50, arrive Phuket 18:35, hotel transfer"],
+     ["Phuket–Siem Reap–Phuket flights", "Cambodia visa", "Angkor entry tickets", "Hotel, 1 night", "Breakfast, lunch, dinner with show", "Russian-speaking guide", "All transfers in Cambodia and Phuket"]]);
+
   ["krabi-phi-phi", "krabi-hong", "krabi-4-islands", "yona-morning", "yona-evening"].forEach(function (id) { var t = window.TOURS.filter(function (z) { return z.id === id; })[0]; if (t) t.kidAge = ""; });
   /* ---------- ЦЕНЫ (CRM) ---------- */
   Object.assign(window.PRICES, {
@@ -670,7 +680,8 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "plane-flight": [P("2 места · 10 мин", "2 seats · 10 min", 4500), P("2 места · 15 мин", "2 seats · 15 min", 5500), P("2 места · 20 мин", "2 seats · 20 min", 6500), P("2 места · 30 мин", "2 seats · 30 min", 7500), P("2 места · 45 мин", "2 seats · 45 min", 10000), P("2 места · 60 мин", "2 seats · 60 min", 13000), P("4 места · 10 мин", "4 seats · 10 min", 7500), P("4 места · 15 мин", "4 seats · 15 min", 8500), P("4 места · 20 мин", "4 seats · 20 min", 9500), P("4 места · 30 мин", "4 seats · 30 min", 11500), P("4 места · 45 мин", "4 seats · 45 min", 16000), P("4 места · 60 мин", "4 seats · 60 min", 18500)],
     "bangkok-1day": [P("Стандарт", "Standard", 11800, 11800)],
     "kuala-lumpur": [P("Стандарт (номер на двоих)", "Standard (twin share)", 16850), P("Одноместное размещение", "Single occupancy", 18700)],
-    "singapore": [P("Стандарт (номер на двоих)", "Standard (twin share)", 23800), P("Одноместное размещение", "Single occupancy", 26450)]
+    "singapore": [P("Стандарт (номер на двоих)", "Standard (twin share)", 23800), P("Одноместное размещение", "Single occupancy", 26450)],
+    "angkor": [P("Стандарт (номер на двоих)", "Standard (twin share)", 21700), P("Одноместное размещение", "Single occupancy", 23300)]
   });
 
   /* ---------- РЕГИОНЫ ---------- */
@@ -678,7 +689,8 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     { id: "pattaya", img: "jetski", ru: "Паттайя", en: "Pattaya" },
     { id: "bangkok", img: "ph-bangkok", ru: "Бангкок", en: "Bangkok" },
     { id: "kualalumpur", img: "ph-kuala-lumpur", ru: "Куала-Лумпур", en: "Kuala Lumpur", country: { ru: "Малайзия", en: "Malaysia" } },
-    { id: "singapore", img: "ph-singapore", ru: "Сингапур", en: "Singapore", country: { ru: "Сингапур", en: "Singapore" } }
+    { id: "singapore", img: "ph-singapore", ru: "Сингапур", en: "Singapore", country: { ru: "Сингапур", en: "Singapore" } },
+    { id: "siemreap", img: "angkor", ru: "Сиемреап", en: "Siem Reap", country: { ru: "Камбоджа", en: "Cambodia" } }
   );
 
   /* ---------- ОТМЕНА ---------- */
@@ -715,7 +727,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "khaolak-safari": "day", "elephants-mantra": "day", "sunrise-adventure": "day", "khaosok-2day": "twoday",
     "carnival-magic": "day", "fantasea": "day",
     "hanuman-world": null, "erawan-zipline": null, "paraglide": null, "plane-flight": "plane",
-    "bangkok-1day": "nonref", "kuala-lumpur": "nonref", "singapore": "nonref"
+    "bangkok-1day": "nonref", "kuala-lumpur": "nonref", "singapore": "nonref", "angkor": "nonref"
   });
 
   /* ---------- ОГРАНИЧЕНИЯ (дополнение) ---------- */
@@ -732,6 +744,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
       "bangkok-1day": ["Младенец (до 2 лет) — 6 000 ฿"],
       "kuala-lumpur": ["Младенец (до 2 лет) — 4 600 ฿", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
       "singapore": ["Младенец (до 2 лет) — 5 100 ฿", "При визе Таиланда нужен re-entry permit — 2 000 ฿"],
+      "angkor": ["Младенец (до 2 лет) — 5 100 ฿", "Паспорт действителен не менее 6 месяцев", "При визе Таиланда нужен re-entry permit — до 2 000 ฿"],
       "khaosok-2day": ["Вторая слоновья программа — доплата 300 ฿"],
       "jetski-tsa": ["Страховка гидроцикла — 1 000 ฿ на пирсе, по желанию"]
     },
@@ -747,6 +760,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
       "bangkok-1day": ["Infant (under 2) — 6,000 ฿"],
       "kuala-lumpur": ["Infant (under 2) — 4,600 ฿", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
       "singapore": ["Infant (under 2) — 5,100 ฿", "With a Thai visa you need a re-entry permit — 2,000 ฿"],
+      "angkor": ["Infant (under 2) — 5,100 ฿", "Passport valid for at least 6 months", "With a Thai visa you need a re-entry permit — up to 2,000 ฿"],
       "khaosok-2day": ["A second elephant programme — 300 ฿ extra"],
       "jetski-tsa": ["Jet ski insurance — 1,000 ฿ at the pier, optional"]
     }
