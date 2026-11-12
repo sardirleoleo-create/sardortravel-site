@@ -803,7 +803,7 @@ window.EVENTS = [
     url: "https://lotusarena.com/events/91------781--?ref=sardor_4erhjapj",
     ru: { title: "Артемий Лебедев · выпуск 781", sub: "Съёмки «Самых честных новостей» со зрителями: можно попасть в кадр и задать вопрос в «Ответошной»" },
     en: { title: "Artemy Lebedev · episode 781", sub: "Live taping of \"The Most Honest News\" with an audience: get on camera and ask your question" } },
-  { id: "lebedev-782", date: "2026-12-05", time: "20:30", venue: "Shaman, Phuket", from: 1500, img: "ev-lebedev",
+  { id: "lebedev-782", date: "2026-12-05", time: "20:30", venue: "Shaman, Phuket", from: 1500, img: "ev-lebedev-782",
     url: "https://lotusarena.com/events/92------782--?ref=sardor_t65ca2qw",
     ru: { title: "Артемий Лебедев · выпуск 782", sub: "Вторая съёмка в тот же вечер: «Самые честные новости» и «Ответошная» со зрителями" },
     en: { title: "Artemy Lebedev · episode 782", sub: "Second taping the same evening: \"The Most Honest News\" and Q&A with the audience" } },
