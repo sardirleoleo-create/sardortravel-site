@@ -799,15 +799,15 @@ window.TOURS.forEach(function (t) { var p = (window.PRICES[t.id] || []).filter(f
 
 /* счётчики отзывов из чата по экскурсиям (обновляются при выгрузке reviews.json) */
 window.EVENTS = [
-  { id: "lotus-grand-opening", date: "2026-12-27", time: "18:00", venue: "Lotus Arena Phuket", from: 800, img: "",
+  { id: "lotus-grand-opening", date: "2026-12-27", time: "18:00", venue: "Lotus Arena Phuket", from: 800, img: "ev-grand-opening",
     url: "https://lotusarena.com/events/90-grand-opening--phuket?ref=sardor_u3b3b3sn",
     ru: { title: "Grand Opening Lotus Arena", sub: "Открытие арены. Хедлайнер — Инстасамка, остальных артистов объявят позже" },
     en: { title: "Grand Opening Lotus Arena", sub: "Arena opening. Headliner — Instasamka, more artists to be announced" } },
-  { id: "poshlaya-molly", date: "2027-01-14", time: "18:00", venue: "Lotus Arena Phuket", from: 1200, img: "",
+  { id: "poshlaya-molly", date: "2027-01-14", time: "18:00", venue: "Lotus Arena Phuket", from: 1200, img: "ev-molly",
     url: "https://lotusarena.com/events/95----phuket?ref=sardor_bb5f2ncp",
     ru: { title: "Пошлая Молли", sub: "Тур к 10-летию группы: главные хиты и редкие треки" },
     en: { title: "Poshlaya Molly", sub: "10th anniversary tour: the big hits and rare tracks" } },
-  { id: "kasta", date: "2027-01-28", time: "20:00", venue: "LAVA, Phuket", from: 800, img: "",
+  { id: "kasta", date: "2027-01-28", time: "20:00", venue: "LAVA, Phuket", from: 800, img: "ev-kasta",
     url: "https://lotusarena.com/events/93---phuket?ref=sardor_jgd5ewt5",
     ru: { title: "Каста", sub: "Greatest Hits — лучшие треки за всю историю группы" },
     en: { title: "Kasta", sub: "Greatest Hits — the best tracks from the band's whole career" } }
