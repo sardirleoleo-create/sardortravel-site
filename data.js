@@ -799,6 +799,10 @@ window.TOURS.forEach(function (t) { var p = (window.PRICES[t.id] || []).filter(f
 
 /* счётчики отзывов из чата по экскурсиям (обновляются при выгрузке reviews.json) */
 window.EVENTS = [
+  { id: "vse-nashi-fest", date: "2027-01-02", time: "20:00", venue: "Lotus Arena Phuket", from: 700, img: "ev-vse-nashi",
+    url: "https://lotusarena.com/events/110-----phuket?ref=sardor_x6wfravn",
+    ru: { title: "Все наши фест: 5sta Family", sub: "Большая дискотека «Легендарный 2007-й»: «Я буду твоей малышкой», «Вместе мы» и другие хиты" },
+    en: { title: "Vse Nashi Fest: 5sta Family", sub: "A big \"Legendary 2007\" disco with 5sta Family's greatest hits" } },
   { id: "guf", date: "2027-01-07", time: "20:00", venue: "Lotus Arena Phuket", from: 1200, img: "ev-guf",
     url: "https://lotusarena.com/events/40-guf--?ref=sardor_4r8e88q6",
     ru: { title: "Гуф", sub: "Сольный концерт на Пхукете. Вход с 18:00, начало в 20:00" },
