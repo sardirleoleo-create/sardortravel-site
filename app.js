@@ -510,7 +510,7 @@
     document.title = (ru ? 'Афиша концертов на Пхукете и в Паттайе' : 'Concerts in Phuket and Pattaya') + ' — Sardor Travel';
     var body = events('', true);
     main.innerHTML = '<section class="page-head"><div class="wrap"><h1>' + (ru ? 'Афиша концертов' : 'Concerts') + '</h1><p class="lead">' +
-      (ru ? 'Концерты русскоязычных артистов на Пхукете и в Паттайе. Билеты — на сайте Lotus Arena.' : 'Russian-speaking artists live in Phuket and Pattaya. Tickets on the Lotus Arena website.') + '</p></div></section>' +
+      (ru ? 'Концерты русскоязычных артистов на Пхукете и в Паттайе.' : 'Russian-speaking artists live in Phuket and Pattaya.') + '</p></div></section>' +
       '<div class="wrap">' + (body || '<p class="empty">' + (ru ? 'Скоро добавим новые концерты.' : 'New concerts coming soon.') + '</p>') + '</div>';
   }
 
