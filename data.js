@@ -799,6 +799,10 @@ window.TOURS.forEach(function (t) { var p = (window.PRICES[t.id] || []).filter(f
 
 /* счётчики отзывов из чата по экскурсиям (обновляются при выгрузке reviews.json) */
 window.EVENTS = [
+  { id: "guf", date: "2027-01-07", time: "20:00", venue: "Lotus Arena Phuket", from: 1200, img: "ev-guf",
+    url: "https://lotusarena.com/events/40-guf--?ref=sardor_4r8e88q6",
+    ru: { title: "Гуф", sub: "Сольный концерт на Пхукете. Вход с 18:00, начало в 20:00" },
+    en: { title: "Guf", sub: "Live concert in Phuket. Doors 18:00, show at 20:00" } },
   { id: "lebedev-781", date: "2026-12-05", time: "17:30", venue: "Shaman, Phuket", from: 1500, img: "ev-lebedev",
     url: "https://lotusarena.com/events/91------781--?ref=sardor_4erhjapj",
     ru: { title: "Артемий Лебедев · выпуск 781", sub: "Съёмки «Самых честных новостей» со зрителями: можно попасть в кадр и задать вопрос в «Ответошной»" },
