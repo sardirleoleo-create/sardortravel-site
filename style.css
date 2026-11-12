@@ -336,3 +336,18 @@ body.has-sticky .footer{padding-bottom:96px}
 .chips--scroll{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
 .chips--scroll .chip{white-space:nowrap;flex:0 0 auto}
 .chip small{opacity:.6;font-weight:500}
+
+/* concerts */
+.rail--ev{grid-auto-columns:minmax(240px,78%)}
+@media(min-width:800px){.rail--ev{grid-auto-columns:minmax(260px,32%)}}
+.ev{display:flex;flex-direction:column;background:var(--card);border-radius:var(--radius);overflow:hidden;text-decoration:none;color:var(--ink);scroll-snap-align:start;border:1px solid var(--line)}
+.ev__img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.ev__art{aspect-ratio:16/10;background:radial-gradient(120% 90% at 20% 10%,#2c6b5c 0%,var(--green) 55%,var(--green-d) 100%);display:flex;align-items:flex-end;padding:16px}
+.ev__art span{font-family:var(--display);font-weight:700;color:var(--lime);font-size:26px;line-height:1.05;text-transform:uppercase;letter-spacing:-.01em}
+.ev__body{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.ev__date{font-size:13px;color:var(--muted)}.ev__date b{color:var(--ink);font-size:15px}
+.ev__t{margin:2px 0 0;font-family:var(--display);font-size:17px;line-height:1.2}
+.ev__s{margin:0;font-size:14px;color:var(--muted)}
+.ev__v{margin:0;font-size:13px;color:var(--muted)}
+.ev__f{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px;font-weight:700}
+.ev__b{background:var(--lime);color:var(--green);border-radius:999px;padding:8px 14px;font-size:14px;white-space:nowrap}

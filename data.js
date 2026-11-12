@@ -798,6 +798,20 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
 window.TOURS.forEach(function (t) { var p = (window.PRICES[t.id] || []).filter(function (o) { return !o.x; }); if (p.length) t.price = Math.min.apply(null, p.map(function (o) { return o.a; })); });
 
 /* счётчики отзывов из чата по экскурсиям (обновляются при выгрузке reviews.json) */
+window.EVENTS = [
+  { id: "lotus-grand-opening", date: "2026-12-27", time: "18:00", venue: "Lotus Arena Phuket", from: 800, img: "",
+    url: "https://lotusarena.com/events/90-grand-opening--phuket?ref=sardor_u3b3b3sn",
+    ru: { title: "Grand Opening Lotus Arena", sub: "Открытие арены. Хедлайнер — Инстасамка, остальных артистов объявят позже" },
+    en: { title: "Grand Opening Lotus Arena", sub: "Arena opening. Headliner — Instasamka, more artists to be announced" } },
+  { id: "poshlaya-molly", date: "2027-01-14", time: "18:00", venue: "Lotus Arena Phuket", from: 1200, img: "",
+    url: "https://lotusarena.com/events/95----phuket?ref=sardor_bb5f2ncp",
+    ru: { title: "Пошлая Молли", sub: "Тур к 10-летию группы: главные хиты и редкие треки" },
+    en: { title: "Poshlaya Molly", sub: "10th anniversary tour: the big hits and rare tracks" } },
+  { id: "kasta", date: "2027-01-28", time: "20:00", venue: "LAVA, Phuket", from: 800, img: "",
+    url: "https://lotusarena.com/events/93---phuket?ref=sardor_jgd5ewt5",
+    ru: { title: "Каста", sub: "Greatest Hits — лучшие треки за всю историю группы" },
+    en: { title: "Kasta", sub: "Greatest Hits — the best tracks from the band's whole career" } }
+];
 window.REV_TOTAL = 565; window.REV_COUNT = {"jetski":104,"five-pearls":33,"four-pearls":8,"early-phi-phi":62,"phi-phi-2day":10,"krabi":50,"similan":64,"phangnga":16,"cheowlan":41,"fishing":6,"diving":3,"rafting":40,"eleven-islands":11,"khaolak-safari":13,"phuket":12,"avatar":45,"sunrise":18,"james-bond":3,"plankton":9,"fantasea":2,"elephants-mantra":12,"carnival-magic":1,"khaosok-2day":1}; window.REV_VER = 2;
 /* похожие программы показывают отзывы «соседа» */
 window.REV_ALIAS = { "rafting-atv": "rafting", "la-similan": "similan" };

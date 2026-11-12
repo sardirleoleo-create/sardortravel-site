@@ -418,6 +418,21 @@
   function chatbox() { return '<div class="chatbox"><div class="bubble">' + t('not_found_q') + '</div><a class="btn btn--lime" href="' + tg(t('msg_general')) + '" target="_blank" rel="noopener">' + t('write') + '</a></div>'; }
 
   /* ---------- pages ---------- */
+  function events() {
+    var today = new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
+    var list = (window.EVENTS || []).filter(function (e) { return e.date >= today; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    if (!list.length) return '';
+    var MON = { ru: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'], en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] };
+    return '<section class="section" id="afisha">' + head(lang === 'ru' ? 'Афиша концертов' : 'Concerts') + '<div class="rail rail--ev">' + list.map(function (e) {
+      var d = e.date.split('-'), L = e[lang] || e.ru;
+      return '<a class="ev" href="' + esc(e.url) + '" target="_blank" rel="noopener">' +
+        (e.img ? '<img class="ev__img" src="/assets/' + e.img + '.webp" alt="" loading="lazy">' : '<div class="ev__art"><span>' + esc(L.title) + '</span></div>') +
+        '<div class="ev__body"><div class="ev__date"><b>' + (+d[2]) + '</b> ' + MON[lang][+d[1] - 1] + ' ' + d[0] + ' · ' + e.time + '</div>' +
+        '<h3 class="ev__t">' + esc(L.title) + '</h3><p class="ev__s">' + esc(L.sub) + '</p><p class="ev__v">' + esc(e.venue) + '</p>' +
+        '<div class="ev__f"><span>' + (lang === 'ru' ? 'от ' : 'from ') + fmt(e.from) + '</span><span class="ev__b">' + (lang === 'ru' ? 'Купить билет' : 'Buy ticket') + '</span></div></div></a>';
+    }).join('') + '</div></section>';
+  }
+
   function home() {
     var hits = TOURS.filter(function (x) { return x.hit; }).concat(TOURS.filter(function (x) { return !x.hit; })).slice(0, 8);
     var early = EARLY.map(byId).filter(Boolean);
@@ -431,6 +446,7 @@
       (recent.length ? '<section class="section">' + head(t('recent')) + rail(recent) + '</section>' : '') +
       '<section class="section">' + head(t('popular'), '<a class="more" href="' + href('/catalog') + '">' + t('all_n', { n: TOURS.length }) + '</a>') + grid(hits) +
       '<a class="btn btn--ghost btn-all" href="' + href('/catalog') + '">' + t('all_btn', { n: TOURS.length }) + '</a></section>' +
+      events() +
       '<section class="section promo"><div class="promo__text"><h2 class="h2">' + t('early_h') + '</h2><p>' + t('early_p') + '</p></div>' + rail(early) + '</section>' +
       '<section class="section">' + head(t('overnight_h')) + '<div class="grid grid--2">' + over.map(card).join('') + '</div></section>' +
       '<section class="section">' + head(lang === 'ru' ? 'Отзывы гостей' : 'Guest reviews', '<a class="more" href="' + href('/reviews') + '">' + (lang === 'ru' ? 'Все ' : 'All ') + revCount(window.REV_TOTAL || 0) + ' →</a>') + tgWindow({ home: 1, withTour: 1 }) + '<p class="revs-all"><a class="btn btn--ghost" href="' + href('/reviews') + '">' + (lang === 'ru' ? 'Читать все ' + revCount(window.REV_TOTAL || 0) : 'Read all ' + revCount(window.REV_TOTAL || 0)) + '</a></p></section>' +
