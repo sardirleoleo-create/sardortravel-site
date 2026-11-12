@@ -351,3 +351,8 @@ body.has-sticky .footer{padding-bottom:96px}
 .ev__v{margin:0;font-size:13px;color:var(--muted)}
 .ev__f{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:10px;font-weight:700}
 .ev__b{background:var(--lime);color:var(--green);border-radius:999px;padding:8px 14px;font-size:14px;white-space:nowrap}
+
+.chips--ev{margin:-6px 0 12px}
+.ev[hidden]{display:none}
+.chips--ev .chip{background:var(--card);color:var(--green);border:1px solid var(--line);cursor:pointer}
+.chips--ev .chip[aria-pressed="true"]{background:var(--green);color:#fff;border-color:var(--green)}

@@ -201,6 +201,12 @@
   }
   function tg(text) { text = tagText(text); return 'https://t.me/' + TG + (text ? '?text=' + encodeURIComponent(text) : ''); }
   document.addEventListener('click', function (ev) {
+    var b = ev.target && ev.target.closest && ev.target.closest('[data-evcity]'); if (!b) return;
+    var sec = b.closest('#afisha'), c = b.getAttribute('data-evcity');
+    sec.querySelectorAll('[data-evcity]').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+    sec.querySelectorAll('.ev').forEach(function (x) { x.hidden = !!c && x.getAttribute('data-city') !== c; });
+  });
+  document.addEventListener('click', function (ev) {
     var a = ev.target && ev.target.closest && ev.target.closest('a[href*="t.me/' + TG + '"]'); if (!a || !utmTag()) return;
     try { var url = new URL(a.href); a.href = tg(url.searchParams.get('text') || ''); } catch (e) {}
   }, true);
@@ -418,14 +424,16 @@
   function chatbox() { return '<div class="chatbox"><div class="bubble">' + t('not_found_q') + '</div><a class="btn btn--lime" href="' + tg(t('msg_general')) + '" target="_blank" rel="noopener">' + t('write') + '</a></div>'; }
 
   /* ---------- pages ---------- */
-  function events() {
+  function events(city) {
     var today = new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
-    var list = (window.EVENTS || []).filter(function (e) { return e.date >= today; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var list = (window.EVENTS || []).filter(function (e) { return e.date >= today && (!city || e.city === city); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
     if (!list.length) return '';
     var MON = { ru: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'], en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] };
-    return '<section class="section" id="afisha">' + head(lang === 'ru' ? 'Афиша концертов' : 'Concerts') + '<div class="rail rail--ev">' + list.map(function (e) {
+    return '<section class="section" id="afisha">' + head((lang === 'ru' ? 'Афиша концертов' : 'Concerts') + (city ? ' · ' + esc(region(city)[lang]) : '')) +
+      (!city ? '<div class="chips chips--ev">' + ['', 'phuket', 'pattaya'].map(function (c) { return '<button type="button" class="chip" data-evcity="' + c + '" aria-pressed="' + (!c) + '">' + (c ? esc(region(c)[lang]) : (lang === 'ru' ? 'Все' : 'All')) + '</button>'; }).join('') + '</div>' : '') +
+      '<div class="rail rail--ev">' + list.map(function (e) {
       var d = e.date.split('-'), L = e[lang] || e.ru;
-      return '<a class="ev" href="' + esc(e.url) + '" target="_blank" rel="noopener">' +
+      return '<a class="ev" data-city="' + e.city + '" href="' + esc(e.url) + '" target="_blank" rel="noopener">' +
         (e.img ? '<img class="ev__img" src="/assets/' + e.img + '.webp" alt="" loading="lazy">' : '<div class="ev__art"><span>' + esc(L.title) + '</span></div>') +
         '<div class="ev__body"><div class="ev__date"><b>' + (+d[2]) + '</b> ' + MON[lang][+d[1] - 1] + ' ' + d[0] + ' · ' + e.time + '</div>' +
         '<h3 class="ev__t">' + esc(L.title) + '</h3><p class="ev__s">' + esc(L.sub) + '</p><p class="ev__v">' + esc(e.venue) + '</p>' +
@@ -484,7 +492,7 @@
       '<section class="page-head"><div class="wrap"><h1>' + (R ? esc(R[lang]) : t('catalog_h1')) + '</h1>' + searchForm(q) +
       '<div class="chips">' + CATS.map(function (c) { return '<a class="chip" href="' + link({ cat: c }) + '" aria-pressed="' + (c === cat) + '">' + t('cat_' + c) + '</a>'; }).join('') + '</div>' +
       stories(reg) + '</div></section>' +
-      ((cat === 'all' || cat === 'show') && !reg && !q ? '<div class="wrap">' + events() + '</div>' : '') +
+      ((cat === 'all' || cat === 'show') && !q && (!reg || reg === 'phuket' || reg === 'pattaya') ? '<div class="wrap">' + events(reg) + '</div>' : '') +
       '<div class="wrap section"><div class="toolbar">' +
         '<p class="count">' + t('found', { n: list.length }) + (filtered ? ' · <a href="' + href('/catalog') + '">' + t('reset') + '</a>' : '') + '</p>' +
         '<div class="toolbar__ctrls"><label class="select"><span class="sr">' + t('dur') + '</span><select id="dur" data-param="dur">' + ['any', 'short', 'day', 'multi'].map(function (d) { return '<option value="' + d + '"' + (d === dur ? ' selected' : '') + '>' + (d === 'any' ? t('dur') + ': ' + t('dur_any') : t('dur_' + d)) + '</option>'; }).join('') + '</select></label>' +
