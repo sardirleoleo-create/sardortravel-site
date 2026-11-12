@@ -799,6 +799,14 @@ window.TOURS.forEach(function (t) { var p = (window.PRICES[t.id] || []).filter(f
 
 /* счётчики отзывов из чата по экскурсиям (обновляются при выгрузке reviews.json) */
 window.EVENTS = [
+  { id: "lebedev-781", date: "2026-12-05", time: "17:30", venue: "Shaman, Phuket", from: 1500, img: "ev-lebedev",
+    url: "https://lotusarena.com/events/91------781--?ref=sardor_4erhjapj",
+    ru: { title: "Артемий Лебедев · выпуск 781", sub: "Съёмки «Самых честных новостей» со зрителями: можно попасть в кадр и задать вопрос в «Ответошной»" },
+    en: { title: "Artemy Lebedev · episode 781", sub: "Live taping of \"The Most Honest News\" with an audience: get on camera and ask your question" } },
+  { id: "lebedev-782", date: "2026-12-05", time: "20:30", venue: "Shaman, Phuket", from: 1500, img: "ev-lebedev",
+    url: "https://lotusarena.com/events/92------782--?ref=sardor_t65ca2qw",
+    ru: { title: "Артемий Лебедев · выпуск 782", sub: "Вторая съёмка в тот же вечер: «Самые честные новости» и «Ответошная» со зрителями" },
+    en: { title: "Artemy Lebedev · episode 782", sub: "Second taping the same evening: \"The Most Honest News\" and Q&A with the audience" } },
   { id: "lotus-grand-opening", date: "2026-12-27", time: "18:00", venue: "Lotus Arena Phuket", from: 800, img: "ev-grand-opening",
     url: "https://lotusarena.com/events/90-grand-opening--phuket?ref=sardor_u3b3b3sn",
     ru: { title: "Grand Opening Lotus Arena", sub: "Открытие арены. Хедлайнер — Инстасамка, остальных артистов объявят позже" },
