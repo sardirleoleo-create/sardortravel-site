@@ -484,6 +484,7 @@
       '<section class="page-head"><div class="wrap"><h1>' + (R ? esc(R[lang]) : t('catalog_h1')) + '</h1>' + searchForm(q) +
       '<div class="chips">' + CATS.map(function (c) { return '<a class="chip" href="' + link({ cat: c }) + '" aria-pressed="' + (c === cat) + '">' + t('cat_' + c) + '</a>'; }).join('') + '</div>' +
       stories(reg) + '</div></section>' +
+      ((cat === 'all' || cat === 'show') && !reg && !q ? '<div class="wrap">' + events() + '</div>' : '') +
       '<div class="wrap section"><div class="toolbar">' +
         '<p class="count">' + t('found', { n: list.length }) + (filtered ? ' · <a href="' + href('/catalog') + '">' + t('reset') + '</a>' : '') + '</p>' +
         '<div class="toolbar__ctrls"><label class="select"><span class="sr">' + t('dur') + '</span><select id="dur" data-param="dur">' + ['any', 'short', 'day', 'multi'].map(function (d) { return '<option value="' + d + '"' + (d === dur ? ' selected' : '') + '>' + (d === 'any' ? t('dur') + ': ' + t('dur_any') : t('dur_' + d)) + '</option>'; }).join('') + '</select></label>' +
