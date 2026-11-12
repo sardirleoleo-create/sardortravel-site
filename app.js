@@ -5,7 +5,7 @@
   var T = {
     ru: {
       title: 'Sardor Travel — экскурсии в Таиланде',
-      nav_catalog: 'Все экскурсии', nav_fav: 'Избранное', nav_contact: 'Связаться', chat: 'Чат с менеджером',
+      nav_catalog: 'Все экскурсии', nav_afisha: 'Афиша', nav_fav: 'Избранное', nav_contact: 'Связаться', chat: 'Чат с менеджером',
       footer_text: 'Экскурсии в Таиланде. Бронь и вопросы — менеджеру в Telegram, поддержка 24/7.',
       footer_soon: 'Новые страны — скоро',
       hero_h1: 'Экскурсии <em>от своих людей</em> на месте',
@@ -60,7 +60,7 @@
     },
     en: {
       title: 'Sardor Travel — tours in Thailand',
-      nav_catalog: 'All tours', nav_fav: 'Saved', nav_contact: 'Contact', chat: 'Chat with us',
+      nav_catalog: 'All tours', nav_afisha: 'Concerts', nav_fav: 'Saved', nav_contact: 'Contact', chat: 'Chat with us',
       footer_text: 'Tours in Thailand. Bookings and questions — chat with our manager on Telegram, 24/7 support.',
       footer_soon: 'New countries coming soon',
       hero_h1: 'Tours <em>by locals</em> who live here',
@@ -120,6 +120,7 @@
     jungle: '<path d="M12 21V11M7 14l5-9 5 9z"/>',
     drive: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
     overnight: '<path d="M20 15A8 8 0 1 1 9 4a6 6 0 0 0 11 11z"/>',
+    mic: '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
     show: '<path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>',
     city: '<path d="M4 21V9l6-4v16M10 21h10V11l-6-3"/>',
     all: '<path d="M4 6h16M4 12h16M4 18h16"/>',
@@ -424,14 +425,14 @@
   function chatbox() { return '<div class="chatbox"><div class="bubble">' + t('not_found_q') + '</div><a class="btn btn--lime" href="' + tg(t('msg_general')) + '" target="_blank" rel="noopener">' + t('write') + '</a></div>'; }
 
   /* ---------- pages ---------- */
-  function events(city) {
+  function events(city, page) {
     var today = new Date(Date.now() + 7 * 3600e3).toISOString().slice(0, 10);
     var list = (window.EVENTS || []).filter(function (e) { return e.date >= today && (!city || e.city === city); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
     if (!list.length) return '';
     var MON = { ru: ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'], en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] };
-    return '<section class="section" id="afisha">' + head((lang === 'ru' ? 'Афиша концертов' : 'Concerts') + (city ? ' · ' + esc(region(city)[lang]) : '')) +
+    return '<section class="section" id="afisha">' + (page ? '' : head((lang === 'ru' ? 'Афиша концертов' : 'Concerts') + (city ? ' · ' + esc(region(city)[lang]) : ''), '<a class="more" href="' + href('/afisha') + '">' + (lang === 'ru' ? 'Вся афиша →' : 'All concerts →') + '</a>')) +
       (!city ? '<div class="chips chips--ev">' + ['', 'phuket', 'pattaya'].map(function (c) { return '<button type="button" class="chip" data-evcity="' + c + '" aria-pressed="' + (!c) + '">' + (c ? esc(region(c)[lang]) : (lang === 'ru' ? 'Все' : 'All')) + '</button>'; }).join('') + '</div>' : '') +
-      '<div class="rail rail--ev">' + list.map(function (e) {
+      '<div class="' + (page ? 'evgrid' : 'rail rail--ev') + '">' + list.map(function (e) {
       var d = e.date.split('-'), L = e[lang] || e.ru;
       return '<a class="ev" data-city="' + e.city + '" href="' + esc(e.url) + '" target="_blank" rel="noopener">' +
         (e.img ? '<img class="ev__img" src="/assets/' + e.img + '.webp" alt="" loading="lazy">' : '<div class="ev__art"><span>' + esc(L.title) + '</span></div>') +
@@ -450,7 +451,7 @@
     main.innerHTML =
       '<section class="hero"><div class="wrap"><h1>' + t('hero_h1') + '</h1><p class="lead">' + t('hero_lead') + '</p>' + searchForm('') + stories() + '</div></section>' +
       '<div class="wrap">' +
-      '<section class="section"><div class="cats">' + CATS.map(function (c) { var p = new URLSearchParams(); if (c !== 'all') p.set('cat', c); return '<a class="cat" href="' + href('/catalog', p) + '">' + icon(c) + t('cat_' + c) + '</a>'; }).join('') + '</div></section>' +
+      '<section class="section"><div class="cats">' + CATS.map(function (c) { var p = new URLSearchParams(); if (c !== 'all') p.set('cat', c); return '<a class="cat" href="' + href('/catalog', p) + '">' + icon(c) + t('cat_' + c) + '</a>'; }).join('') + '<a class="cat" href="' + href('/afisha') + '">' + icon('mic') + t('nav_afisha') + '</a></div></section>' +
       (recent.length ? '<section class="section">' + head(t('recent')) + rail(recent) + '</section>' : '') +
       '<section class="section">' + head(t('popular'), '<a class="more" href="' + href('/catalog') + '">' + t('all_n', { n: TOURS.length }) + '</a>') + grid(hits) +
       '<a class="btn btn--ghost btn-all" href="' + href('/catalog') + '">' + t('all_btn', { n: TOURS.length }) + '</a></section>' +
@@ -490,9 +491,8 @@
     var filtered = cat !== 'all' || reg || q || dur !== 'any';
     main.innerHTML =
       '<section class="page-head"><div class="wrap"><h1>' + (R ? esc(R[lang]) : t('catalog_h1')) + '</h1>' + searchForm(q) +
-      '<div class="chips">' + CATS.map(function (c) { return '<a class="chip" href="' + link({ cat: c }) + '" aria-pressed="' + (c === cat) + '">' + t('cat_' + c) + '</a>'; }).join('') + '</div>' +
+      '<div class="chips">' + CATS.map(function (c) { return '<a class="chip" href="' + link({ cat: c }) + '" aria-pressed="' + (c === cat) + '">' + t('cat_' + c) + '</a>'; }).join('') + '<a class="chip" href="' + href('/afisha') + '">' + t('nav_afisha') + '</a></div>' +
       stories(reg) + '</div></section>' +
-      ((cat === 'all' || cat === 'show') && !q && (!reg || reg === 'phuket' || reg === 'pattaya') ? '<div class="wrap">' + events(reg) + '</div>' : '') +
       '<div class="wrap section"><div class="toolbar">' +
         '<p class="count">' + t('found', { n: list.length }) + (filtered ? ' · <a href="' + href('/catalog') + '">' + t('reset') + '</a>' : '') + '</p>' +
         '<div class="toolbar__ctrls"><label class="select"><span class="sr">' + t('dur') + '</span><select id="dur" data-param="dur">' + ['any', 'short', 'day', 'multi'].map(function (d) { return '<option value="' + d + '"' + (d === dur ? ' selected' : '') + '>' + (d === 'any' ? t('dur') + ': ' + t('dur_any') : t('dur_' + d)) + '</option>'; }).join('') + '</select></label>' +
@@ -503,6 +503,15 @@
     main.querySelectorAll('select[data-param]').forEach(function (s) {
       s.addEventListener('change', function () { var o = {}; o[s.dataset.param] = s.value; go(link(o)); });
     });
+  }
+
+  function afishaPage(params) {
+    var ru = lang === 'ru';
+    document.title = (ru ? 'Афиша концертов на Пхукете и в Паттайе' : 'Concerts in Phuket and Pattaya') + ' — Sardor Travel';
+    var body = events('', true);
+    main.innerHTML = '<section class="page-head"><div class="wrap"><h1>' + (ru ? 'Афиша концертов' : 'Concerts') + '</h1><p class="lead">' +
+      (ru ? 'Концерты русскоязычных артистов на Пхукете и в Паттайе. Билеты — на сайте Lotus Arena.' : 'Russian-speaking artists live in Phuket and Pattaya. Tickets on the Lotus Arena website.') + '</p></div></section>' +
+      '<div class="wrap">' + (body || '<p class="empty">' + (ru ? 'Скоро добавим новые концерты.' : 'New concerts coming soon.') + '</p>') + '</div>';
   }
 
   function reviewsPage(params) {
@@ -635,6 +644,7 @@
     else if (p === '/catalog') catalog(c.params);
     else if (p === '/favorites') favorites();
     else if (p === '/reviews') reviewsPage(c.params);
+    else if (p === '/afisha') afishaPage(c.params);
     else if (p === '/' || p === '') { home(); fillRevs(main); }
     else notFound();
     if (!keepScroll) window.scrollTo(0, 0);
