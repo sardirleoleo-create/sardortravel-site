@@ -690,7 +690,7 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
     "yona-morning": [Object.assign(P("Kids Pass", "Kids Pass", 1500), { x: 1 }), P("Morning Pass", "Morning Pass", 3000), P("Утро с депозитом 4000 (половина — на бар)", "Morning with 4,000 deposit (half for the bar)", 4000)],
     "yona-evening": [P("Regular Pass", "Regular Pass", 4000), P("Зоны (лежак, дейбед, VIP) — от 10 000 за зону", "Zones (lounger, daybed, VIP) — from 10,000 per zone", 10000)],
     "khaolak-safari": [P("Стандарт", "Standard", 2150, 1950)],
-    "elephants-mantra": [P("Со смотровой Самет Нангше", "With Samet Nangshe viewpoint", 3650, 3250), P("Со стеклянным мостом", "With glass bridge", 4050, 3750)],
+    "elephants-mantra": [P("Со смотровой Самет Нангше", "With Samet Nangshe viewpoint", 3650, 3250), P("Со стеклянным мостом", "With glass bridge", 4250, 3950)],
     "sunrise-adventure": [P("Смотровая Самет Нангше", "Samet Nangshe viewpoint", 2700, 2400), P("Стеклянный мост Skywalk", "Skywalk glass bridge", 3100, 2800)],
     "khaosok-2day": [P("Standard · стандартные бунгало", "Standard · standard bungalows", 5200, 4700), P("Standard · капсулы", "Standard · capsules", 5800, 5300), P("Deluxe · бунгало", "Deluxe · bungalows", 7100, 6600), P("Deluxe · новые бунгало", "Deluxe · new bungalows", 7300, 6800)],
     "carnival-magic": [P("Standard", "Standard", 2350, 2350), P("Standard + ужин", "Standard + dinner", 2550, 2450), P("Royal", "Royal", 2600, 2600), P("Royal + ужин", "Royal + dinner", 2800, 2700)],
