@@ -531,13 +531,13 @@ window.CANCEL_TYPE = { "jetski": "jetski", "phi-phi-2day": "twoday", "five-pearl
      ["Transfer, guide and insurance", "Elephant programme", "Glass bridge entry (bridge option)", "Lunch", "Mantra Spa entry"]]);
   tour("sunrise-adventure", "phangnga", ["phangnga"], ["jungle"],
     ["Рассветное приключение", "Самет Нангше, Пханг-Нга", "Ночь – обед", "Рассвет над заливом",
-     "Единственный тур, который начинается до рассвета: восход на смотровой Самет Нангше (или на стеклянном мосту), завтрак с видом, лонгтейл к острову Джеймса Бонда и пляж с самолётами. В 13:30 уже в отеле.",
-     ["Выезд 03:00–04:00", "Смотровая Самет Нангше до рассвета", "Восход над заливом Пханг-Нга", "Завтрак с видом", "Лонгтейл: остров Джеймса Бонда (фото с лодки), пещеры", "Пляж с самолётами", "Возвращение 13:00–13:30"],
-     ["Трансфер, гид и страховка", "Лёгкий завтрак", "Прогулка на лонгтейле", "Пляж с самолётами"]],
+     "Тур, который начинается до рассвета: встречаете солнце на стеклянном мосту Beyond Skywalk или смотровой Самет Нангше, завтракаете с видом, плывёте на лонгтейле к острову Джеймса Бонда, фотографируетесь среди гигантских кувшинок и отдыхаете на пляже с самолётами.",
+     ["Выезд из отеля 03:00–04:00", "Стеклянный мост Beyond Skywalk или смотровая Самет Нангше", "Встреча рассвета над заливом Пханг-Нга", "Завтрак с видом", "Лонгтейл: остров Джеймса Бонда и пещеры с воды", "Фотолокация с гигантскими кувшинками", "Пляж с самолётами и купание", "Отправление в отели в 12:00"],
+     ["Трансфер, русскоговорящий гид и страховка", "Завтрак-шведский стол на мосту или ланчбокс на Самет Нангше", "Прогулка на лонгтейле", "Фото среди кувшинок, в том числе на лодке", "Пляж с самолётами"]],
     ["Sunrise Adventure", "Samet Nangshe, Phang Nga", "Night to lunchtime", "Sunrise over the bay",
-     "Our only tour that starts before dawn: sunrise at Samet Nangshe (or on the glass bridge), breakfast with a view, a longtail to James Bond Island and the plane-spotting beach. Back by 13:30.",
-     ["Pick-up 03:00–04:00", "Samet Nangshe before sunrise", "Sunrise over Phang Nga Bay", "Breakfast with a view", "Longtail: James Bond Island (photo from the boat), caves", "Plane-spotting beach", "Back 13:00–13:30"],
-     ["Transfer, guide and insurance", "Light breakfast", "Longtail ride", "Plane-spotting beach"]]);
+     "A tour that starts before dawn: sunrise on the Beyond Skywalk glass bridge or at Samet Nangshe, breakfast with a view, a longtail to James Bond Island, photos among giant water lilies and the plane-spotting beach.",
+     ["Hotel pick-up 03:00–04:00", "Beyond Skywalk glass bridge or Samet Nangshe viewpoint", "Sunrise over Phang Nga Bay", "Breakfast with a view", "Longtail: James Bond Island and caves from the water", "Giant water lily photo spot", "Plane-spotting beach and swimming", "Departure to hotels at 12:00"],
+     ["Transfer, Russian-speaking guide and insurance", "Buffet breakfast on the bridge or lunch box at Samet Nangshe", "Longtail ride", "Photos among the water lilies, including on the boat", "Plane-spotting beach"]]);
   tour("khaosok-2day", "cheowlan", ["cheowlan"], ["jungle", "overnight"],
     ["Као Сок + Чео Лан: 2 дня", "Као Сок, Сураттхани", "2 дня / 1 ночь", "Ночь в бунгало на озере",
      "Два дня в древнейших джунглях Као Сок: озеро Чео Лан, ночёвка в бунгало на понтонах, вечернее сафари и слоновья программа. Deluxe — с горячими источниками и сплавом, Standard — проще и короче.",
