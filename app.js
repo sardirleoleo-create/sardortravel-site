@@ -1,12 +1,13 @@
 (function () {
   'use strict';
   var TG = 'ds_sardor';
+  var WA = '66617843046';
   var HASH = !!window.HASH_MODE;
   var T = {
     ru: {
       title: 'Sardor Travel — экскурсии в Таиланде',
       nav_catalog: 'Все экскурсии', nav_afisha: 'Афиша', nav_fav: 'Избранное', nav_contact: 'Связаться', chat: 'Чат с менеджером',
-      footer_text: 'Экскурсии в Таиланде. Бронь и вопросы — менеджеру в Telegram, поддержка 24/7.',
+      footer_text: 'Экскурсии в Таиланде. Бронь и вопросы — менеджеру в Telegram или WhatsApp, поддержка 24/7.',
       footer_soon: 'Новые страны — скоро',
       hero_h1: 'Экскурсии <em>от своих людей</em> на месте',
       hero_lead: 'Острова, джунгли и драйв в Таиланде. Выберите программу — менеджер подтвердит бронь в Telegram.',
@@ -43,7 +44,7 @@
       thailand: 'Таиланд', back: 'Назад',
       booking: 'Бронирование', date: 'Дата', other_date: 'Другая дата', adults: 'Взрослые', kids: 'Дети',
       kids_price: 'цену подскажет менеджер', total: 'Итого', total_kids: '+ дети по цене менеджера',
-      book: 'Забронировать', book_note: 'Сейчас бронь подтверждает менеджер в Telegram. Онлайн-оплата картой — скоро.',
+      book: 'Забронировать в Telegram', book_wa: 'Забронировать в WhatsApp', book_note: 'Бронь подтверждает менеджер в Telegram или WhatsApp. Онлайн-оплата картой — скоро.',
       highlights: 'Главное', program: 'Программа', included: 'Что включено', inc_ask: 'Состав услуг уточните у менеджера.',
       bring: 'Что взять с собой', similar: 'Похожие экскурсии', share: 'Поделиться', copied: 'Ссылка скопирована',
       ask: 'Есть вопрос по программе? Напишите — ответим в чате.', ask_btn: 'Спросить менеджера',
@@ -61,7 +62,7 @@
     en: {
       title: 'Sardor Travel — tours in Thailand',
       nav_catalog: 'All tours', nav_afisha: 'Concerts', nav_fav: 'Saved', nav_contact: 'Contact', chat: 'Chat with us',
-      footer_text: 'Tours in Thailand. Bookings and questions — chat with our manager on Telegram, 24/7 support.',
+      footer_text: 'Tours in Thailand. Bookings and questions — chat with our manager on Telegram or WhatsApp, 24/7 support.',
       footer_soon: 'New countries coming soon',
       hero_h1: 'Tours <em>by locals</em> who live here',
       hero_lead: 'Islands, jungle and thrills in Thailand. Pick a tour — our manager confirms your booking on Telegram.',
@@ -98,7 +99,7 @@
       thailand: 'Thailand', back: 'Back',
       booking: 'Booking', date: 'Date', other_date: 'Other date', adults: 'Adults', kids: 'Children',
       kids_price: 'price on request', total: 'Total', total_kids: '+ children, price on request',
-      book: 'Book now', book_note: 'For now our manager confirms bookings on Telegram. Online card payment is coming soon.',
+      book: 'Book on Telegram', book_wa: 'Book on WhatsApp', book_note: 'Our manager confirms bookings on Telegram or WhatsApp. Online card payment is coming soon.',
       highlights: 'Highlights', program: 'Itinerary', included: 'What’s included', inc_ask: 'Ask our manager for the list of inclusions.',
       bring: 'What to bring', similar: 'You might also like', share: 'Share', copied: 'Link copied',
       ask: 'Questions about the tour? Message us — we reply in the chat.', ask_btn: 'Ask a manager',
@@ -200,6 +201,7 @@
     text = text.replace(/\s*#p_[a-z0-9_-]+/ig, '');
     var i = text.indexOf('\n'); return i < 0 ? text + ' ' + g : text.slice(0, i) + ' ' + g + text.slice(i);
   }
+  function wa(text) { text = tagText(text); return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
   function tg(text) { text = tagText(text); return 'https://t.me/' + TG + (text ? '?text=' + encodeURIComponent(text) : ''); }
   document.addEventListener('click', function (ev) {
     var b = ev.target && ev.target.closest && ev.target.closest('[data-evcity]'); if (!b) return;
@@ -580,6 +582,7 @@
         '<div class="book__row"' + (x.unit ? ' hidden' : '') + '><span class="book__label">' + t('kids') + '<small id="price-k"></small></span><div class="stepper"><button type="button" data-step="k" data-d="-1" aria-label="' + t('kids') + ' −1">−</button><output id="out-k" aria-live="polite"></output><button type="button" data-step="k" data-d="1" aria-label="' + t('kids') + ' +1">+</button></div></div>' +
         '<div class="total"><span>' + t('total') + '<br><small id="kids-note"></small></span><strong id="total"></strong></div>' +
         '<a class="btn btn--lime" id="book-btn" target="_blank" rel="noopener" href="#">' + t('book') + '</a>' +
+        '<a class="btn btn--wa" id="wa-btn" target="_blank" rel="noopener" href="#">' + t('book_wa') + '</a>' +
         '<p class="book__note">' + t('book_note') + '</p></aside>' +
       '</div>' +
       '<section class="section">' + head(t('similar')) + grid(similar) + '</section>' +
@@ -608,7 +611,8 @@
       document.getElementById('total').textContent = fmt(state.a * o.a + (kidsKnown ? state.k * o.c : 0));
       document.getElementById('kids-note').textContent = state.k && !kidsKnown ? t('total_kids') : '';
       var nm = l.name + (opts.length > 1 ? ' (' + (o[lang] || o.ru) + ')' : '');
-      document.getElementById('book-btn').href = tg(x.unit ? t('msg_unit', { name: nm, date: human(state.date), q: state.a, u: x.unit.qty[lang] }) : t('msg', { name: nm, date: human(state.date), a: state.a, k: state.k }));
+      var bm = x.unit ? t('msg_unit', { name: nm, date: human(state.date), q: state.a, u: x.unit.qty[lang] }) : t('msg', { name: nm, date: human(state.date), a: state.a, k: state.k });
+      document.getElementById('book-btn').href = tg(bm); document.getElementById('wa-btn').href = wa(bm);
     }
     main.querySelector('#book').addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;

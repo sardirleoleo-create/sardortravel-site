@@ -63,3 +63,5 @@ img{max-width:100%;display:block}a{color:var(--green)}button{font:inherit;color:
 .foot{background:var(--green);color:#cfe0d3;padding:24px 0 90px;font-size:14px}.foot a{color:var(--lime)}
 .fab{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom));background:var(--green);color:#fff;text-decoration:none;font-weight:700;border-radius:999px;padding:14px 20px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:30}
 @media(max-width:480px){.top__cta{padding:8px 12px;font-size:13px}.brand img{height:22px}}
+
+.btn--wa{background:#fff;color:var(--green);border:1.5px solid var(--green);margin-top:8px}

@@ -15,6 +15,7 @@
   function tg(text) { var g = tag(); text = (text || 'Здравствуйте! Хочу экскурсию на Бали.').replace(/…/g, '...');
     if (g) { var i = text.indexOf('\n'); text = i < 0 ? text + ' ' + g : text.slice(0, i) + ' ' + g + text.slice(i); }
     return 'https://t.me/' + TG + '?text=' + encodeURIComponent(text); }
+  function wa(text) { return tg(text).replace('https://t.me/' + TG + '?text=', 'https://wa.me/66617843046?text='); }
   function fixTg() { document.querySelectorAll('[data-tg]').forEach(function (a) { a.href = tg(''); }); }
 
   function card(t) {
@@ -46,10 +47,10 @@
       '<aside class="box book"><h2>Варианты и цены</h2><div id="opts">' + t.v.map(function (v, i) {
         return '<label class="opt" data-on="' + (i === 0 ? 1 : 0) + '"><input type="radio" name="v" value="' + i + '"' + (i === 0 ? ' checked' : '') + '><span><span class="opt__n">' + esc(v[0]) + '</span><br><span class="opt__s">' + esc(v[1]) + '</span></span><span class="opt__p">' + rp(v[2]) + '</span></label>'; }).join('') + '</div>' +
       '<div class="field"><label>Дата<input type="date" id="d"></label><label>Гостей<input type="number" id="n" min="1" value="2"></label></div>' +
-      '<a class="btn" id="go" target="_blank" rel="noopener">Забронировать в Telegram</a><p class="small">Менеджер подтвердит наличие мест и пришлёт детали.</p></aside></div></div>';
+      '<a class="btn" id="go" target="_blank" rel="noopener">Забронировать в Telegram</a><a class="btn btn--wa" id="gowa" target="_blank" rel="noopener">Забронировать в WhatsApp</a><p class="small">Менеджер в Telegram или WhatsApp подтвердит наличие мест и пришлёт детали.</p></aside></div></div>';
     function upd() {
       var v = t.v[sel], d = main.querySelector('#d').value, n = main.querySelector('#n').value;
-      main.querySelector('#go').href = tg('Здравствуйте! Хочу забронировать ' + (t.cat === 'transport' ? '' : 'экскурсию ') + 'на Бали «' + t.name + '».\nВариант: ' + v[0] + ' — ' + rp(v[2]) + '\nДата: ' + (d ? d.split('-').reverse().join('.') : '...') + '\nГостей: ' + (n || '...') + '\nОтель: ...');
+      var bm = 'Здравствуйте! Хочу забронировать ' + (t.cat === 'transport' ? '' : 'экскурсию ') + 'на Бали «' + t.name + '».\nВариант: ' + v[0] + ' — ' + rp(v[2]) + '\nДата: ' + (d ? d.split('-').reverse().join('.') : '...') + '\nГостей: ' + (n || '...') + '\nОтель: ...'; main.querySelector('#go').href = tg(bm); main.querySelector('#gowa').href = wa(bm);
     }
     main.querySelectorAll('.opt input').forEach(function (r) { r.onchange = function () { sel = +r.value; main.querySelectorAll('.opt').forEach(function (o, i) { o.setAttribute('data-on', i === sel ? 1 : 0); }); upd(); }; });
     main.querySelector('#d').oninput = upd; main.querySelector('#n').oninput = upd; upd();
