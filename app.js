@@ -7,7 +7,7 @@
     ru: {
       title: 'Sardor Travel — экскурсии в Таиланде',
       nav_catalog: 'Все экскурсии', nav_afisha: 'Афиша', nav_fav: 'Избранное', nav_contact: 'Связаться', chat: 'Чат с менеджером',
-      footer_text: 'Экскурсии в Таиланде. Бронь и вопросы — менеджеру в Telegram или WhatsApp, поддержка 24/7.',
+      footer_text: 'Экскурсии в Таиланде. Бронь и вопросы — менеджеру в Telegram (есть и WhatsApp), поддержка 24/7.',
       footer_soon: 'Новые страны — скоро',
       hero_h1: 'Экскурсии <em>от своих людей</em> на месте',
       hero_lead: 'Острова, джунгли и драйв в Таиланде. Выберите программу — менеджер подтвердит бронь в Telegram.',
@@ -44,7 +44,7 @@
       thailand: 'Таиланд', back: 'Назад',
       booking: 'Бронирование', date: 'Дата', other_date: 'Другая дата', adults: 'Взрослые', kids: 'Дети',
       kids_price: 'цену подскажет менеджер', total: 'Итого', total_kids: '+ дети по цене менеджера',
-      book: 'Забронировать в Telegram', book_wa: 'Забронировать в WhatsApp', book_note: 'Бронь подтверждает менеджер в Telegram или WhatsApp. Онлайн-оплата картой — скоро.',
+      book: 'Забронировать в Telegram', wa_line: 'Удобнее WhatsApp? Пишите:', book_note: 'Бронь подтверждает менеджер в Telegram. Онлайн-оплата картой — скоро.',
       highlights: 'Главное', program: 'Программа', included: 'Что включено', inc_ask: 'Состав услуг уточните у менеджера.',
       bring: 'Что взять с собой', similar: 'Похожие экскурсии', share: 'Поделиться', copied: 'Ссылка скопирована',
       ask: 'Есть вопрос по программе? Напишите — ответим в чате.', ask_btn: 'Спросить менеджера',
@@ -62,7 +62,7 @@
     en: {
       title: 'Sardor Travel — tours in Thailand',
       nav_catalog: 'All tours', nav_afisha: 'Concerts', nav_fav: 'Saved', nav_contact: 'Contact', chat: 'Chat with us',
-      footer_text: 'Tours in Thailand. Bookings and questions — chat with our manager on Telegram or WhatsApp, 24/7 support.',
+      footer_text: 'Tours in Thailand. Bookings and questions — chat with our manager on Telegram (WhatsApp also available), 24/7 support.',
       footer_soon: 'New countries coming soon',
       hero_h1: 'Tours <em>by locals</em> who live here',
       hero_lead: 'Islands, jungle and thrills in Thailand. Pick a tour — our manager confirms your booking on Telegram.',
@@ -99,7 +99,7 @@
       thailand: 'Thailand', back: 'Back',
       booking: 'Booking', date: 'Date', other_date: 'Other date', adults: 'Adults', kids: 'Children',
       kids_price: 'price on request', total: 'Total', total_kids: '+ children, price on request',
-      book: 'Book on Telegram', book_wa: 'Book on WhatsApp', book_note: 'Our manager confirms bookings on Telegram or WhatsApp. Online card payment is coming soon.',
+      book: 'Book on Telegram', wa_line: 'Prefer WhatsApp? Message us:', book_note: 'Our manager confirms bookings on Telegram. Online card payment is coming soon.',
       highlights: 'Highlights', program: 'Itinerary', included: 'What’s included', inc_ask: 'Ask our manager for the list of inclusions.',
       bring: 'What to bring', similar: 'You might also like', share: 'Share', copied: 'Link copied',
       ask: 'Questions about the tour? Message us — we reply in the chat.', ask_btn: 'Ask a manager',
@@ -582,8 +582,7 @@
         '<div class="book__row"' + (x.unit ? ' hidden' : '') + '><span class="book__label">' + t('kids') + '<small id="price-k"></small></span><div class="stepper"><button type="button" data-step="k" data-d="-1" aria-label="' + t('kids') + ' −1">−</button><output id="out-k" aria-live="polite"></output><button type="button" data-step="k" data-d="1" aria-label="' + t('kids') + ' +1">+</button></div></div>' +
         '<div class="total"><span>' + t('total') + '<br><small id="kids-note"></small></span><strong id="total"></strong></div>' +
         '<a class="btn btn--lime" id="book-btn" target="_blank" rel="noopener" href="#">' + t('book') + '</a>' +
-        '<a class="btn btn--wa" id="wa-btn" target="_blank" rel="noopener" href="#">' + t('book_wa') + '</a>' +
-        '<p class="book__note">' + t('book_note') + '</p></aside>' +
+        '<p class="book__note">' + t('book_note') + '</p><p class="book__wa">' + t('wa_line') + ' <a href="https://wa.me/66617843046" target="_blank" rel="noopener">+66 61 784 3046</a></p></aside>' +
       '</div>' +
       '<section class="section">' + head(t('similar')) + grid(similar) + '</section>' +
       faq() + '</div>' +
@@ -612,7 +611,7 @@
       document.getElementById('kids-note').textContent = state.k && !kidsKnown ? t('total_kids') : '';
       var nm = l.name + (opts.length > 1 ? ' (' + (o[lang] || o.ru) + ')' : '');
       var bm = x.unit ? t('msg_unit', { name: nm, date: human(state.date), q: state.a, u: x.unit.qty[lang] }) : t('msg', { name: nm, date: human(state.date), a: state.a, k: state.k });
-      document.getElementById('book-btn').href = tg(bm); document.getElementById('wa-btn').href = wa(bm);
+      document.getElementById('book-btn').href = tg(bm);
     }
     main.querySelector('#book').addEventListener('click', function (e) {
       var b = e.target.closest('button'); if (!b) return;
