@@ -670,7 +670,7 @@
     var a = e.target.closest('a[href]');
     if (!a || a.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey || e.button) return;
     var u = new URL(a.href, location.href);
-    if (u.origin !== location.origin || u.pathname.indexOf('/assets/') === 0) return;
+    if (u.origin !== location.origin || u.pathname.indexOf('/assets/') === 0 || /^\/(oferta|privacy)/.test(u.pathname)) return;
     if (u.hash && u.pathname === location.pathname) return;
     e.preventDefault(); go(u.pathname + u.search);
   });
