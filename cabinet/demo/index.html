@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="ru"><head><base target="_top"><meta charset="utf-8"><meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Демо кабинета сети · Sardor Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&family=Unbounded:wght@500;600&display=swap">
+<style>
+[hidden]{display:none!important}
+:root{
+  --bg:#F3F6F5;--surface:#FFFFFF;--ink:#15201F;--muted:#5B6A67;--line:#D9E2DF;--soft:#E9F0EE;
+  --accent:#0C6A66;--accent-ink:#FFFFFF;--accent-soft:#DDEFEC;
+  --good:#2E7A4B;--good-soft:#E1F1E6;--warn:#9A6414;--warn-soft:#F7ECD8;--plan:#3F5E8C;--plan-soft:#E3EAF5;
+  --display:"Unbounded","Onest",system-ui,sans-serif;--body:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#0E1514;--surface:#162120;--ink:#E4ECEA;--muted:#93A4A0;--line:#28403C;--soft:#1C2A28;
+  --accent:#4DB3A9;--accent-ink:#06201D;--accent-soft:#16332F;
+  --good:#6CC08C;--good-soft:#16301F;--warn:#E0A94F;--warn-soft:#33260F;--plan:#8FB0E0;--plan-soft:#1B2638;}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--bg:#0E1514;--surface:#162120;--ink:#E4ECEA;--muted:#93A4A0;--line:#28403C;--soft:#1C2A28;
+  --accent:#4DB3A9;--accent-ink:#06201D;--accent-soft:#16332F;
+  --good:#6CC08C;--good-soft:#16301F;--warn:#E0A94F;--warn-soft:#33260F;--plan:#8FB0E0;--plan-soft:#1B2638;}
+*{box-sizing:border-box}
+html{background:var(--bg);min-height:100%}
+body{min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:24px 48px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.brand{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(24px,4vw,34px);line-height:1.15;margin:6px 0 0;text-wrap:balance}
+.meta{color:var(--muted);font-size:13px;text-align:right}
+@media (max-width:560px){.meta{text-align:left}}
+.meta b{color:var(--ink);font-weight:600}
+.daypick{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.daypick button,.daypick input{font:inherit;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 10px;min-height:34px}
+.daypick button{cursor:pointer}
+.today-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.today-grid{grid-template-columns:1fr}}
+.today-grid h3{margin:0 0 8px;font-size:15px;font-weight:700}
+#refresh{font:inherit;font-size:12px;color:var(--accent);background:none;border:1px solid var(--line);border-radius:6px;padding:2px 10px;margin-top:6px;cursor:pointer}
+#refresh:disabled{color:var(--muted);cursor:default}
+h2{font-family:var(--display);font-weight:500;font-size:17px;margin:0;text-wrap:balance}
+.sec{display:flex;flex-direction:column;gap:14px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px}
+.hint{color:var(--muted);font-size:13px}
+.num{font-variant-numeric:tabular-nums}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.kpi.lead{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.kpi .l{font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.8;font-weight:600}
+.kpi .v{font-family:var(--display);font-weight:500;font-size:clamp(20px,3vw,26px);font-variant-numeric:tabular-nums;line-height:1.2;overflow-wrap:anywhere}
+.kpi .s{font-size:13px;opacity:.8}
+.tbl-wrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:10px 12px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--line)}
+th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--soft);position:sticky;top:0}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:none}
+tfoot td{font-weight:700;border-top:2px solid var(--line);border-bottom:none}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--soft)}
+tr.sel td{background:var(--accent-soft)}
+td.tour{white-space:normal;min-width:180px;max-width:320px}
+/* узкий экран (Telegram на телефоне): тур переносится, отступы меньше, у края таблицы тень «листается вбок», чтобы деньги справа не терялись */
+@media (max-width:560px){
+  th,td{padding:8px 7px}
+  table{font-size:13px}
+  td.tour{min-width:96px;max-width:34vw}
+  .tbl-wrap{background:linear-gradient(to right,var(--surface) 30%,transparent),linear-gradient(to left,var(--surface) 30%,transparent) 100% 0,linear-gradient(to right,rgba(0,0,0,.18),transparent) 0 0,linear-gradient(to left,rgba(0,0,0,.18),transparent) 100% 0;background-repeat:no-repeat;background-size:36px 100%,36px 100%,14px 100%,14px 100%;background-attachment:local,local,scroll,scroll;background-color:var(--surface)}
+}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.pill.paid{background:var(--good-soft);color:var(--good)}
+.pill.due{background:var(--warn-soft);color:var(--warn)}
+.pill.plan{background:var(--plan-soft);color:var(--plan)}
+.pill.part{background:var(--warn-soft);color:var(--warn)}
+.controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,input[type=search]{font:inherit;font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+input[type=search]{width:200px;max-width:100%}
+select:focus-visible,input:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-size:13px;border:0;background:transparent;color:var(--muted);padding:8px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.empty{padding:24px;color:var(--muted);text-align:center}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.panel h3{margin:0;font-size:15px;font-weight:700}
+.panel p,.panel ul{margin:0;color:var(--ink)}
+.panel ul{padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.formula{font-variant-numeric:tabular-nums;background:var(--soft);border-radius:8px;padding:10px 12px;font-size:14px}
+a{color:var(--accent)}
+.foot{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px}
+.tag.pre{color:var(--warn);border-color:var(--warn)}
+.tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+
+.gate{max-width:520px;margin:12vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:12px}
+.gate h1{font-size:22px}
+.gate code{font-size:18px;font-weight:700;background:var(--soft);padding:6px 10px;border-radius:6px;user-select:all}
+.gate button{font:inherit;font-weight:600;border:0;border-radius:8px;padding:10px 14px;background:var(--accent);color:var(--accent-ink);cursor:pointer;align-self:flex-start}
+.spin{width:28px;height:28px;border:3px solid var(--line);border-top-color:var(--accent);border-radius:50%;animation:sp 0.9s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.spin{animation:none}}
+#admin-slot select{margin-bottom:6px}
+:root{--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#8a5bd6;--s7:#14a8c9;--s8:#d63a4a;--s9:#8aa51c;--s10:#6b7a8f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#9d78e6;--s7:#2bb8d8;--s8:#e0525f;--s9:#9db832;--s10:#8393a8}}
+:root[data-theme="dark"]{--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#9d78e6;--s7:#2bb8d8;--s8:#e0525f;--s9:#9db832;--s10:#8393a8}
+.ov-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:8px}
+.ov-legend i,.ov-tip i,.ov-dot{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.ov-chart{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+.ov-chart svg{display:block;width:100%;height:auto}
+.ov-hit{cursor:pointer;outline:none}
+.ov-tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.5;padding:8px 10px;border-radius:8px;white-space:nowrap;z-index:3}
+.ov-attn{margin:0;padding-left:18px;line-height:1.6}
+.lead-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:12px}
+.lead-flow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.lead-flow>div:not(.arr){display:flex;flex-direction:column;min-width:0}
+.lead-flow b{font-size:22px;line-height:1.2}
+.lead-flow span{font-size:12px;color:var(--muted)}
+.lead-flow .arr{color:var(--muted);font-size:20px}
+.lead-card p{margin:0}
+.pay-sum{margin:0 0 12px}
+.mbar{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:8px;overflow-x:auto;padding:8px 0;margin:0 0 4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.mbar::-webkit-scrollbar{display:none}
+.mbar button{flex:0 0 auto;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.mbar button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+
+.hero{display:flex;flex-direction:column;gap:6px;background:var(--accent);color:var(--accent-ink);border-radius:14px;padding:20px;margin-bottom:12px}
+.hero-l{font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;opacity:.85}
+.hero-v{font-family:var(--display);font-size:clamp(32px,9vw,44px);font-weight:500;font-variant-numeric:tabular-nums;line-height:1.1}
+.hero-s{font-size:13px;opacity:.85}
+.hsum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:20px}
+.hsum div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.hsum span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.hsum b{font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.hsum b.good{color:var(--good)} .hsum b.warn{color:var(--warn)}
+.hc{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:16px;overflow:hidden}
+.hc-h{padding:14px 16px 8px}.hc-h h2{margin:0;font-size:17px}.hc-h p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.hl{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:10px 16px;border-top:1px solid var(--line)}
+.hl-t{min-width:0;display:flex;flex-direction:column;gap:2px;font-size:15px}
+.hl-t small{color:var(--muted);font-size:12px;line-height:1.35}
+.hl-a{white-space:nowrap;font-variant-numeric:tabular-nums;font-size:15px;text-align:right}
+.hl.sum{background:var(--soft)}.hl.sum .hl-t,.hl.sum .hl-a{font-weight:600}
+.hl.total{background:var(--accent-soft)}.hl.total .hl-t,.hl.total .hl-a{font-weight:700}
+.hl.small .hl-t,.hl.small .hl-a{font-size:14px}.hl.small{padding-left:28px}
+.hl.mute .hl-t{color:var(--muted)}
+.hd>summary{list-style:none;cursor:pointer}.hd>summary::-webkit-details-marker{display:none}
+.hd>summary .hl-t{display:block}.hd>summary .hl-t small{display:block;margin-top:2px}
+.hd>summary .hl-t::before{content:'▸ ';color:var(--muted)}.hd[open]>summary .hl-t::before{content:'▾ '}
+.hcond{margin:0;padding:6px 16px 14px 34px;font-size:14px;line-height:1.5}
+.goal{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+.goal h2{margin:0 0 4px;font-size:17px}.goal .gs{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.45}
+.gbar{height:12px;border-radius:999px;background:var(--soft);overflow:hidden}.gbar i{display:block;height:100%;background:var(--accent);border-radius:999px}
+.grow{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-top:6px;color:var(--muted);font-variant-numeric:tabular-nums}
+.gbig{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}
+.gbig div{background:var(--soft);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.gbig span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.gbig b{font-size:15px;font-variant-numeric:tabular-nums}
+.grules{margin:12px 0 0;padding:0 0 0 18px;font-size:14px;line-height:1.5}.grules li{margin:3px 0}.grules b{color:var(--accent)}
+.hcond li{margin:4px 0}
+.hdebt{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:10px;padding:12px 14px;margin:-8px 0 20px}
+.hdebt-r{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.hdebt-r span{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.hdebt-r b{font-size:20px;font-variant-numeric:tabular-nums;white-space:nowrap}.hdebt p{margin:6px 0 0;font-size:13px;color:var(--muted);line-height:1.4}
+
+.lc{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.lc-h{padding:18px 18px 4px}.lc-h .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lc-h h2{margin:6px 0 2px;font-family:var(--body);font-weight:500;font-size:19px;letter-spacing:-.01em}
+.lc-h p{margin:0;color:var(--muted);font-size:12.5px}
+.money{margin:16px 18px 6px;padding:16px 18px;border-radius:14px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 70%,#000));color:var(--accent-ink)}
+.money .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.money .v{font-family:var(--body);font-weight:300;font-size:36px;letter-spacing:-.02em;line-height:1.15;margin-top:4px;font-variant-numeric:tabular-nums}
+.money .s{font-size:12.5px;opacity:.8;margin-top:2px}
+.fun{padding:10px 18px 4px;display:flex;flex-direction:column;gap:10px}
+.fs{display:grid;grid-template-columns:64px 1fr 108px;align-items:center;gap:10px}
+.fs .n{font-family:var(--body);font-weight:300;font-size:22px;font-variant-numeric:tabular-nums}
+.fs .t{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}.fs .t i{display:block;height:100%;border-radius:99px;background:var(--accent);opacity:.85}
+.fs .l{font-size:12px;color:var(--muted);text-align:right}
+.lms{padding:4px 18px 16px}.lm{padding:12px 0;border-top:1px solid var(--line)}
+.lm-top{display:flex;justify-content:space-between;align-items:baseline}
+.lm-m{font-size:15px}.lm-e{font-family:var(--body);font-weight:400;font-size:16px;font-variant-numeric:tabular-nums}
+.lm-bar{height:4px;border-radius:99px;background:var(--soft);margin:8px 0 6px;overflow:hidden}.lm-bar i{display:block;height:100%;background:var(--accent);opacity:.6;border-radius:99px}
+.lm-s{font-size:12px;color:var(--muted)}.lc-note{margin:0;padding:0 18px 16px;font-size:12px;color:var(--muted)}
+/* ===== Айдентика Sardor Travel (как на sardortravel.com): тёмно-зелёный, лайм, Unbounded + Onest, радиус 18 ===== */
+:root{
+  --bg:#EEF3EC;--surface:#FFFFFF;--ink:#12201E;--muted:#4B6156;--line:#DDE3DA;--soft:#E4EBE1;
+  --accent:#123C3A;--accent-ink:#FFFFFF;--accent-soft:#E7F5C8;--lime:#E2FF8C;--green-d:#0A2827;--r:18px;
+  --good:#2E7A4B;--good-soft:#E1F1E6;--plan:#2F5D8A;--plan-soft:#E2EBF4;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A2827;--surface:#123C3A;--ink:#EEF3EC;--muted:#A9BDB4;--line:#24524F;--soft:#174745;
+  --accent:#E2FF8C;--accent-ink:#123C3A;--accent-soft:#2A4F3A;}}
+:root[data-theme="dark"]{--bg:#0A2827;--surface:#123C3A;--ink:#EEF3EC;--muted:#A9BDB4;--line:#24524F;--soft:#174745;--accent:#E2FF8C;--accent-ink:#123C3A;--accent-soft:#2A4F3A}
+body{padding-block:16px 48px}
+header.top{background:#123C3A;color:#fff;border-radius:var(--r);padding:20px 22px;align-items:center;box-shadow:0 10px 30px -18px rgba(10,40,39,.6)}
+header.top .brand{color:#E2FF8C;padding-top:44px;background:url("https://sardortravel.com/assets/brand/sardor-logo-light.svg") no-repeat 0 0/auto 30px;letter-spacing:.14em}
+header.top h1{color:#fff;font-weight:800}
+header.top .meta{color:rgba(255,255,255,.72)}
+header.top .meta b{color:#E2FF8C}
+header.top select,header.top input{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.25)}
+header.top select option{color:#12201E}
+header.top #refresh{color:#123C3A;background:#E2FF8C;border:0;border-radius:999px;padding:4px 14px;font-weight:700}
+header.top #refresh:disabled{opacity:.7;color:#123C3A}
+h2{font-weight:600}
+.kpi,.tbl-wrap,.panel,.ov-chart,.lead-card,.hsum div,.hc,.gate{border-radius:var(--r)}
+.kpi.lead,.hero{background:#123C3A;border-color:#123C3A;color:#fff}
+.kpi.lead .v,.hero .hero-v{color:#E2FF8C}
+.seg{border-radius:999px}
+.seg button[aria-pressed="true"],.mbar button[aria-pressed="true"]{background:#E2FF8C;border-color:#E2FF8C;color:#123C3A;font-weight:700}
+.mbar button{border-radius:999px}
+button.copy,.btn,button[type=submit]{background:#E2FF8C;color:#123C3A;border:0;border-radius:999px;font-weight:700;font-size:14px;padding:10px 18px;min-height:40px;cursor:pointer}
+.links code{font-size:13px;background:var(--soft);border-radius:12px;padding:8px 10px}
+a{color:inherit;text-decoration-color:#9BBF3A;text-underline-offset:3px}
+.pill.plan{background:#E2FF8C;color:#123C3A}
+/* Вкладки, прогресс, значки, калькулятор, QR */
+.tab-off{display:none!important}
+.tabs{position:sticky;top:0;z-index:6;display:flex;gap:6px;overflow-x:auto;padding:8px 0;background:var(--bg);scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:0 0 auto;font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:#123C3A;border-color:#123C3A;color:#E2FF8C}
+.bar{height:10px;background:var(--soft);border-radius:999px;overflow:hidden;position:relative}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,#9BD04A,#E2FF8C);border-radius:999px}
+.prog{display:flex;flex-direction:column;gap:6px}
+.prog .t{font-size:14px}
+.perks{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}
+.perks h3{margin:0;font-family:var(--display);font-size:16px;font-weight:600}
+.badges{display:flex;flex-wrap:wrap;gap:8px}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:6px 12px;border-radius:999px;background:#123C3A;color:#E2FF8C}
+.badge.off{background:var(--soft);color:var(--muted);font-weight:500}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}
+.calc label{display:flex;flex-direction:column;gap:6px;font-size:14px}
+.calc input[type=range]{width:100%;accent-color:#123C3A}
+.calc .res{background:#123C3A;color:#fff;border-radius:14px;padding:14px 16px}
+.calc .res b{display:block;font-family:var(--display);font-size:28px;color:#E2FF8C;font-weight:700}
+.qr{margin-top:8px;background:#fff;border-radius:12px;padding:10px;display:inline-block}
+.qr svg{display:block;width:180px;height:180px}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;font:inherit;font-size:14px;font-weight:600;padding:9px 16px;cursor:pointer;margin-left:6px}
+#mladder:not([hidden]){background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;color:var(--ink);font-size:14px;margin:0}
+/* ===== Кабинет сети (организатор и агенты): тёмно-зелёный + жёлтый, по макетам Рината ===== */
+body.net-body,html:has(body.net-body){background:#081F1E}
+body.net-body{padding:0}
+.net{--bg:#081F1E;--surface:#0F2E2C;--soft:#17403C;--ink:#F0F6F1;--muted:#9FBBB2;--line:#1F4843;--accent:#F4D35E;--accent-ink:#13261F;--accent-soft:#2F4426;--y:#F4D35E;
+  --good:#7FD39B;--good-soft:#17452F;--warn:#F0B35A;--warn-soft:#43331A;--plan:#A9C8F0;--plan-soft:#1C3652;color-scheme:dark;
+  color:var(--ink);display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh;min-height:100dvh;background:var(--bg)}
+.net .n-side{position:sticky;top:0;align-self:start;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:18px;padding:22px 14px;background:#0B2826;border-right:1px solid var(--line)}
+.net .n-logo{height:30px;background:url("https://sardortravel.com/assets/brand/sardor-logo-light.svg") no-repeat 0 50%/auto 28px;min-width:150px}
+.net .n-tag{margin:-12px 0 0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--y);font-weight:600}
+.net .n-nav{display:flex;flex-direction:column;gap:4px}
+.net .n-nav button,.net .n-bottom button{font:inherit;border:0;background:transparent;color:var(--muted);cursor:pointer;display:flex;align-items:center}
+.net .n-nav button{gap:12px;padding:11px 12px;border-radius:12px;font-size:14.5px;font-weight:600;text-align:left}
+.net .n-nav button:hover{background:var(--surface);color:var(--ink)}
+.net .n-nav button[aria-current="page"]{background:var(--y);color:var(--accent-ink)}
+.net svg.i{width:20px;height:20px;flex:0 0 20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.net .n-me{margin-top:auto;display:flex;align-items:center;gap:10px;min-width:0;font-size:13px}
+.net .n-me b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.net .n-me span{color:var(--muted)}
+.net .n-av{width:40px;height:40px;flex:0 0 40px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--y);font-weight:700;font-size:14px;border:1px solid var(--line)}
+.net .n-main{padding:22px clamp(16px,3vw,36px) 48px;min-width:0;width:100%;max-width:1060px;display:flex;flex-direction:column;gap:18px}
+.net .n-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.net .n-top .n-logo,.net .n-top .n-avbtn{display:none}
+.net .n-top .meta{margin-left:auto;text-align:right;color:var(--muted);font-size:12.5px}
+.net .n-top select{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.net #refresh{color:var(--accent-ink);background:var(--y);border:0;border-radius:999px;padding:4px 14px;font-weight:700;margin-top:4px}
+.net h1{font-size:clamp(22px,3.4vw,30px);font-weight:700;margin:0}
+.net .n-sub{margin:-12px 0 0;color:var(--muted);font-size:14px}
+.net .n-page{display:flex;flex-direction:column;gap:18px}
+.net .n-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.net .n-tile{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.net .n-tile .ico{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--soft);color:var(--y)}
+.net .n-tile .l{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.net .n-tile .v{font-family:var(--display);font-size:clamp(19px,2.4vw,25px);font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2;overflow-wrap:anywhere}
+.net .n-tile .s{font-size:12.5px;color:var(--muted)}
+.net .n-tile.lead{background:var(--y);border-color:var(--y);color:var(--accent-ink)}
+.net .n-tile.lead .l,.net .n-tile.lead .s{color:#3F4A1E}
+.net .n-tile.lead .ico{background:rgba(19,38,31,.12);color:var(--accent-ink)}
+.net .n-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.net .n-card h2,.net .n-h{font-family:var(--display);font-size:16px;font-weight:600;margin:0}
+.net .n-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
+.net .n-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.net .n-btn{font:inherit;font-size:14px;font-weight:700;border:0;border-radius:999px;background:var(--y);color:var(--accent-ink);padding:10px 18px;min-height:40px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.net .n-btn.ghost,.net button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);margin-left:0}
+.net .n-btn:disabled{opacity:.5;cursor:default}
+.net .n-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.net .n-stats div{background:var(--soft);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;min-width:0}
+.net .n-stats b{font-size:19px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.net .n-stats span{font-size:11.5px;color:var(--muted)}
+.net .n-url{display:block;word-break:break-all;background:#0A2523;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:13px}
+.net .n-chips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.net .n-chips button{flex:0 0 auto;font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.net .n-chips button[aria-pressed="true"]{background:var(--y);border-color:var(--y);color:var(--accent-ink)}
+.net .n-people{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.net .n-phead{display:flex;align-items:center;gap:12px;min-width:0}
+.net .n-phead>div:nth-child(2){min-width:0;flex:1}
+.net .n-phead b{display:block;font-size:15.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.net .n-phead small{color:var(--muted);font-size:12.5px;display:block}
+.net .n-acts{display:flex;gap:8px;flex-wrap:wrap}
+.net .n-acts .n-btn{flex:1}
+.net .n-bks{display:flex;flex-direction:column;gap:8px}
+.net .n-bk{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 14px}
+.net .n-bk .t{font-weight:600;overflow-wrap:anywhere}
+.net .n-bk .m{grid-row:1/span 2;grid-column:2;text-align:right;font-variant-numeric:tabular-nums}
+.net .n-bk .m b{display:block;font-size:17px;color:var(--y)}
+.net .n-bk .m small{color:var(--muted);font-size:11.5px}
+.net .n-bk .d{font-size:12.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.net .n-bk .a{grid-column:1/-1;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
+.net .n-empty{padding:24px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:14px}
+.net .tbl-wrap,.net .perks,.net .calc{background:var(--surface);border-color:var(--line)}
+.net .perks{padding:18px}
+.net th{background:var(--soft)}
+.net .badge{background:var(--y);color:var(--accent-ink)}
+.net .badge.off{background:var(--soft);color:var(--muted)}
+.net .bar>i{background:var(--y)}
+.net .calc .res{background:var(--soft)}
+.net .calc .res b{color:var(--y)}
+.net .calc input[type=range]{accent-color:var(--y)}
+.net .tag{margin-left:0}
+.net .n-form{display:grid;gap:14px;max-width:460px}
+.net .n-form label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+.net .n-form input:not([type=checkbox]){font:inherit;font-size:16px;color:var(--ink);background:#0A2523;border:1px solid var(--line);border-radius:12px;padding:11px 12px;width:100%}
+.net .n-form label.n-switch{flex-direction:row;align-items:center;justify-content:space-between;gap:14px;color:var(--ink);font-size:14px;cursor:pointer}
+.net .n-switch input{appearance:none;-webkit-appearance:none;width:46px;height:27px;flex:0 0 46px;border-radius:999px;background:var(--soft);border:1px solid var(--line);position:relative;cursor:pointer}
+.net .n-switch input::after{content:"";position:absolute;top:2px;left:2px;width:21px;height:21px;border-radius:50%;background:#fff;transition:transform .15s}
+.net .n-switch input:checked{background:var(--y)}
+.net .n-switch input:checked::after{transform:translateX(19px)}
+.net .n-msg{margin:0;font-size:14px}
+.net .n-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.net .n-safe{font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.net .n-modal{position:fixed;inset:0;z-index:20;background:rgba(2,12,11,.72);display:flex;align-items:center;justify-content:center;padding:16px}
+.net .n-modal .n-card{width:100%;max-width:440px;max-height:90vh;max-height:90dvh;overflow:auto}
+.net .n-contacts{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.net .n-contacts div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.net .n-contacts span{color:var(--muted)}
+.net .n-lead{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:12px}
+.net .n-hero{background:linear-gradient(145deg,#1B4A42,#0F2E2C 70%);border-color:#2E5E50}
+.net .n-kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--y);font-weight:700}
+.net .n-big{display:flex;align-items:center;gap:16px}
+.net .n-big b{font-family:var(--display);font-size:clamp(52px,9vw,72px);line-height:1;font-weight:600}
+.net .n-big span{color:var(--muted);font-size:14px}
+.net .n-hero .n-stats div{background:rgba(255,255,255,.06)}
+.net .n-invite{font-size:16px;min-height:52px}
+.net .n-invpanel{display:flex;flex-direction:column;gap:10px}
+.net .n-invpanel .qr{align-self:center;margin:0}
+.net .n-rankname{font-family:var(--display);font-size:30px;font-weight:600;color:var(--y);line-height:1.15}
+.net .n-ladder{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.net .n-ladder li{display:flex;justify-content:space-between;gap:10px;padding:7px 12px;border-radius:10px;color:var(--muted);font-size:13.5px}
+.net .n-ladder li.done{color:var(--ink)}
+.net .n-ladder li.now{background:var(--soft);color:var(--ink);font-weight:700;box-shadow:inset 3px 0 0 var(--y)}
+.net .n-chart{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.net .n-chart figcaption{font-size:13px;color:var(--muted)}
+.net .n-bars{display:flex;gap:2px;border-bottom:0}
+.net .n-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:6px;font:inherit;background:transparent;border:0;padding:0;color:var(--muted);cursor:default}
+.net .n-col .plot{display:block;position:relative;height:110px;margin-top:20px;border-bottom:1px solid var(--line)}
+.net .n-col i{position:absolute;left:50%;transform:translateX(-50%);bottom:0;width:min(28px,60%);background:var(--y);border-radius:4px 4px 0 0}
+.net .n-col .v{position:absolute;left:0;right:0;margin-bottom:2px;text-align:center;font-size:13px;font-weight:700;color:var(--ink);opacity:0}
+.net .n-col.last .v,.net .n-col:hover .v,.net .n-col:focus-visible .v,.net .n-col:focus .v{opacity:1}
+.net .n-col:hover i,.net .n-col:focus i{filter:brightness(1.12)}
+.net .n-col small{font-size:11.5px;text-align:center}
+.net .n-tbl summary{cursor:pointer;font-size:13px;color:var(--muted)}
+.net .n-tbl .tbl-wrap{margin-top:8px}
+.net .n-tile.wide{grid-column:1/-1}
+.net .n-top5{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.net .n-top5 li{display:flex;align-items:center;gap:12px;min-width:0}
+.net .n-top5 .pos{width:18px;flex:0 0 18px;text-align:center;color:var(--y);font-weight:700}
+.net .n-top5 .who{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.net .n-top5 .who b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.net .n-top5 .who small{color:var(--muted);font-size:12.5px}
+.net .n-top5 .bar{height:6px}
+.net .n-bottom{display:none}
+@media (max-width:900px){
+  .net{display:block}
+  .net .n-side{display:none}
+  .net .n-main{padding:14px 14px calc(92px + env(safe-area-inset-bottom));gap:14px}
+  .net .n-top{flex-wrap:wrap}
+  .net .n-top .n-logo{display:block;order:1}
+  .net .n-top .n-avbtn{display:grid;order:2;margin-left:auto;cursor:pointer;font:inherit;font-weight:700}
+  .net .n-top .meta{order:3;width:100%;margin:0;text-align:left;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+  .net .n-top .meta br{display:none}
+  .net .n-top #refresh{margin:0 0 0 auto}
+  .net .n-sub{margin:-8px 0 0}
+  .net .n-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .net .n-tile{padding:13px}
+  .net .n-two{grid-template-columns:1fr}
+  .net .n-lead{grid-template-columns:1fr}
+  .net .n-top5 li{flex-wrap:wrap}
+  .net .n-top5 li .n-btn{margin-left:30px;flex:1 0 calc(100% - 30px)}
+  .net .n-people{grid-template-columns:1fr}
+  .net .n-bottom{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:10;background:#0B2826;border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .net .n-bottom button{flex-direction:column;gap:3px;font-size:10.5px;font-weight:600;padding:5px 0;border-radius:12px;min-width:0}
+  .net .n-bottom button[aria-current="page"]{color:var(--y);background:var(--surface)}
+  .net .n-modal{align-items:flex-end;padding:0}
+  .net .n-modal .n-card{max-width:none;border-radius:20px 20px 0 0;padding-bottom:calc(18px + env(safe-area-inset-bottom))}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+</head><body><script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(a&&/^(tel:|https:\/\/wa\.me|https:\/\/t\.me\/(demo_|share))/.test(a.getAttribute('href'))){e.preventDefault();alert('Это демо: кнопка никому не пишет и не звонит.');}},true);</script><script>var DEMO={"org":{"ok":true,"admin":false,"partners":null,"managers":null,"agents":null,"team":[{"name":"Алина Смирнова","since":"2026-09-17","enabled":true,"line":1,"inviter":"","active":true,"isNew":false,"n":3,"n30":2,"pax":13,"mine":2450,"minePlan":1620,"invited":1,"phone":"+66 80 000 0001","tgUser":"@demo_alina","whatsapp":"","email":"","earned":2790,"earnedPlan":2420},{"name":"Тимур Ахметов","since":"2026-10-09","enabled":true,"line":2,"inviter":"Алина Смирнова","active":true,"isNew":false,"n":2,"n30":1,"pax":12,"mine":1190,"minePlan":2800,"invited":0,"phone":"+7 900 000 0002","tgUser":"@demo_timur","whatsapp":"","email":"","earned":850,"earnedPlan":2000},{"name":"Марат Исаев","since":"2026-10-17","enabled":true,"line":1,"inviter":"","active":true,"isNew":false,"n":1,"n30":1,"pax":2,"mine":200,"minePlan":0,"invited":1,"phone":"+7 900 000 0003","tgUser":"","whatsapp":"","email":"","earned":400,"earnedPlan":0},{"name":"Светлана Орлова","since":"2026-11-17","enabled":true,"line":1,"inviter":"","active":true,"isNew":true,"n":2,"n30":2,"pax":5,"mine":875,"minePlan":520,"invited":0,"phone":"+66 80 000 0004","tgUser":"@demo_sveta","whatsapp":"","email":"","earned":875,"earnedPlan":520},{"name":"Денис Ким","since":"2026-11-22","enabled":true,"line":2,"inviter":"Марат Исаев","active":false,"isNew":true,"n":0,"n30":0,"pax":0,"mine":0,"minePlan":0,"invited":0,"phone":"+66 80 000 0005","tgUser":"@demo_denis","whatsapp":"","email":"","earned":0,"earnedPlan":0}],"profile":{"phone":"+66 80 000 0000","tgUser":"@demo_rinat","whatsapp":"+66 80 000 0000","email":"demo@example.com","show":true,"since":""},"links":{"client":"https://sardortravel.com/?utm=ndemo00","reg":"https://sardortravel.com/cabinet/?r=ndemo00","personal":""},"materials":[],"exchanges":[{"d":"2026-11-21","no":"21","cur":"RUB","amt":60000,"com":520}],"partner":"Ринат","updated":"2026-11-26 12:00","today":"2026-11-26","leadsDaily":{},"rule":{"formula":"Здесь будут ваши условия вознаграждения.","note":"Это демонстрация: имена, брони и суммы выдуманы."},"payouts":{"2026-10":4000},"payoutList":[{"partner":"Ринат","month":"2026-10","amount":4000,"date":"2026-11-06","note":"","kind":"cash","ref":""}],"ptype":"network","leadStats":{},"leadsRaw":{},"plan":null,"rows":[{"v":"W0001","ed":"2026-10-07","bd":"2026-09-25","t":"Пхи-Пхи, 2 дня","ad":2,"ch":1,"own":1470,"ag":1470,"an":"Алина Смирнова","com":2940,"x":false,"p":"Ринат","a1":1470,"iv":"","a2":0},{"v":"W0002","ed":"2026-10-23","bd":"2026-10-17","t":"Симиланы","ad":4,"ch":0,"own":1190,"ag":1190,"an":"Тимур Ахметов","com":2380,"x":false,"p":"Ринат","a1":850,"iv":"Алина Смирнова","a2":340},{"v":"W0003","ed":"2026-11-05","bd":"2026-10-31","t":"Джеймс Бонд на катере","ad":2,"ch":2,"own":980,"ag":980,"an":"Алина Смирнова","com":1960,"x":false,"p":"Ринат","a1":980,"iv":"","a2":0},{"v":"W0004","ed":"2026-11-14","bd":"2026-11-08","t":"Краби за один день","ad":2,"ch":0,"own":200,"ag":400,"an":"Марат Исаев","com":600,"x":false,"p":"Ринат","a1":400,"iv":"","a2":0},{"v":"W0005","ed":"2026-11-20","bd":"2026-11-15","t":"Рачи и Корал","ad":3,"ch":1,"own":1050,"ag":1050,"an":"без агента","com":2100,"x":false,"p":"Ринат","a1":1050,"iv":"","a2":0},{"v":"W0006","ed":"2026-11-23","bd":"2026-11-18","t":"Пхи-Пхи рано утром","ad":2,"ch":0,"own":0,"ag":0,"an":"Тимур Ахметов","com":0,"x":true,"p":"Ринат","a1":0,"iv":"Алина Смирнова","a2":0},{"v":"W0007","ed":"2026-11-25","bd":"2026-11-19","t":"Симиланы","ad":2,"ch":0,"own":875,"ag":875,"an":"Светлана Орлова","com":1750,"x":false,"p":"Ринат","a1":875,"iv":"","a2":0},{"v":"W0008","ed":"2026-11-30","bd":"2026-11-21","t":"Панг Нга на закате","ad":5,"ch":1,"own":1620,"ag":1620,"an":"Алина Смирнова","com":3240,"x":false,"p":"Ринат","a1":1620,"iv":"","a2":0},{"v":"W0009","ed":"2026-12-05","bd":"2026-11-24","t":"Приватный катер на острова","ad":6,"ch":2,"own":2800,"ag":2800,"an":"Тимур Ахметов","com":5600,"x":false,"p":"Ринат","a1":2000,"iv":"Алина Смирнова","a2":800},{"v":"W0010","ed":"2026-12-11","bd":"2026-11-25","t":"Слоны и водопад","ad":2,"ch":1,"own":520,"ag":520,"an":"Светлана Орлова","com":1040,"x":false,"p":"Ринат","a1":520,"iv":"","a2":0}]},"agent":{"ok":true,"agent":true,"admin":false,"rank":{"month":"2026-11","sales":1,"pos":2,"of":5},"partners":null,"managers":null,"agents":null,"name":"Алина Смирнова","net":"Ринат","inviter":"","updated":"2026-11-26 12:00","today":"2026-11-26","rows":[{"v":"W0001","ed":"2026-10-07","bd":"2026-09-25","t":"Пхи-Пхи, 2 дня","ad":2,"ch":1,"x":false,"com":1470,"line":1,"full":true},{"v":"W0002","ed":"2026-10-23","bd":"2026-10-17","t":"Симиланы","ad":4,"ch":0,"x":false,"com":340,"line":2,"an":"Тимур Ахметов"},{"v":"W0003","ed":"2026-11-05","bd":"2026-10-31","t":"Джеймс Бонд на катере","ad":2,"ch":2,"x":false,"com":980,"line":1,"full":true},{"v":"W0006","ed":"2026-11-23","bd":"2026-11-18","t":"Пхи-Пхи рано утром","ad":2,"ch":0,"x":true,"com":0,"line":2,"an":"Тимур Ахметов"},{"v":"W0008","ed":"2026-11-30","bd":"2026-11-21","t":"Панг Нга на закате","ad":5,"ch":1,"x":false,"com":1620,"line":1,"full":true},{"v":"W0009","ed":"2026-12-05","bd":"2026-11-24","t":"Приватный катер на острова","ad":6,"ch":2,"x":false,"com":800,"line":2,"an":"Тимур Ахметов"}],"team":[{"name":"Тимур Ахметов","since":"2026-10-09","enabled":true,"line":1,"inviter":"Алина Смирнова","active":true,"isNew":false,"n":2,"n30":1,"pax":12,"mine":340,"minePlan":800,"invited":0,"phone":"+7 900 000 0002","tgUser":"@demo_timur","whatsapp":"","email":""}],"upline":{"name":"Ринат","org":true,"contacts":{"phone":"+66 80 000 0000","tgUser":"@demo_rinat","whatsapp":"+66 80 000 0000","email":"demo@example.com"}},"profile":{"phone":"+66 80 000 0001","tgUser":"@demo_alina","whatsapp":"","email":"","show":true,"since":""},"since":"2026-09-17","links":{"client":"https://sardortravel.com/?utm=ademo01","reg":"https://sardortravel.com/cabinet/?r=ademo01","personal":"https://sardortravel.com/cabinet/?k=xxxxxxxxxxxxxxxxxxxxxxxx"},"materials":[],"rule":{"formula":"Здесь будут ваши условия вознаграждения.","note":"Это демонстрация: имена, брони и суммы выдуманы."}}};
+(function(){var who=/who=agent/.test(location.search)?'agent':'org';
+function run(ok){return {withSuccessHandler:function(f){return run(f);},withFailureHandler:function(){return run(ok);},
+ getCabinet:function(){setTimeout(function(){ok(JSON.parse(JSON.stringify(DEMO[who])));},50);},
+ saveProfile:function(a,f){setTimeout(function(){ok({ok:true,profile:f});},300);}};}
+document.addEventListener('DOMContentLoaded',function(){var b=document.createElement('button');b.type='button';
+b.style.cssText='position:fixed;z-index:50;bottom:84px;right:10px;font:600 12px system-ui;background:#fff;color:#123C3A;border:0;border-radius:999px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer;white-space:nowrap';
+function label(){b.textContent=who==='org'?'Демо: вы — Ринат · показать агента':'Демо: вы — агент · показать Рината';}
+label();b.addEventListener('click',function(){who=who==='org'?'agent':'org';label();load(null);window.scrollTo(0,0);});document.body.appendChild(b);});
+window.google={script:{run:run(function(){}),url:{getLocation:function(cb){setTimeout(function(){cb({hash:'',parameter:{k:'demo'}});},0);}}}};
+})();</script>
+<div id="gate" class="gate" role="status"><div class="spin" aria-hidden="true"></div><div>Загружаем кабинет…</div></div>
+<div id="app" hidden></div>
+<template id="tpl-ov"><div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">Sardor Travel · партнёрский отдел</div>
+      <h1>Обзор отдела</h1>
+    </div>
+    <div class="meta"><span id="admin-slot"></span>Учёт на <b id="ov-clean"></b> · обновлено <span id="ov-updated"></span></div>
+  </header>
+  <nav class="mbar" id="ov-mbar" aria-label="Фильтр по месяцу"></nav>
+  <section class="kpis" id="ov-kpis" aria-label="Итоги отдела"></section>
+  <p class="hint" id="ov-note" style="margin:-16px 0 0"></p>
+  <section class="sec">
+    <div class="sec-head">
+      <h2>Начисления партнёрам по месяцам</h2>
+      <span class="hint">Месяц — по дате экскурсии. Наведите или нажмите на столбец — покажет разбивку.</span>
+    </div>
+    <div class="ov-legend" id="ov-legend"></div>
+    <div class="ov-chart" id="ov-chart"></div>
+  </section>
+  <section class="sec">
+    <div class="sec-head">
+      <h2>Партнёры</h2>
+      <span class="hint">Нажмите на партнёра, чтобы открыть его кабинет.</span>
+    </div>
+    <div class="tbl-wrap"><table id="ov-table"></table></div>
+  </section>
+  <section class="sec" id="ov-debt-sec" hidden>
+    <div class="sec-head"><h2 id="ov-debt-title">Долг Дуо</h2><span class="hint">Видно только вам. Плюс — Дуо должен нам; выплаты и займы считаются авансом в счёт его долей.</span></div>
+    <div class="kpis" id="ov-debt-kpis"></div>
+    <div class="tbl-wrap"><table id="ov-debt-table"></table></div>
+  </section>
+  <section class="sec" id="ov-attn-sec" hidden>
+    <div class="sec-head"><h2>Требует внимания</h2></div>
+    <ul class="ov-attn" id="ov-attn"></ul>
+  </section>
+</div></template>
+<template id="tpl"><div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">Sardor Travel · кабинет партнёра</div>
+      <h1 id="pname"></h1>
+    </div>
+    <div class="meta"><span id="admin-slot"></span>Учёт на <b id="clean"></b> · обновлено <span id="updated"></span><br><span id="period"></span></div>
+  </header>
+
+  <div id="dplan" hidden></div>
+  <nav class="mbar" id="mbar" aria-label="Фильтр по месяцу"></nav>
+  <section class="kpis" id="kpis" aria-label="Итоги"></section>
+  <p class="hint" id="pre-note" style="margin:-16px 0 0"></p>
+
+  <section class="sec" id="perks-sec" data-tab="Обзор" hidden><div id="perks"></div></section>
+  <section class="sec" id="today-sec" data-tab="Обзор" hidden>
+    <div class="sec-head">
+      <h2 id="today-title">Сегодня</h2>
+      <span class="daypick">
+        <button type="button" id="day-prev" aria-label="Предыдущий день">‹</button>
+        <input type="date" id="day-input" aria-label="Выбрать день">
+        <button type="button" id="day-next" aria-label="Следующий день">›</button>
+        <button type="button" id="day-today">Сегодня</button>
+      </span>
+    </div>
+    <div class="kpis" id="today-kpis" aria-label="Итоги за сегодня"></div>
+    <div class="today-grid">
+      <div><h3>Продано сегодня · по дате оформления</h3><div class="tbl-wrap"><table id="today-sold"></table></div></div>
+      <div><h3>Экскурсии сегодня · по дате экскурсии</h3><div class="tbl-wrap"><table id="today-tours"></table></div></div>
+    </div>
+  </section>
+
+  <section class="sec" id="leads-sec" data-tab="Обзор" hidden>
+    <div class="sec-head">
+      <h2>Ваши лиды → наши продажи → ваши деньги</h2>
+      <span class="hint">Лиды — из вашего Instagram-бота (ChatPlace). Клиенты и деньги — по дате брони.</span>
+    </div>
+    <div id="leads"></div>
+  </section>
+
+  <section class="sec" id="pay-sec" data-tab="Выплаты" hidden>
+    <div class="sec-head"><h2>Выплаты</h2></div>
+    <div id="pays"></div>
+  </section>
+
+  <section class="sec" id="calc-sec" data-tab="Инструменты" hidden><div class="sec-head"><h2>Калькулятор дохода</h2><span class="hint">Сколько вы заработаете, если приведёте столько гостей.</span></div><div id="calc"></div></section>
+
+  <section class="sec" id="ex-sec" data-tab="Выплаты" hidden>
+    <div class="sec-head"><h2>Обмен валют · Sonya Exchange</h2><span class="hint">Ваша доля — 25% с каждого выполненного обмена ваших клиентов. Считается отдельно от экскурсий.</span></div>
+    <div id="ex"></div>
+  </section>
+
+  <section class="sec" data-tab="Брони">
+    <div class="sec-head">
+      <h2>Начисления по месяцам</h2>
+      <span class="hint">Месяц считается по дате экскурсии. «Мест» — сумма по всем ваучерам: один гость на трёх экскурсиях даёт 3 места. Нажмите на месяц, чтобы увидеть его брони.</span>
+    </div>
+    <div class="tbl-wrap"><table id="months"></table></div>
+  </section>
+
+  <section class="sec" data-tab="Брони">
+    <div class="sec-head">
+      <h2 id="bk-title">Брони</h2>
+      <div class="controls">
+        <label class="hint" for="f-month">Месяц</label>
+        <select id="f-month"></select>
+        <div class="seg" role="group" aria-label="Статус экскурсии">
+          <button type="button" data-st="all" aria-pressed="true">Все</button>
+          <button type="button" data-st="done" aria-pressed="false">Прошли</button>
+          <button type="button" data-st="plan" aria-pressed="false">Предстоят</button>
+        </div>
+        <input type="search" id="f-q" placeholder="Ваучер, клиент, тур" aria-label="Поиск по броням">
+      </div>
+    </div>
+    <p class="hint" id="bk-hint" style="margin:0 0 8px"></p>
+    <div class="tbl-wrap" id="bk-wrap"><table id="bookings"></table></div>
+  </section>
+
+  <section class="sec" data-tab="Условия">
+    <h2>Условия и материалы</h2>
+    <div class="two">
+      <div class="panel">
+        <h3>Как считается ваше вознаграждение</h3>
+        <div class="formula" id="rule-formula"></div>
+        <p class="hint" id="rule-note"></p>
+      </div>
+      <div class="panel">
+        <h3>Материалы и контакты</h3>
+        <ul>
+          <li>Каталог экскурсий и цены для клиентов: <a href="https://sardortravel.com" target="_blank" rel="noopener">sardortravel.com</a></li>
+          <li>Telegram-канал с программами и отзывами: <a href="https://t.me/sardortravel" target="_blank" rel="noopener">@sardortravel</a></li>
+          <li>Передавая клиента, называйте менеджеру своё имя партнёра, чтобы бронь попала в ваш кабинет.</li>
+          <li>Если бронь не отображается или сумма не сходится, напишите Сардору номер ваучера.</li>
+        </ul>
+        <ul id="mat-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+</template>
+<template id="tpl-mgr"><div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">Sardor Travel · кабинет менеджера</div>
+      <h1 id="mname"></h1>
+    </div>
+    <div class="meta"><span id="admin-slot"></span>Учёт на <b id="clean"></b> · обновлено <span id="updated"></span></div>
+  </header>
+  <div id="head" hidden></div>
+  <section class="kpis" id="mkpis" aria-label="Итоги"></section>
+  <p class="hint" id="mladder" hidden></p>
+  <section class="sec" id="mhold-sec" data-tab="Выплаты" hidden>
+    <div class="sec-head"><h2>Удержание долга</h2></div>
+    <div id="mhold"></div>
+  </section>
+  <section class="sec" data-tab="Брони">
+    <div class="sec-head"><h2>Начисления по месяцам</h2><span class="hint">Месяц — по дате тура. Нажмите на месяц, чтобы увидеть брони.</span></div>
+    <div class="tbl-wrap"><table id="mmonths"></table></div>
+  </section>
+  <section class="sec" data-tab="Выплаты">
+    <div class="sec-head"><h2>Выплаты</h2></div>
+    <div id="mpays"></div>
+  </section>
+  <section class="sec" data-tab="Брони">
+    <div class="sec-head"><h2 id="mbk-title">Брони</h2>
+      <div class="controls"><label class="hint" for="mf-month">Месяц</label><select id="mf-month"></select></div>
+    </div>
+    <div class="tbl-wrap"><table id="mbookings"></table></div>
+  </section>
+  <section class="sec" id="mex-sec" data-tab="Выплаты" hidden>
+    <div class="sec-head"><h2>Обмен валют · Sonya Exchange</h2><span class="hint">Ваша доля — 10% с каждого выполненного обмена ваших клиентов. Считается отдельно от комиссии за брони.</span></div>
+    <div id="mex"></div>
+  </section>
+  <section class="sec" id="mplan-sec" data-tab="Брони" hidden>
+    <div class="sec-head"><h2>Брони наперёд</h2><span class="hint">Ожидаемая комиссия по будущим турам: начислим после тура.</span></div>
+    <div class="tbl-wrap"><table id="mplan"></table></div>
+  </section>
+  <div class="foot">Показываем только вашу комиссию. Данные из учёта Sardor Travel, обновляются каждые 10 минут. Если сумма не сходится, напишите Сардору номер ваучера.</div>
+</div></template>
+<template id="tpl-net"><div class="net">
+  <aside class="n-side">
+    <div class="n-logo" role="img" aria-label="Sardor Travel"></div>
+    <p class="n-tag">Партнёрская сеть</p>
+    <nav class="n-nav" id="n-nav" aria-label="Разделы кабинета"></nav>
+    <div class="n-me" id="n-me"></div>
+  </aside>
+  <main class="n-main">
+    <header class="n-top">
+      <div class="n-logo" role="img" aria-label="Sardor Travel"></div>
+      <button type="button" class="n-av n-avbtn" id="n-avatar" data-go="profile" aria-label="Мой профиль"></button>
+      <div class="meta"><span id="admin-slot"></span>Обновлено <span id="updated"></span></div>
+    </header>
+    <h1 id="n-title"></h1>
+    <p class="n-sub" id="n-sub"></p>
+
+    <div class="n-page" data-page="home">
+      <div class="n-lead">
+        <section class="n-card n-hero" id="n-hero" aria-label="Ваша сеть"></section>
+        <section class="n-card" id="n-rank" aria-label="Статус"></section>
+      </div>
+      <section class="n-card" id="n-growth" hidden></section>
+      <section class="n-tiles" id="n-tiles" aria-label="Деньги"></section>
+      <section class="n-card" id="n-topsec" hidden></section>
+      <section id="nperks-sec" hidden><div id="nperks"></div></section>
+      <section class="n-card" id="n-lastsec"><div class="n-row"><h2>Последние брони</h2><button type="button" class="n-btn ghost" data-go="books">Все брони</button></div><div class="n-bks" id="n-last"></div></section>
+      <section class="n-card" id="n-paysec" hidden><h2>Выплаты</h2><div id="n-pays"></div></section>
+      <section class="n-card" id="n-exsec" hidden><h2>Обмен валют · Sonya Exchange</h2><div id="n-ex"></div></section>
+      <div class="n-safe">Вы видите только свои данные. Суммы — из учёта Sardor Travel, обновляются каждые 10 минут.</div>
+    </div>
+
+    <div class="n-page" data-page="books">
+      <div class="n-row">
+        <select id="nf-month" aria-label="Месяц"></select>
+        <div class="n-chips" id="n-st" role="group" aria-label="Статус экскурсии">
+          <button type="button" data-st="all">Все</button><button type="button" data-st="done">Прошли</button><button type="button" data-st="plan">Предстоят</button>
+        </div>
+      </div>
+      <p class="hint" id="n-bksum" style="margin:0"></p>
+      <div class="n-bks" id="n-books"></div>
+      <section class="n-card"><h2>По месяцам</h2><div class="tbl-wrap"><table id="n-months"></table></div><p class="hint" style="margin:0">Месяц — по дате экскурсии. Отмена без штрафа — 0.</p></section>
+    </div>
+
+    <div class="n-page" data-page="tools">
+      <div class="n-two" id="n-links"></div>
+      <section class="sec" id="ncalc-sec" hidden><div class="sec-head"><h2 class="n-h">Калькулятор дохода</h2><span class="hint">Сколько вы заработаете, если приведёте столько гостей.</span></div><div id="ncalc"></div></section>
+    </div>
+
+    <div class="n-page" data-page="team">
+      <div class="n-chips" id="n-filter" role="group" aria-label="Кого показать"></div>
+      <p class="hint" style="margin:0">«Активные» — есть продажа за последние 30 дней. «Новые» — в сети меньше 30 дней.</p>
+      <div class="n-people" id="n-people"></div>
+    </div>
+
+    <div class="n-page" data-page="terms">
+      <section class="n-card"><h2>Как считается ваше вознаграждение</h2><div class="formula" id="n-formula"></div><p class="hint" id="n-note" style="margin:0"></p></section>
+      <section class="n-card"><h2>Материалы и контакты</h2><ul class="n-list" id="n-mats"></ul></section>
+    </div>
+
+    <div class="n-page" data-page="profile">
+      <section class="n-card" id="n-upline" hidden></section>
+      <section class="n-card"><h2>Мои контакты</h2><p class="hint" id="n-who" style="margin:0"></p>
+        <form class="n-form" id="n-form" novalidate>
+          <label>Телефон<input name="phone" type="tel" inputmode="tel" maxlength="25" autocomplete="tel"></label>
+          <label>Telegram<input name="tgUser" maxlength="40" placeholder="@ник" autocapitalize="off" autocorrect="off"></label>
+          <label>WhatsApp<input name="whatsapp" type="tel" inputmode="tel" maxlength="25" placeholder="+66 …"></label>
+          <label>Email<input name="email" type="email" maxlength="120" autocomplete="email" autocapitalize="off"></label>
+          <label class="n-switch"><span>Показывать мои контакты первой линии</span><input type="checkbox" name="show" role="switch"></label>
+          <button type="submit" class="n-btn">Сохранить</button>
+          <p class="n-msg" id="n-msg" role="status"></p>
+        </form>
+      </section>
+    </div>
+  </main>
+  <nav class="n-bottom" id="n-bottom" aria-label="Разделы кабинета"></nav>
+  <div class="n-modal" id="n-modal" role="dialog" aria-modal="true" hidden></div>
+</div></template>
+<script>
+/* Страница на сайте (sardortravel.com/cabinet/): google.script.run нет — те же вызовы идут в doPost скрипта.
+   В Apps Script (старый адрес /exec) этот блок ничего не делает. */
+if(!(window.google&&window.google.script)){(function(){
+  var EXEC='https://script.google.com/macros/s/AKfycbytfyC0AGk4D5-R1q918kkn2AkioTCZ7ljE38A6XnK91dIl09j28zIBDnnUdLTOGemm/exec';
+  function call(fn,args,ok,fail){
+    fetch(EXEC,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn:fn,args:args})})
+      .then(function(r){return r.json();})
+      .then(function(j){if(!j||j.error){if(fail)fail(new Error((j&&j.error)||'server'));}else if(ok)ok(j.result);})
+      .catch(function(e){if(fail)fail(e);});
+  }
+  function runner(ok,fail){
+    return {
+      withSuccessHandler:function(f){return runner(f,fail);},
+      withFailureHandler:function(f){return runner(ok,f);},
+      getCabinet:function(){call('getCabinet',[].slice.call(arguments),ok,fail);},
+      registerAgent:function(){call('registerAgent',[].slice.call(arguments),ok,fail);},
+      saveProfile:function(){call('saveProfile',[].slice.call(arguments),ok,fail);}
+    };
+  }
+  var q={};location.search.slice(1).split('&').forEach(function(kv){if(!kv)return;var i=kv.indexOf('=');try{q[decodeURIComponent(i<0?kv:kv.slice(0,i))]=decodeURIComponent((i<0?'':kv.slice(i+1)).replace(/\+/g,' '));}catch(e){}});
+  window.google={script:{run:runner(null,null),url:{getLocation:function(cb){setTimeout(function(){cb({hash:location.hash,parameter:q});},0);}}}};
+  try{var tg=window.Telegram&&Telegram.WebApp;if(tg){tg.ready();tg.expand();}}catch(e){}
+})();}
+</script>
+<script>
+function matHtml(M){
+  return (M||[]).filter(function(m){return /^https:\/\//i.test(m.u);}).map(function(m){return '<li><a href="'+esc2(m.u)+'" target="_blank" rel="noopener">'+esc2(m.t)+'</a></li>';}).join('');
+}
+document.addEventListener('click',function(e){
+  var b=e.target&&e.target.closest&&e.target.closest('button.copy');if(!b)return;
+  var t=b.getAttribute('data-copy');
+  try{navigator.clipboard.writeText(t).then(function(){b.textContent='Скопировано';},function(){b.textContent='Выделите и скопируйте';});}catch(_){b.textContent='Выделите и скопируйте';}
+});
+/* ===== Вкладки ===== */
+var TAB_STATE={}, TAB_ORDER=['Обзор','Брони','Клиенты','Выплаты','Инструменты','Условия'];
+function tabify(root,key){
+  var secs=[].slice.call(root.querySelectorAll('[data-tab]'));
+  var names=TAB_ORDER.filter(function(n){return secs.some(function(s){return s.getAttribute('data-tab')===n&&!s.hidden;});});
+  if(names.length<2)return;
+  var nav=document.createElement('nav');nav.className='tabs';nav.setAttribute('role','tablist');nav.setAttribute('aria-label','Разделы кабинета');
+  var cur=names.indexOf(TAB_STATE[key])>=0?TAB_STATE[key]:names[0];
+  function sel(n){TAB_STATE[key]=n;secs.forEach(function(x){x.classList.toggle('tab-off',x.getAttribute('data-tab')!==n);});
+    [].forEach.call(nav.children,function(b){b.setAttribute('aria-selected',String(b.dataset.t===n));});}
+  names.forEach(function(n){var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.dataset.t=n;b.textContent=n;
+    b.addEventListener('click',function(){sel(n);if(nav.getBoundingClientRect().top<0)nav.scrollIntoView({block:'start'});});nav.appendChild(b);});
+  var first=secs[0];
+  first.parentNode.insertBefore(nav,first);
+  sel(cur);
+}
+/* ===== Прогресс ===== */
+function barHtml(cur,max){var p=max>0?Math.max(0,Math.min(100,cur/max*100)):0;return '<div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="'+max+'" aria-valuenow="'+cur+'"><i style="width:'+p.toFixed(1)+'%"></i></div>';}
+function nfmt(n){return (Math.round(n||0)).toLocaleString('ru-RU').replace(/,/g,' ');}
+function plural2(n,f){n=Math.abs(n)%100;var n1=n%10;if(n>10&&n<20)return f[2];if(n1>1&&n1<5)return f[1];if(n1===1)return f[0];return f[2];}
+/* Значки и прогресс партнёра/агента: по неотменённым броням с долей > 0 (свои продажи) */
+var BADGES=[[1,'Первая продажа'],[10,'10 гостей'],[25,'25 гостей'],[50,'50 гостей'],[100,'100 гостей'],[250,'250 гостей'],[500,'500 гостей']];
+function perksInto(secId,boxId,rows,today,rank){
+  var sold=rows.filter(function(r){return !r.x&&(r.com||0)>0&&r.line!==2;});
+  var guests=sold.reduce(function(a,r){return a+(r.ad||0)+(r.ch||0);},0), n=sold.length;
+  var curK=today.slice(0,7), byM={};
+  sold.forEach(function(r){var k=(r.bd||r.ed||'').slice(0,7);if(k)byM[k]=(byM[k]||0)+(r.ad||0)+(r.ch||0);});
+  var best=Object.keys(byM).filter(function(k){return k<curK;}).reduce(function(a,k){return Math.max(a,byM[k]);},0), curG=byM[curK]||0;
+  var got=BADGES.filter(function(b){return b[0]===1?n>=1:guests>=b[0];}), next=BADGES.filter(function(b){return b[0]>1&&guests<b[0];})[0];
+  var h='<div class="perks"><h3>Ваши достижения</h3><div class="badges">'
+    +got.map(function(b){return '<span class="badge">★ '+b[1]+'</span>';}).join('')
+    +(curG>0&&best>0&&curG>=best?'<span class="badge">🔥 Рекорд месяца</span>':'')
+    +(next?'<span class="badge off">'+next[1]+'</span>':'')+'</div>';
+  if(!n)h+='<p class="hint" style="margin:0">Первая продажа откроет первый значок. Ссылка для клиентов — во вкладке «Инструменты».</p>';
+  if(next&&n)h+='<div class="prog"><span class="t">До значка «'+next[1]+'»: <b>'+nfmt(guests)+' из '+nfmt(next[0])+'</b> гостей</span>'+barHtml(guests,next[0])+'</div>';
+  if(best>0)h+='<div class="prog"><span class="t">Этот месяц: <b>'+nfmt(curG)+'</b> '+plural2(curG,['гость','гостя','гостей'])+' · ваш лучший месяц — '+nfmt(best)+'</span>'+barHtml(curG,best)+'</div>';
+  if(rank&&rank.of>1)h+='<p class="hint" style="margin:0">В этом месяце по продажам вы на <b>'+rank.pos+'-м месте</b> из '+rank.of+' агентов сети.</p>';
+  h+='</div>';
+  document.getElementById(boxId).innerHTML=h;document.getElementById(secId).hidden=false;
+}
+/* Калькулятор: по ставкам (за гостя / гидроцикл) или по вашему среднему доходу с гостя */
+function calcInto(secId,boxId,rule,rows){
+  var box=document.getElementById(boxId), per=rule&&rule.perPax;
+  var sold=rows.filter(function(r){return !r.x&&(r.com||0)>0&&r.line!==2;});
+  var g=sold.reduce(function(a,r){return a+(r.ad||0)+(r.ch||0);},0), c=sold.reduce(function(a,r){return a+(r.com||0);},0);
+  var avg=g?c/g:0;
+  if(!per&&!avg){document.getElementById(secId).hidden=true;return;}
+  box.innerHTML='<div class="calc">'
+    +'<label>Гостей в месяц: <b data-o="g">20</b><input type="range" min="0" max="200" value="20" data-i="g" aria-label="Гостей в месяц"></label>'
+    +(per&&rule.perJet?'<label>Из них на гидроциклах: <b data-o="j">0</b><input type="range" min="0" max="100" value="0" data-i="j" aria-label="Гидроциклов"></label>':'')
+    +'<div class="res">Вы заработаете ≈<b data-o="sum">0 ฿</b><span data-o="how" style="font-size:13px;opacity:.8"></span></div></div>';
+  function upd(){var gi=+box.querySelector('[data-i="g"]').value, je=box.querySelector('[data-i="j"]'), ji=je?Math.min(+je.value,gi):0;
+    box.querySelector('[data-o="g"]').textContent=gi;if(je)box.querySelector('[data-o="j"]').textContent=ji;
+    var sum=per?(gi-ji)*rule.perPax+ji*(rule.perJet||0):gi*avg;
+    box.querySelector('[data-o="sum"]').textContent=nfmt(sum)+' ฿ в месяц';
+    box.querySelector('[data-o="how"]').textContent=per?((gi-ji)+' × '+nfmt(rule.perPax)+' ฿'+(ji?' + '+ji+' × '+nfmt(rule.perJet)+' ฿ за гидроцикл':'')):('по вашему среднему доходу ≈ '+nfmt(avg)+' ฿ с гостя по прошлым броням');}
+  [].forEach.call(box.querySelectorAll('input'),function(i){i.addEventListener('input',upd);});
+  upd();document.getElementById(secId).hidden=false;
+}
+document.addEventListener('click',function(e){
+  var b=e.target&&e.target.closest&&e.target.closest('button.qr-btn');if(!b)return;
+  var box=b.parentNode.nextElementSibling;if(!box)return;
+  if(!box.hidden){box.hidden=true;return;}
+  if(typeof qrcode!=='function'){b.textContent='QR недоступен';return;}
+  var q=qrcode(0,'M');q.addData(b.getAttribute('data-qr'));q.make();box.innerHTML=q.createSvgTag({cellSize:4,margin:2});box.hidden=false;
+});
+/* ===== Кабинет сети: организатор (роль «org») и агент. Выручку и маржу сервер не присылает. ===== */
+var NET_VIEW='home', NET_FILTER='all', NET_ST='all', NET_DIRTY=false, NET_WHO='';
+/* Статусы по числу активных агентов (продажа за 30 дней): организатор — вся сеть, агент — первая линия.
+   Только показывают рост, на выплаты не влияют. Названия и пороги — предложение 26.11, ждут решения Сардора. */
+var NET_RANKS=[[0,'Старт'],[1,'Наставник'],[3,'Лидер'],[10,'Мастер'],[25,'Топ-лидер']];
+var NET_PAGES=[['home','Обзор','<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>'],
+  ['books','Брони','<path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/>'],
+  ['tools','Инструменты','<path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/>'],
+  ['team','Структура','<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4.5a3.5 3.5 0 010 7M18 14a6.5 6.5 0 013.5 6"/>'],
+  ['terms','Условия','<path d="M6 3h9l4 4v14H6zM9 12h7M9 16h7"/>'],
+  ['profile','Мой профиль','<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>']];
+function renderNet(D){
+  var RU_M=['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  var org=!D.agent, name=org?D.partner:D.name, today=D.today, curK=today.slice(0,7), esc=esc2;
+  var $=function(id){return document.getElementById(id);};
+  var root=document.querySelector('.net');
+  var thb=function(n){return nfmt(n)+' ฿';};
+  var dShort=function(s){return s?s.slice(8,10)+'.'+s.slice(5,7)+'.'+s.slice(2,4):'—';};
+  var mLabel=function(k){return RU_M[+k.slice(5)-1]+' '+k.slice(0,4);};
+  var cnt=function(n,f){return nfmt(n)+' '+plural2(n,f);};
+  var BK=['бронь','брони','броней'], GUEST=['гость','гостя','гостей'];
+  var initials=function(s){return String(s||'?').split(/\s+/).filter(Boolean).slice(0,2).map(function(w){return w.charAt(0).toUpperCase();}).join('');};
+  var icon=function(p){return '<svg class="i" viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>';};
+  if(NET_WHO!==name){NET_WHO=name;NET_VIEW='home';NET_FILTER='all';NET_ST='all';}
+  NET_DIRTY=false;
+  document.title='Демо кабинета сети · Sardor Travel';
+  $('updated').textContent=D.updated?dShort(D.updated.slice(0,10))+' '+D.updated.slice(11):'—';
+
+  var rows=(D.rows||[]).map(function(r){return Object.assign({},r,{mk:(r.ed||r.bd||'').slice(0,7),done:(r.ed||'')<=today});});
+  var team=D.team||[];
+  var sum=function(list,f){return list.reduce(function(a,r){return a+(f(r)||0);},0);};
+  var done=rows.filter(function(r){return r.done;}), plan=rows.filter(function(r){return !r.done;});
+  var month=done.filter(function(r){return r.mk===curK;});
+  var com=function(r){return r.com;}, own=function(r){return r.own;}, ag=function(r){return r.ag;};
+  var payouts=D.payouts||{}, paid=Object.keys(payouts).reduce(function(a,k){return a+(payouts[k]||0);},0);
+
+  /* — меню — */
+  var me=org?'Организатор сети':'Агент сети '+D.net;
+  $('n-nav').innerHTML=NET_PAGES.map(function(p){return '<button type="button" data-go="'+p[0]+'">'+icon(p[2])+'<span>'+p[1]+'</span></button>';}).join('');
+  $('n-bottom').innerHTML=NET_PAGES.slice(0,5).map(function(p){return '<button type="button" data-go="'+p[0]+'">'+icon(p[2])+'<span>'+p[1]+'</span></button>';}).join('');
+  $('n-me').innerHTML='<div class="n-av">'+esc(initials(name))+'</div><div style="min-width:0"><b>'+esc(name)+'</b><span>'+esc(me)+'</span></div>';
+  $('n-avatar').textContent=initials(name);
+  var since=org?((D.profile||{}).since||''):(D.since||'');
+  function go(v,scroll){
+    NET_VIEW=v;
+    root.querySelectorAll('[data-page]').forEach(function(x){x.hidden=x.getAttribute('data-page')!==v;});
+    root.querySelectorAll('.n-nav [data-go],.n-bottom [data-go]').forEach(function(b){if(b.getAttribute('data-go')===v)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
+    var title=NET_PAGES.filter(function(p){return p[0]===v;})[0][1];
+    $('n-title').textContent=v==='home'?'Добро пожаловать, '+name:(v==='team'?(org?'Структура сети':'Структура · 1 линия'):title);
+    var sub=v==='home'?me+(since?' · с нами с '+dShort(since):'')
+      :v==='team'?(org?cnt(team.length,['агент','агента','агентов'])+' в сети':'Пригласили вы: '+team.length+' · с их продаж вам 10%'):'';
+    $('n-sub').textContent=sub;$('n-sub').hidden=!sub;
+    if(scroll)window.scrollTo(0,0);
+  }
+  root.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('[data-go]');if(b){e.preventDefault();go(b.getAttribute('data-go'),true);}});
+
+  /* — обзор — */
+  var money=['<path d="M3 7h18v11H3z"/><path d="M3 11h18M16 15h2"/>','<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>','<path d="M4 6h16v14H4zM4 10h16M8 3v5M16 3v5"/>','<path d="M4 19V9M10 19V5M16 19v-7M21 19H3"/>'];
+  var split=function(list,approx){return 'ваша '+(approx?'≈ ':'')+thb(sum(list,own))+' · агентам '+(approx?'≈ ':'')+thb(sum(list,ag));};
+  /* — сеть: главный блок — */
+  var members=team.filter(function(m){return m.enabled;});
+  var back=function(n){return new Date(Date.parse(today+'T00:00:00Z')-n*86400000).toISOString().slice(0,10);};
+  var newSince=function(n){var from=back(n);return members.filter(function(m){return m.since&&m.since>=from;}).length;};
+  var nAct=members.filter(function(m){return m.active;}).length;
+  var l1=members.filter(function(m){return m.line===1;}).length;
+  var L=D.links||{};
+  $('n-hero').innerHTML='<span class="n-kicker">'+(org?'Ваша сеть':'Ваша команда')+'</span>'
+    +'<div class="n-big"><b>'+members.length+'</b><span>'+plural2(members.length,['агент','агента','агентов'])+(org?'<br>1 линия: '+l1+' · 2 линия: '+(members.length-l1):'<br>в вашей первой линии')+'</span></div>'
+    +'<div class="n-stats"><div><b>+'+newSince(7)+'</b><span>за неделю</span></div><div><b>+'+newSince(30)+'</b><span>за месяц</span></div><div><b>'+nAct+'</b><span>активные</span></div></div>'
+    +(L.reg?'<button type="button" class="n-btn n-invite" id="n-invite" aria-expanded="false" aria-controls="n-invpanel">+ Пригласить агента</button>'
+      +'<div id="n-invpanel" class="n-invpanel" hidden><p class="hint" style="margin:0">'+(org?'Кто зарегистрируется по ссылке, попадёт в вашу первую линию.':'Кто зарегистрируется по ссылке, попадёт в вашу команду. С его продаж вам 10%.')+'</p><code class="n-url">'+esc(L.reg)+'</code>'
+      +'<div class="n-acts"><button type="button" class="n-btn copy" data-copy="'+esc(L.reg)+'">Копировать</button><a class="n-btn ghost" target="_blank" rel="noopener" href="https://t.me/share/url?url='+encodeURIComponent(L.reg)+'&text='+encodeURIComponent('Приглашаю в команду агентов Sardor Travel')+'">Отправить в Telegram</a></div><div class="qr" id="n-invqr" hidden></div></div>':'')
+    +'<button type="button" class="n-btn ghost" data-go="team">Открыть структуру</button>';
+  var inv=$('n-invite');
+  if(inv)inv.addEventListener('click',function(){
+    var p=$('n-invpanel'), q=$('n-invqr');p.hidden=!p.hidden;inv.setAttribute('aria-expanded',String(!p.hidden));
+    if(!p.hidden&&typeof qrcode==='function'&&!q.innerHTML){var c=qrcode(0,'M');c.addData(L.reg);c.make();q.innerHTML=c.createSvgTag({cellSize:4,margin:2});q.hidden=false;}
+  });
+
+  /* — статус по числу активных агентов — */
+  var cur=0;NET_RANKS.forEach(function(r,i){if(nAct>=r[0])cur=i;});
+  var next=NET_RANKS[cur+1], need=next?next[0]-nAct:0;
+  $('n-rank').innerHTML='<span class="n-kicker">Ваш статус</span><div class="n-rankname">'+NET_RANKS[cur][1]+'</div>'
+    +(next?'<div class="prog"><span class="t">До статуса «'+next[1]+'»: ещё <b>'+need+'</b> '+plural2(need,['активный агент','активных агента','активных агентов'])+'</span>'+barHtml(nAct,next[0])+'</div>':'<p style="margin:0">Это высший статус.</p>')
+    +'<ol class="n-ladder">'+NET_RANKS.map(function(r,i){return '<li class="'+(i<cur?'done':i===cur?'now':'')+'"'+(i===cur?' aria-current="step"':'')+'><span>'+(i<=cur?'★':'☆')+' '+r[1]+'</span><small>'+(r[0]?'от '+r[0]+' акт.':'начало')+'</small></li>';}).join('')+'</ol>'
+    +'<p class="hint" style="margin:0">Статус показывает, сколько агентов продаёт. На выплаты пока не влияет.</p>';
+
+  /* — рост: последние месяцы (до 6, не меньше 3) — */
+  var teamRows=rows.filter(function(r){return !r.x&&(org?(r.an||'без агента')!=='без агента':r.line===2);});
+  var soldMonth=function(r){return String(r.bd||r.ed||'').slice(0,7);};
+  var shift=function(k,n){var d=new Date(Date.UTC(+k.slice(0,4),+k.slice(5)-1+n,1));return d.toISOString().slice(0,7);};
+  var firstK=members.map(function(m){return String(m.since||'').slice(0,7);}).concat(teamRows.map(soldMonth)).filter(Boolean).sort()[0];
+  if(members.length&&firstK){
+    var from=firstK<shift(curK,-5)?shift(curK,-5):(firstK>shift(curK,-2)?shift(curK,-2):firstK), ks=[];
+    for(var k=from;k<=curK;k=shift(k,1))ks.push(k);
+    var size=ks.map(function(k){return members.filter(function(m){return String(m.since||'').slice(0,7)<=k;}).length;});
+    var sales=ks.map(function(k){return teamRows.filter(function(r){return soldMonth(r)===k;}).length;});
+    var chart=function(title,vals,unit){var mx=Math.max.apply(null,vals.concat(1));
+      return '<figure class="n-chart"><figcaption>'+title+'</figcaption><div class="n-bars">'+ks.map(function(k,i){
+        var m=RU_M[+k.slice(5)-1], tip=m+': '+cnt(vals[i],unit);
+        return '<button type="button" class="n-col'+(i===ks.length-1?' last':'')+'" title="'+tip+'" aria-label="'+tip+'"><span class="plot"><span class="v" style="bottom:'+(vals[i]/mx*100)+'%">'+vals[i]+'</span><i style="height:'+(vals[i]/mx*100)+'%"></i></span><small>'+m.slice(0,3)+'</small></button>';}).join('')+'</div></figure>';};
+    $('n-growth').hidden=false;
+    $('n-growth').innerHTML='<h2>'+(org?'Рост сети':'Рост команды')+'</h2><div class="n-two">'+chart('Агентов в '+(org?'сети':'команде'),size,['агент','агента','агентов'])+chart(org?'Продажи агентов, броней в месяц':'Продажи команды, броней в месяц',sales,BK)+'</div>'
+      +'<details class="n-tbl"><summary>Показать таблицей</summary><div class="tbl-wrap"><table><thead><tr><th>Месяц</th><th class="r">Агентов</th><th class="r">Броней</th></tr></thead><tbody>'+ks.map(function(k,i){return '<tr><td>'+mLabel(k)+'</td><td class="r">'+size[i]+'</td><td class="r">'+sales[i]+'</td></tr>';}).join('')+'</tbody></table></div></details>';
+  }
+
+  /* — деньги — */
+  var fromTeam=function(r){return org?(r.an||'без агента')!=='без агента':r.line===2;};
+  var mine=org?own:com;
+  var netDone=sum(done.filter(fromTeam),mine), netPlan=sum(plan.filter(fromTeam),mine);
+  var wide=['Заработок с сети',thb(netDone),(org?'ваша доля с продаж агентов':'10% с продаж вашей первой линии')+' · туры прошли'+(netPlan?' · ещё ≈ '+thb(netPlan)+' в пути':'')];
+  var tiles;
+  if(org){
+    var due=sum(done,com)-paid;
+    tiles=[[due<0?'Аванс':'К выплате',thb(Math.abs(due)),'начислено '+thb(sum(done,com))+' − выплачено '+thb(paid)],
+      ['В пути','≈ '+thb(sum(plan,com)),split(plan,true)],
+      ['Этот месяц',thb(sum(month,com)),split(month)],
+      ['Всего начислено',thb(sum(done,com)),split(done)]];
+  } else {
+    tiles=[['Заработано',thb(sum(done,com)),'всего по прошедшим экскурсиям'],
+      ['В пути','≈ '+thb(sum(plan,com)),'экскурсии впереди — начислим после тура'],
+      ['Этот месяц',thb(sum(month,com)),RU_M[+curK.slice(5)-1]],
+      ['С ваших продаж',thb(sum(done.filter(function(r){return r.line!==2;}),com)),'25–35% с ваших клиентов']];
+  }
+  var tile=function(t,ico,cls){return '<div class="n-tile'+cls+'"><span class="ico">'+icon(ico)+'</span><span class="l">'+t[0]+'</span><span class="v">'+t[1]+'</span><span class="s">'+t[2]+'</span></div>';};
+  $('n-tiles').innerHTML=tile(wide,NET_PAGES[3][2],' lead wide')+tiles.map(function(t,i){return tile(t,money[i],'');}).join('');
+
+  /* — лучшие в первой линии: по броням, без сумм продаж — */
+  var wa=function(v){var d=String(v||'').replace(/\D/g,'');return d.length>=6?'https://wa.me/'+d:'';};
+  var tg=function(u){u=String(u||'').replace(/^@/,'');return /^[a-z0-9_]{4,}$/i.test(u)?'https://t.me/'+u:'';};
+  var top=members.filter(function(m){return m.line===1&&m.n>0;}).sort(function(a,b){return (b.n30-a.n30)||(b.n-a.n)||(b.pax-a.pax)||a.name.localeCompare(b.name);}).slice(0,5);
+  if(members.length){
+    var mx30=Math.max.apply(null,top.map(function(m){return m.n30;}).concat(1));
+    $('n-topsec').hidden=false;
+    $('n-topsec').innerHTML='<div class="n-row"><h2>Лучшие в первой линии</h2><span class="hint">по броням за 30 дней</span></div>'
+      +(top.length?'<ol class="n-top5">'+top.map(function(m,i){var w=tg(m.tgUser)||wa(m.whatsapp);
+        return '<li><span class="pos">'+(i+1)+'</span><div class="n-av">'+esc(initials(m.name))+'</div><div class="who"><b>'+esc(m.name)+'</b><small>'+cnt(m.n30,BK)+' за 30 дней · всего '+m.n+' · '+cnt(m.pax,GUEST)+'</small>'+barHtml(m.n30,mx30)+'</div>'+(w?'<a class="n-btn ghost" href="'+w+'" target="_blank" rel="noopener">Написать</a>':'')+'</li>';}).join('')+'</ol>'
+        :'<p class="hint" style="margin:0">Продаж в первой линии пока нет.</p>');
+  }
+  perksInto('nperks-sec','nperks',rows,today,org?null:D.rank);
+
+  /* — брони — */
+  function bkCard(r){
+    var g=(r.ad||0)+(r.ch||0), who;
+    if(org) who='Агент: '+esc(r.an||'без агента')+' · агенту '+thb(r.ag)+(r.iv&&r.ag?' ('+nfmt(r.a1)+' + '+nfmt(r.a2)+' → '+esc(r.iv)+')':'');
+    else who=r.line===2?'Продажа вашей команды: агент '+esc(r.an)+' · 10%':'Ваша продажа · '+(r.full?'35%':'25%');
+    return '<article class="n-bk"><span class="t">'+esc(r.t)+'</span><span class="m"><b>'+thb(org?r.own:r.com)+'</b><small>вам</small></span>'
+      +'<span class="d"><span>'+dShort(r.ed)+'</span><span>'+esc(r.v)+'</span><span>'+cnt(g,GUEST)+'</span>'
+      +(r.x?'<span class="pill due">Отменена</span>':r.done?'<span class="pill paid">Прошла</span>':'<span class="pill plan">Предстоит</span>')+'</span>'
+      +'<span class="a">'+who+'</span></article>';
+  }
+  var byDate=function(a,b){return String(b.ed||'').localeCompare(String(a.ed||''));};
+  var noBk='<div class="n-empty">Броней пока нет. Отправьте клиентам ссылку из раздела «Инструменты».</div>';
+  $('n-last').innerHTML=rows.slice().sort(function(a,b){return String(b.bd||b.ed||'').localeCompare(String(a.bd||a.ed||''));}).slice(0,4).map(bkCard).join('')||noBk;
+  var mks=Array.from(new Set(rows.map(function(r){return r.mk;}).filter(Boolean))).sort().reverse();
+  var fm=$('nf-month');
+  fm.innerHTML='<option value="all">Все месяцы</option>'+mks.map(function(k){return '<option value="'+k+'">'+mLabel(k)+'</option>';}).join('');
+  function drawBooks(){
+    var list=rows.filter(function(r){return (fm.value==='all'||r.mk===fm.value)&&(NET_ST==='all'||(NET_ST==='done')===r.done);}).sort(byDate);
+    var live=list.filter(function(r){return !r.x;});
+    $('n-bksum').textContent=list.length?cnt(live.length,BK)+' · '+cnt(sum(live,function(r){return (r.ad||0)+(r.ch||0);}),GUEST)+' · вам '+thb(sum(list,org?own:com))+(org?' · агентам '+thb(sum(list,ag)):''):'';
+    $('n-books').innerHTML=list.map(bkCard).join('')||(rows.length?'<div class="n-empty">Под фильтр ничего не попало</div>':noBk);
+    root.querySelectorAll('#n-st button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.st===NET_ST));});
+  }
+  fm.addEventListener('change',drawBooks);
+  root.querySelectorAll('#n-st button').forEach(function(b){b.addEventListener('click',function(){NET_ST=b.dataset.st;drawBooks();});});
+  drawBooks();
+  $('n-months').innerHTML='<thead><tr><th>Месяц</th><th class="r">Броней</th><th class="r">Гостей</th><th class="r">Начислено, ฿</th>'+(org?'<th class="r">Выплачено, ฿</th>':'')+'</tr></thead><tbody>'
+    +(mks.map(function(k){var m=rows.filter(function(r){return r.mk===k;}), live=m.filter(function(r){return !r.x;}), p=sum(m.filter(function(r){return !r.done;}),com);
+      return '<tr><td>'+mLabel(k)+'</td><td class="r">'+live.length+'</td><td class="r">'+sum(live,function(r){return (r.ad||0)+(r.ch||0);})+'</td><td class="r"><b>'+nfmt(sum(m,com)-p)+'</b>'+(p?'<br><small class="hint">+≈'+nfmt(p)+' в пути</small>':'')+'</td>'+(org?'<td class="r">'+(payouts[k]?nfmt(payouts[k]):'—')+'</td>':'')+'</tr>';}).join('')
+    ||'<tr><td colspan="5" class="empty">Пока пусто</td></tr>')+'</tbody>';
+
+  /* — выплаты и обмены (организатор) — */
+  var pl=(D.payoutList||[]).slice().sort(function(a,b){return String(b.date||b.month).localeCompare(String(a.date||a.month));});
+  if(org&&pl.length){$('n-paysec').hidden=false;$('n-pays').innerHTML='<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>За месяц</th><th class="r">Сумма, ฿</th></tr></thead><tbody>'
+    +pl.map(function(x){return '<tr><td>'+(x.date?dShort(x.date):'—')+'</td><td>'+(/^\d{4}-\d\d$/.test(x.month)?mLabel(x.month):esc(x.month))+(x.kind==='credit'?' <span class="tag">зачтено</span>':'')+'</td><td class="r">'+nfmt(x.amount)+'</td></tr>';}).join('')+'</tbody></table></div>';}
+  var ex=(D.exchanges||[]).slice().sort(function(a,b){return String(b.d).localeCompare(String(a.d));});
+  if(ex.length){$('n-exsec').hidden=false;$('n-ex').innerHTML='<p class="pay-sum">Ваша доля с обменов: <b>'+thb(sum(ex,com))+'</b> · '+cnt(ex.length,['обмен','обмена','обменов'])+'. Считается отдельно от экскурсий.</p><div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>№</th><th class="r">Сумма обмена</th><th class="r">Вам, ฿</th></tr></thead><tbody>'
+    +ex.map(function(x){return '<tr><td>'+dShort(x.d)+'</td><td>'+esc(x.no)+'</td><td class="r">'+nfmt(x.amt)+' '+esc(x.cur)+'</td><td class="r"><b>'+nfmt(x.com)+'</b></td></tr>';}).join('')+'</tbody></table></div>';}
+
+  /* — инструменты — */
+  var first=team.filter(function(m){return m.line===1;});
+  var ownSales=rows.filter(function(r){return !r.x&&(org?(r.an||'без агента')==='без агента':r.line===1);});
+  var stats=function(a){return '<div class="n-stats">'+a.map(function(s){return '<div><b>'+s[0]+'</b><span>'+s[1]+'</span></div>';}).join('')+'</div>';};
+  var linkCard=function(title,hint,url,st,qr){return '<section class="n-card"><h2>'+title+'</h2><p class="hint" style="margin:0">'+hint+'</p><code class="n-url">'+esc(url)+'</code><div class="n-acts"><button type="button" class="n-btn copy" data-copy="'+esc(url)+'">Копировать</button>'+(qr?'<button type="button" class="n-btn ghost qr-btn" data-qr="'+esc(url)+'">QR-код</button>':'')+'</div><div class="qr" hidden></div>'+(st?stats(st):'')+'</section>';};
+  var later=['—','переходы (скоро)'];
+  $('n-links').innerHTML=[
+    L.reg&&linkCard('Ссылка для агентов',org?'Агент регистрируется по ней и попадает в вашу первую линию.':'Агент регистрируется по ней и попадает в вашу команду. С его продаж вам 10%.',L.reg,[later,[first.length,'зарегистрировались'],[first.filter(function(m){return m.active;}).length,'активные']],true),
+    L.client&&linkCard('Ссылка для клиентов','Клиент выбирает экскурсию на сайте и пишет нам — бронь сама попадёт в ваш кабинет.',L.client,[later,[ownSales.length,org?'броней без агента':'ваших броней'],[sum(ownSales,function(r){return (r.ad||0)+(r.ch||0);}),'гостей']],true),
+    L.personal&&linkCard('Ваш личный вход','Откроет кабинет в любом браузере. Никому её не отправляйте.',L.personal,null,false)
+  ].filter(Boolean).join('');
+  calcInto('ncalc-sec','ncalc',null,rows.map(function(r){return Object.assign({},r,{com:org?r.own:r.com});}));
+
+  /* — структура — */
+  var tel=function(p){var d=String(p||'').replace(/[^\d+]/g,'');return d.length>=6?'tel:'+d:'';};
+  var acts=function(c){var w=tg(c.tgUser)||wa(c.whatsapp), t=tel(c.phone);return (w?'<a class="n-btn" href="'+w+'" target="_blank" rel="noopener">Написать</a>':'')+(t?'<a class="n-btn ghost" href="'+t+'">Позвонить</a>':'');};
+  var contacts=function(c){var a=[['Телефон',c.phone],['Telegram',c.tgUser],['WhatsApp',c.whatsapp],['Email',c.email]].filter(function(x){return x[1];});
+    return a.length?'<div class="n-contacts">'+a.map(function(x){return '<div><span>'+x[0]+'</span><b>'+esc(x[1])+'</b></div>';}).join('')+'</div>':'<p class="hint" style="margin:0">Контакты пока не указаны.</p>';};
+  var tags=function(m){return (!m.enabled?' <span class="pill due">Отключён</span>':m.active?' <span class="pill paid">Активен</span>':'')+(m.isNew?' <span class="pill plan">Новый</span>':'');};
+  var lineOf=function(m){return org?(m.line===1?'1 линия':'2 линия · наставник '+m.inviter):'1 линия';};
+  var mStats=function(m){return org?[[m.n,plural2(m.n,BK)],[nfmt(m.earned),'заработок агента, ฿'],[nfmt(m.mine),'вам, ฿']]:[[m.n,plural2(m.n,BK)],[m.pax,plural2(m.pax,GUEST)],[nfmt(m.mine),'вам с продаж, ฿']];};
+  var FILTERS=[['all','Все',function(){return true;}],['active','Активные',function(m){return m.active;}],['new','Новые',function(m){return m.isNew;}]];
+  function drawTeam(){
+    $('n-filter').innerHTML=FILTERS.map(function(f){return '<button type="button" data-f="'+f[0]+'" aria-pressed="'+(NET_FILTER===f[0])+'">'+f[1]+' · '+team.filter(f[2]).length+'</button>';}).join('');
+    $('n-filter').querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){NET_FILTER=b.dataset.f;drawTeam();});});
+    var f=FILTERS.filter(function(x){return x[0]===NET_FILTER;})[0][2];
+    var list=team.map(function(m,i){return {m:m,i:i};}).filter(function(x){return f(x.m);}).sort(function(a,b){return b.m.n-a.m.n||a.m.name.localeCompare(b.m.name);});
+    $('n-people').innerHTML=list.map(function(x){var m=x.m;return '<article class="n-card"><div class="n-phead"><div class="n-av">'+esc(initials(m.name))+'</div><div><b>'+esc(m.name)+'</b><small>в структуре с '+dShort(m.since)+' · '+esc(lineOf(m))+'</small></div></div>'
+      +(tags(m)?'<div>'+tags(m)+'</div>':'')+stats(mStats(m))+'<div class="n-acts"><button type="button" class="n-btn ghost" data-person="'+x.i+'">Подробнее</button>'+(tg(m.tgUser)||wa(m.whatsapp)?'<a class="n-btn" href="'+(tg(m.tgUser)||wa(m.whatsapp))+'" target="_blank" rel="noopener">Написать</a>':tel(m.phone)?'<a class="n-btn" href="'+tel(m.phone)+'">Позвонить</a>':'')+'</div></article>';}).join('')
+      ||'<div class="n-empty">'+(team.length?'Под этот фильтр пока никто не попал.':'Пока никого. Отправьте «Ссылку для агентов» из раздела «Инструменты» — кто зарегистрируется по ней, появится здесь.')+'</div>';
+  }
+  drawTeam();
+  var modal=$('n-modal'), opener=null;
+  function closeModal(){modal.hidden=true;modal.innerHTML='';if(opener){opener.focus();opener=null;}}
+  $('n-people').addEventListener('click',function(e){
+    var b=e.target.closest('[data-person]');if(!b)return;
+    var m=team[+b.getAttribute('data-person')];opener=b;
+    var s=[[m.n,plural2(m.n,BK)],[m.pax,plural2(m.pax,GUEST)],[m.invited,'приглашённых']];
+    var s2=org?[[nfmt(m.earned),'заработок агента, ฿'],[nfmt(m.mine),'вам, ฿'],[nfmt((m.earnedPlan||0)+(m.minePlan||0)),'в пути вам и агенту, ≈ ฿']]:[[nfmt(m.mine),'вам с продаж, ฿'],[nfmt(m.minePlan),'в пути, ≈ ฿']];
+    modal.innerHTML='<div class="n-card"><div class="n-phead"><div class="n-av">'+esc(initials(m.name))+'</div><div><b>'+esc(m.name)+'</b><small>в структуре с '+dShort(m.since)+' · '+esc(lineOf(m))+'</small></div><button type="button" class="n-btn ghost" data-close aria-label="Закрыть">✕</button></div>'
+      +(tags(m)?'<div>'+tags(m)+'</div>':'')+stats(s)+stats(s2)+contacts(m)+'<div class="n-acts">'+acts(m)+'</div></div>';
+    modal.hidden=false;modal.querySelector('[data-close]').focus();
+  });
+  modal.addEventListener('click',function(e){if(e.target===modal||(e.target.closest&&e.target.closest('[data-close]')))closeModal();});
+  root.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)closeModal();});
+
+  /* — условия — */
+  $('n-formula').textContent=(D.rule||{}).formula||'';$('n-note').textContent=(D.rule||{}).note||'';
+  $('n-mats').innerHTML='<li>Каталог экскурсий и цены для клиентов: <a href="https://sardortravel.com" target="_blank" rel="noopener">sardortravel.com</a></li>'
+    +'<li>Telegram-канал с программами и отзывами: <a href="https://t.me/sardortravel" target="_blank" rel="noopener">@sardortravel</a></li>'
+    +(org?'<li>Если бронь не отображается или сумма не сходится, напишите Сардору номер ваучера.</li>':'<li>Продавайте по нашей цене: клиент сравнивает цены на месте.</li><li>Если бронь не отображается, напишите организатору сети номер ваучера.</li>')
+    +matHtml(D.materials);
+
+  /* — профиль — */
+  var up=D.upline;
+  if(up){var u=$('n-upline');u.hidden=false;u.innerHTML='<h2>'+(up.org?'Организатор сети':'Ваш наставник')+'</h2><div class="n-phead"><div class="n-av">'+esc(initials(up.name))+'</div><div><b>'+esc(up.name)+'</b></div></div>'
+    +(up.contacts?contacts(up.contacts)+'<div class="n-acts">'+acts(up.contacts)+'</div>':'<p class="hint" style="margin:0">Контакты пока скрыты.</p>');}
+  var P=D.profile||{}, form=$('n-form'), el=form.elements, msg=$('n-msg'), save=form.querySelector('button');
+  ['phone','tgUser','whatsapp','email'].forEach(function(k){el[k].value=P[k]||'';});el.show.checked=!!P.show;
+  $('n-who').textContent=org?'Ваши контакты видит Sardor Travel. Включите переключатель, чтобы их видели агенты вашей первой линии.':'Ваши контакты видят тот, кто вас пригласил, и организатор сети. Включите переключатель, чтобы их видела и ваша первая линия.';
+  if(D.admin){[].forEach.call(el,function(x){x.disabled=true;});msg.textContent='Вы смотрите как админ: контакты меняет только сам участник.';}
+  form.addEventListener('input',function(){NET_DIRTY=true;msg.textContent='';});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();if(D.admin)return;
+    var f={phone:el.phone.value,tgUser:el.tgUser.value,whatsapp:el.whatsapp.value,email:el.email.value,show:el.show.checked};
+    save.disabled=true;msg.style.color='';msg.textContent='Сохраняем…';
+    google.script.run.withSuccessHandler(function(r){
+      save.disabled=false;
+      if(!r||!r.ok){msg.style.color='var(--warn)';msg.textContent=(r&&r.msg)||'Не получилось сохранить. Попробуйте ещё раз.';return;}
+      NET_DIRTY=false;LAST='';['phone','tgUser','whatsapp','email'].forEach(function(k){el[k].value=r.profile[k]||'';});msg.textContent='Сохранено ✓';
+    }).withFailureHandler(function(){save.disabled=false;msg.style.color='var(--warn)';msg.textContent='Нет связи. Попробуйте ещё раз.';}).saveProfile(AUTH,f);
+  });
+  go(NET_VIEW,false);
+}
+function renderManager(D){
+  const RU_M = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  const fmt = n => (n==null||isNaN(n)) ? '—' : (Math.round(n)||0).toLocaleString('ru-RU').replace(/,/g,' ');
+  const thb = n => fmt(n) + '\u00a0฿';
+  const mLabel = k => { const a = k.split('-'); return RU_M[+a[1]-1] + ' ' + a[0]; };
+  const dShort = s => s ? s.slice(8,10)+'.'+s.slice(5,7)+'.'+s.slice(2,4) : '—';
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const plural = (n,f) => {n=Math.abs(n)%100;const n1=n%10;if(n>10&&n<20)return f[2];if(n1>1&&n1<5)return f[1];if(n1==1)return f[0];return f[2]};
+  const T = D.totals, curK = D.today.slice(0,7);
+  document.getElementById('mname').textContent = D.name;
+  document.getElementById('updated').textContent = dShort(D.updated.slice(0,10)) + ' ' + D.updated.slice(11);
+  document.getElementById('clean').textContent = dShort(D.today);
+  document.title = D.name + ' · кабинет менеджера';
+  (function renderEx(){
+    const L = (D.exchanges || []).slice().sort((a,b) => String(b.d).localeCompare(String(a.d)));
+    if (!L.length) return;
+    document.getElementById('mex-sec').hidden = false;
+    const tot = L.reduce((a,x) => a + (x.com||0), 0);
+    document.getElementById('mex').innerHTML = '<p class="pay-sum">Ваша доля с обменов: <b>' + thb(tot) + '</b> · ' + L.length + ' ' + plural(L.length,['обмен','обмена','обменов']) + '.</p>'
+      + '<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>№</th><th class="r">Сумма обмена</th><th class="r">Ваша доля, ฿</th></tr></thead><tbody>'
+      + L.map(x => '<tr><td class="num">' + dShort(x.d) + '</td><td>' + esc(x.no) + '</td><td class="r">' + fmt(x.amt) + ' ' + esc(x.cur) + '</td><td class="r"><b>' + fmt(x.com) + '</b></td></tr>').join('')
+      + '</tbody></table></div>';
+  })();
+  const mk = Object.keys(D.months).sort().reverse();
+  const cm = D.months[curK] || {accrued:0,plan:0,n:0};
+  const planAll = mk.reduce((s,k) => s + D.months[k].plan, 0);
+  const PR = D.period, GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  const pl = (a, b) => b ? (a.slice(5,7) === b.slice(5,7) ? (+a.slice(8)) + '–' + (+b.slice(8)) + ' ' + GEN[+b.slice(5,7)-1] : (+a.slice(8)) + ' ' + GEN[+a.slice(5,7)-1] + ' – ' + (+b.slice(8)) + ' ' + GEN[+b.slice(5,7)-1]) : (+a.slice(8)) + ' ' + GEN[+a.slice(5,7)-1];
+  const kp = [
+    {cls:'lead', l: T.due < 0 ? 'Выдано сверх заработанного' : 'К выплате', v: thb(Math.abs(T.due)), s: (PR && PR.closedTo ? 'за всё до ' + pl(PR.closedTo) + ': ' : '') + 'начислено ' + thb(T.gross) + ' − выплачено ' + thb(T.paid) + (D.hold ? ' − удержано ' + thb(D.hold.held) : '')},
+    PR && PR.openFrom ? {l:'Копится до выплаты ' + pl(PR.payDate), v: thb(PR.open), s:'за ' + pl(PR.openFrom, PR.openTo) + ': сумма не входит в «К выплате», пока период не закончится'} : {l:'Остаток прошлого месяца', v: thb(T.prev), s:'начислено минус выплачено на конец прошлого месяца'},
+    {l:'Начислено · ' + RU_M[+curK.slice(5)-1], v: thb(cm.accrued), s: cm.plan ? 'ещё ≈ ' + thb(cm.plan) + ' в пути' : 'по прошедшим турам'},
+    {l:'В пути', v: planAll ? '≈ ' + thb(planAll) : '—', s: 'по будущим турам'}
+  ];
+  document.getElementById('mkpis').innerHTML = kp.map(k => '<div class="kpi ' + (k.cls||'') + '"><span class="l">' + k.l + '</span><span class="v">' + k.v + '</span><span class="s">' + k.s + '</span></div>').join('');
+  (function renderLadder(){
+    if (!D.ladder) return;
+    const L = D.ladder[curK] || (curK < '2026-12' ? {n:0, rate:10, next:0, toNext:0, before:'2026-12'} : {n:0, rate:10, next:12, toNext:81});
+    const el = document.getElementById('mladder');
+    el.hidden = false;
+    el.innerHTML = 'Продано в ' + GEN[+curK.slice(5)-1].replace(/я$/,'е').replace(/а$/,'е') + ': <b>' + L.n + ' ' + plural(L.n,['бронь','брони','броней']) + '</b>, ставка <b>' + L.rate + '%</b>'
+      + (L.before ? ', лестница с ' + GEN[+L.before.slice(5)-1] : L.next ? ' · до ' + L.next + '% ещё ' + L.toNext + ' ' + plural(L.toNext,['бронь','брони','броней']) : ' — максимальная')
+      + '. Комиссия начисляется с даты продажи; ставка месяца действует на все его продажи.';
+    // полоска лестницы 0 → 81 (12%) → 151 (15%) и прогноз на конец месяца по нынешнему темпу
+    const d = +D.today.slice(8,10), dim = new Date(+curK.slice(0,4), +curK.slice(5,7), 0).getDate();
+    const fc = d ? Math.round(L.n / d * dim) : L.n, top = Math.max(151, L.n, fc);
+    const rateOf = n => n >= 151 ? 15 : n >= 81 ? 12 : 10;
+    el.innerHTML += '<span style="display:block;margin-top:10px">' + barHtml(L.n, top) + '</span>'
+      + '<span style="display:flex;justify-content:space-between;font-size:12px;margin-top:4px"><span>0 · 10%</span><span>81 · 12%</span><span>151 · 15%</span></span>'
+      + (d < dim ? '<span style="display:block;margin-top:6px">Прогноз: при таком темпе к концу месяца ≈ <b>' + fc + ' ' + plural(fc,['бронь','брони','броней']) + '</b>' + (L.before ? '' : ' — ставка <b>' + rateOf(fc) + '%</b>') + '.</span>' : '');
+  })();
+  if (D.hold) {
+    document.getElementById('mhold-sec').hidden = false;
+    document.getElementById('mhold').innerHTML = '<div class="kpis"><div class="kpi"><span class="l">Долг</span><span class="v">' + thb(D.hold.debt) + '</span><span class="s">выдано ранее</span></div>'
+      + '<div class="kpi"><span class="l">Удержано</span><span class="v">' + thb(D.hold.held) + '</span><span class="s">' + Math.round(D.hold.pct*100) + '% ваших начислений</span></div>'
+      + '<div class="kpi"><span class="l">Осталось погасить</span><span class="v">' + thb(D.hold.left) + '</span><span class="s">долг минус удержано</span></div>'
+      + '<div class="kpi lead"><span class="l">К выплате</span><span class="v">' + thb(Math.max(0,T.due)) + '</span><span class="s">после удержания</span></div></div>';
+  }
+  let sel = 'all';
+  const fm = document.getElementById('mf-month');
+  fm.innerHTML = '<option value="all">Все месяцы</option>' + mk.map(k => '<option value="' + k + '">' + mLabel(k) + '</option>').join('');
+  fm.addEventListener('change', () => { sel = fm.value; renderBookings(); });
+  function renderMonths(){
+    const t = document.getElementById('mmonths');
+    const anyFix = mk.some(k => D.months[k].fixed);
+    t.innerHTML = '<thead><tr><th>Месяц</th><th class="r">Броней</th><th class="r">Начислено, ฿</th>' + (anyFix ? '<th class="r">Фикс, ฿</th>' : '') + '<th class="r">Выплачено, ฿</th></tr></thead><tbody>'
+      + (mk.map(k => { const m = D.months[k]; return '<tr class="clickable" data-k="' + k + '" tabindex="0"><td>' + mLabel(k) + '</td><td class="r">' + m.n + '</td><td class="r"><b>' + fmt(m.accrued) + '</b>' + (m.plan ? '<br><small style="color:var(--plan)">+≈' + fmt(m.plan) + ' в пути</small>' : '') + '</td>' + (anyFix ? '<td class="r">' + (m.fixed ? fmt(m.fixed) : '—') + '</td>' : '') + '<td class="r">' + (m.paid ? fmt(m.paid) : '—') + '</td></tr>'; }).join('') || '<tr><td colspan="5" class="empty">Начислений пока нет</td></tr>') + '</tbody>';
+    t.querySelectorAll('tr.clickable').forEach(tr => {
+      const go = () => { sel = sel === tr.dataset.k ? 'all' : tr.dataset.k; fm.value = sel; renderBookings(); document.getElementById('mbk-title').scrollIntoView({block:'start'}); };
+      tr.addEventListener('click', go); tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+  }
+  function renderBookings(){
+    const list = D.rows.filter(r => (r.sd || r.ed) <= D.today && (sel === 'all' || r.k === sel)).sort((a,b) => b.ed.localeCompare(a.ed));
+    document.getElementById('mbk-title').textContent = 'Брони' + (sel === 'all' ? '' : ' · ' + mLabel(sel));
+    const sum = list.reduce((s,r) => s + r.com, 0);
+    document.getElementById('mbookings').innerHTML = '<thead><tr><th>Дата тура</th><th>Ваучер</th><th class="r">Комиссия, ฿</th><th>Тур</th></tr></thead><tbody>'
+      + (list.map(r => '<tr><td class="num">' + dShort(r.ed) + '</td><td>' + esc(r.v) + '</td><td class="r"><b>' + fmt(r.com) + '</b></td><td class="tour">' + esc(r.t) + (r.x ? '<span class="tag" style="color:var(--warn);border-color:var(--warn)">' + (r.com > 0 ? 'отмена со штрафом' : 'отменена') + '</span>' : '') + '</td></tr>').join('') || '<tr><td colspan="4" class="empty">Броней нет</td></tr>')
+      + '</tbody>' + (list.length ? '<tfoot><tr><td colspan="2">' + list.length + ' ' + plural(list.length,['бронь','брони','броней']) + '</td><td class="r">' + fmt(sum) + '</td><td></td></tr></tfoot>' : '');
+  }
+  function renderPays(){
+    const L = D.payoutList.slice().sort((a,b) => String(b.date).localeCompare(String(a.date)));
+    document.getElementById('mpays').innerHTML = L.length
+      ? (hasNote => '<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>За месяц</th><th class="r">Сумма, ฿</th>' + (hasNote ? '<th>Комментарий</th>' : '') + '</tr></thead><tbody>' + L.map(x => '<tr><td>' + dShort(x.date) + '</td><td>' + mLabel(x.month) + '</td><td class="r">' + fmt(x.amount) + '</td>' + (hasNote ? '<td>' + esc(x.note) + '</td>' : '') + '</tr>').join('') + '</tbody></table></div>')(L.some(x => x.note))
+      : '<p class="hint">Выплат пока не было.</p>';
+  }
+  function renderPlan(){
+    const L = D.rows.filter(r => (r.sd || r.ed) > D.today).sort((a,b) => a.ed.localeCompare(b.ed));
+    document.getElementById('mplan-sec').hidden = !L.length;
+    if (!L.length) return;
+    document.getElementById('mplan').innerHTML = '<thead><tr><th>Дата тура</th><th>Ваучер</th><th class="r">Ожидаемая комиссия, ฿</th><th>Тур</th></tr></thead><tbody>'
+      + L.map(r => '<tr><td class="num">' + dShort(r.ed) + '</td><td>' + esc(r.v) + '</td><td class="r"><b>' + fmt(r.com) + '</b></td><td class="tour">' + esc(r.t) + '</td></tr>').join('')
+      + '</tbody><tfoot><tr><td colspan="2">Всего впереди</td><td class="r">' + fmt(L.reduce((s,r) => s + r.com, 0)) + '</td><td></td></tr></tfoot>';
+  }
+  if (D.head) { renderHead(D); return; }
+  renderMonths(); renderBookings(); renderPays(); renderPlan();
+}
+function renderHead(D){
+  const H = D.head, L = H.led;
+  const RU_M = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  const fmt = n => (n==null||isNaN(n)) ? '—' : (Math.round(n)||0).toLocaleString('ru-RU').replace(/,/g,' ');
+  const thb = n => fmt(n) + '\u00a0฿';
+  const mName = k => RU_M[+k.slice(5)-1];
+  const mLabel = k => mName(k) + ' ' + k.slice(0,4);
+  const dShort = s => s ? s.slice(8,10)+'.'+s.slice(5,7) : '—';
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  document.querySelectorAll('#app .sec, #mkpis').forEach(e => { e.hidden = true; e.style.display = 'none'; });
+  const box = document.getElementById('head'); box.hidden = false;
+  const ln = (label, amt, o) => { o = o || {}; return '<div class="hl' + (o.cls ? ' ' + o.cls : '') + '"><div class="hl-t">' + label + (o.sub ? '<small>' + o.sub + '</small>' : '') + '</div><div class="hl-a">' + amt + '</div></div>'; };
+  const card = (title, hint, body) => '<section class="hc"><div class="hc-h"><h2>' + title + '</h2>' + (hint ? '<p>' + hint + '</p>' : '') + '</div>' + body + '</section>';
+  const minus = n => '−' + thb(n), plus = n => '+' + thb(n);
+  const P = H.plan, S = P.snap;
+  const cm = P.months[P.months.length - 1] || {k: D.today.slice(0,7), earned:0, hsum:0, toDebt:0, avail:0, taken:[], tsum:0, diff:0, over:0};
+  const past = P.months.slice(0, -1).reverse();
+  const earnedAfter = P.months.reduce((s,m) => s + m.earned, 0);
+  // октябрь для шапки — по броням сейчас (как в блоке «Продажи отдела»); S.octEarned — снимок на черте 16.11, от него считается долг
+  const octLiveRow = H.dept.find(a => a.k === '2026-10'), octLive = octLiveRow ? (octLiveRow.od || octLiveRow.fee) : null;
+  const octAcc = octLive != null ? Math.round(octLive) : S.octEarned;
+  const deptN = H.dept.filter(a => a.k >= H.since).reduce((s,a) => s + a.nd + a.np, 0);
+  const left = cm.end != null ? cm.end : cm.diff;   // >0 — можно взять (с остатком прошлых месяцев), <0 — минус в следующую зарплату
+  let html = '<section class="hero"><span class="hero-l">Ты заработал с ' + dShort(H.since + '-01') + '.' + H.since.slice(2,4) + '</span>'
+    + '<span class="hero-v">' + thb(octAcc + earnedAfter) + '</span>'
+    + '<span class="hero-s">Доля руководителя отдела. Растёт с каждой продажей твоей команды.</span></section>';
+  html += '<div class="hsum">'
+    + '<div><span>За ' + mName(cm.k) + '</span><b class="good">' + thb(cm.earned) + '</b></div>'
+    + '<div><span>' + (left >= 0 ? 'Можно взять' : 'Взято наперёд') + '</span><b class="' + (left >= 0 ? 'good' : 'warn') + '">' + thb(Math.abs(left)) + '</b></div>'
+    + '<div><span>Броней отдела</span><b>' + fmt(deptN) + '</b></div>'
+    + '</div>';
+  const repaid = P.months.reduce((s,m) => s + m.toDebt, 0);
+  html += '<div class="hdebt"><div class="hdebt-r"><span>' + (P.debt > 0 ? 'Остаток долга' : 'Долга нет') + '</span><b>' + thb(Math.max(P.debt,0)) + '</b></div>'
+    + '<p>На черте 16.11 было ' + thb(P.debt0) + '. Каждый месяц 30% твоего заработка гасят долг' + (repaid ? ' — уже погашено ' + thb(repaid) : '') + '. Подробно — в карточке ' + (past.length ? '4' : '3') + '.</p></div>';
+  html += goalBlock(P, D.today);
+  // 1. Этот месяц
+  let b = ln('Заработал за ' + mName(cm.k), thb(cm.earned), {sub:'по дате продажи, растёт с каждой продажей отдела'});
+  if (cm.bonus) { const B = cm.bonus, nx = B.n < B.plan ? ['плана', B.plan] : B.n < B.bar ? ['планки', B.bar] : B.n < B.top ? ['сверхцели', B.top] : null;
+    b += ln('Бонус за план отдела' + (B.pct ? ' · ' + Math.round(B.pct*100) + '%' : ''), B.sum ? '+' + thb(B.sum) : thb(0), {cls:'small', sub:'Отдел продал ' + fmt(B.n) + (nx ? ' · до ' + nx[0] + ' ' + fmt(nx[1]) + ' ещё ' + fmt(nx[1] - B.n) : ' · сверхцель взята') + '. План ' + fmt(B.plan) + ' → 1%, планка ' + fmt(B.bar) + ' → 2%, сверхцель ' + fmt(B.top) + ' → 3% маржи отдела; входит в «Заработал»'});
+    b += '<div class="prog" style="padding:4px 0 10px">' + barHtml(B.n, Math.max(B.top, B.n)) + '<span style="display:flex;justify-content:space-between;font-size:12px;color:var(--muted)"><span>0</span><span>план ' + fmt(B.plan) + '</span><span>планка ' + fmt(B.bar) + '</span><span>сверхцель ' + fmt(B.top) + '</span></span></div>'; }
+  if (cm.hsum) b += ln('Удержания за ошибки', minus(cm.hsum));
+  b += ln('30% в погашение долга', minus(cm.toDebt));
+  b += ln('Можно взять за месяц', thb(cm.avail), {cls:'sum'});
+  if (cm.prevLeft) b += ln('Остаток с прошлых месяцев', plus(cm.prevLeft));
+  if (cm.carryIn) b += ln('Минус с прошлого месяца', minus(-cm.carryIn), {sub:'отмена брони или взял больше'});
+  cm.taken.forEach(t => { b += ln(esc(t.what), t.amount >= 0 ? minus(t.amount) : plus(-t.amount), {sub: dShort(t.date)}); });
+  if (!cm.taken.length) b += ln('Пока ничего не брал', thb(0), {cls:'small mute'});
+  b += ln(left >= 0 ? 'Заработано и можно взять' : 'Взято наперёд — так нельзя, вычтем из следующего расчёта', thb(Math.abs(left)), {cls:'total'});
+  html += card('1. Этот месяц', 'всё, что Сардор даёт или платит за тебя, вычитается отсюда', b);
+  // 2. Продажи отдела
+  const dr = H.dept.slice().reverse();
+  html += card('2. Продажи отдела', 'откуда берётся заработок — нажми на месяц',
+    dr.map(a => '<details class="hd"><summary>' + ln(mLabel(a.k) + ' · ' + (a.nd + a.np) + ' броней', thb(a.od || a.fee)) + '</summary>'
+      + ln('Прямые клиенты · ' + a.nd, thb(a.md*0.1), {cls:'small', sub:'маржа ' + thb(a.md) + ' × 10%'})
+      + ln('От партнёров · ' + a.np, thb(a.mp*0.05), {cls:'small', sub:'маржа ' + thb(a.mp) + ' × 5%'})
+      + a.by.map(x => ln(esc(x.n) + ' · ' + x.cnt, thb(x.fee), {cls:'small mute', sub:'прямые ' + thb(x.md) + ' · партнёрские ' + thb(x.mp)})).join('')
+      + (a.nodate ? '<p class="hint" style="padding:8px 16px">' + a.nodate + ' брон. без даты продажи — по дате тура</p>' : '')
+      + '</details>').join(''));
+  // 3. Прошлые месяцы
+  if (past.length) html += card('3. Прошлые месяцы', '', past.map(m => '<details class="hd"><summary>' + ln(mLabel(m.k), m.diff >= 0 ? 'остаток ' + thb(m.diff) : 'сверх ' + thb(-m.diff)) + '</summary>'
+      + ln('Заработал', thb(m.earned), {cls:'small'}) + ln('30% в долг', minus(m.toDebt), {cls:'small'}) + (m.hsum ? ln('Удержания', minus(m.hsum), {cls:'small'}) : '')
+      + m.taken.map(t => ln(esc(t.what) + ' · ' + dShort(t.date), minus(t.amount), {cls:'small mute'})).join('') + '</details>').join(''));
+  // 4. Долг
+  b = '<details class="hd"><summary>' + ln('Долг на черте 16.11', thb(P.debt0)) + '</summary>'
+    + ln('Займы: байк, iPhone, PlayStation', plus(S.loans), {cls:'small'})
+    + ln('Октябрь: 30% заработка', minus(S.octPart), {cls:'small', sub:'на черте 16.11 заработал ' + thb(S.octEarned) + (octLive != null && Math.abs(Math.round(octLive) - S.octEarned) >= 1 ? ' (по броням сейчас ' + thb(Math.round(octLive)) + ': разница ' + thb(Math.abs(Math.round(octLive) - S.octEarned)) + ' после черты, на долг не влияет)' : '') + ' − квартира ' + thb(S.octHousing) + ' − 30% = можно было ' + thb(S.octEarned - S.octHousing - S.octPart) + ', взял ' + thb(S.octTaken)})
+    + ln('Октябрь: недобрал', minus(S.octLeft), {cls:'small'})
+    + ln('Взял 1–15 ноября', plus(S.novTaken), {cls:'small'}) + '</details>';
+  P.months.forEach(m => { b += ln('30% за ' + mName(m.k), minus(m.toDebt)); });
+  b += ln(P.debt > 0 ? 'Остаток долга' : 'Долга нет', thb(Math.max(P.debt,0)), {cls:'total'});
+  html += card((past.length ? '4' : '3') + '. Долг', 'гасится сам — 30% с каждого заработка', b);
+  html += card('Условия', '', '<ul class="hcond">' + H.cond2.map(c => '<li>' + esc(c) + '</li>').join('') + '</ul>');
+  box.innerHTML = html;
+}
+
+function renderOverview(D){
+  const RU_M = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  const RU_S = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+  const fmt = n => (n==null||isNaN(n)) ? '—' : (Math.round(n)||0).toLocaleString('ru-RU').replace(/,/g,' ');
+  const thb = n => fmt(n) + '\u00a0฿';
+  const mLabel = k => { const [y,m] = k.split('-'); return RU_M[+m-1] + ' ' + y; };
+  const mShort = k => { const [y,m] = k.split('-'); return RU_S[+m-1] + (m === '01' ? ' ' + y.slice(2) : ''); };
+  const dShort = s => s ? s.slice(8,10)+'.'+s.slice(5,7)+'.'+s.slice(2,4) : '—';
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const pct = x => (isFinite(x) ? (x*100).toLocaleString('ru-RU',{maximumFractionDigits:1}) + '%' : '—');
+  function plural(n,f){n=Math.abs(n)%100;const n1=n%10;if(n>10&&n<20)return f[2];if(n1>1&&n1<5)return f[1];if(n1===1)return f[0];return f[2]}
+  const today = D.today, curK = today.slice(0,7);
+  const L = D.list || [];
+  const COL = i => 'var(--s' + ((i % 10) + 1) + ')';
+  document.getElementById('ov-clean').textContent = dShort(D.today);
+  document.getElementById('ov-updated').textContent = dShort(D.updated.slice(0,10)) + ' ' + D.updated.slice(11);
+  const allM = Array.from(new Set([].concat.apply([], L.map(p => Object.keys(p.months))))).filter(Boolean).sort();
+  document.getElementById('ov-note').textContent = 'Начисления — колонка «Партнёру» в листах «СС <месяц>» таблицы «Сардор Финансы»; выплаты — «Журнал операций», статья «Партнерское вознаграждение», с сентября 2026.';
+  let sel = 'all';
+  const zero = {n:0,com:0,plan:0,pax:0};
+  const valOf = (p,k) => k === 'all' ? p.tot : (p.months[k] || zero);
+  function sum(k){ return L.reduce((a,p) => { const v = valOf(p,k); a.n+=v.n||0; a.com+=v.com||0; a.plan+=v.plan||0; a.pax+=v.pax||0; return a; }, {n:0,com:0,plan:0,pax:0}); }
+
+  function renderBar(){
+    const b = document.getElementById('ov-mbar');
+    b.innerHTML = ['all'].concat(allM.slice().reverse()).map(k => '<button type="button" data-k="' + k + '" aria-pressed="' + (sel === k) + '">' + (k === 'all' ? 'Всё время' : mLabel(k)) + '</button>').join('');
+    b.querySelectorAll('button').forEach(x => x.addEventListener('click', () => { sel = x.dataset.k; renderAll(); }));
+    const act = b.querySelector('[aria-pressed="true"]');
+    if (act) b.scrollLeft = act.offsetLeft - b.offsetLeft - (b.clientWidth - act.offsetWidth) / 2;
+  }
+  const pdOf = p => sel === 'all' ? (p.paid||0) : ((p.paidBy||{})[sel]||0);
+  function renderKpis(){
+    const s = sum(sel);
+    const paidS = L.reduce((a,p) => a + pdOf(p), 0);
+    const per = sel === 'all' ? 'за всё время' : mLabel(sel);
+    const paid = L.reduce((a,p) => a + (p.paid||0), 0);
+    const earned = s.com - s.plan;
+    const k = [
+      {cls:'lead', l:'Начислено партнёрам', v:thb(earned), s: per + ' · по прошедшим экскурсиям'},
+      {l:'Выплачено', v:thb(paidS), s: sel === 'all' ? 'с сентября 2026, по журналу операций' : 'за ' + per},
+      {l: (earned - paidS) < 0 ? 'Выплачено авансом' : 'Остаток к выплате', v:thb(Math.abs(earned - paidS)), s:'начислено (прошедшие) − выплачено'},
+      {l:'В пути', v:'≈ ' + thb(s.plan), s:'по экскурсиям, которые ещё впереди'}
+    ];
+    document.getElementById('ov-kpis').innerHTML = k.map(x => '<div class="kpi ' + (x.cls||'') + '"><span class="l">' + x.l + '</span><span class="v">' + x.v + '</span><span class="s">' + x.s + '</span></div>').join('');
+  }
+  function renderLegend(){
+    document.getElementById('ov-legend').innerHTML = L.map((p,i) => '<span><i style="background:' + COL(i) + '"></i>' + esc(p.name) + '</span>').join('');
+  }
+  function renderChart(){
+    const box = document.getElementById('ov-chart');
+    const ms = allM.slice(-12);
+    if (!ms.length) { box.innerHTML = '<p class="empty">Начислений пока нет</p>'; return; }
+    const tot = ms.map(k => L.reduce((a,p) => a + Math.max(0, (p.months[k]||zero).com), 0));
+    const max = Math.max.apply(null, tot) || 1;
+    const nice = (() => { const e = Math.pow(10, Math.floor(Math.log10(max))); const f = max / e; const st = f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10; return st * e; })();
+    const W = 640, H = 240, pl = 60, pr = 8, pt = 18, pb = 26, cw = W - pl - pr, ch = H - pt - pb;
+    const bw = Math.min(40, cw / ms.length * 0.6), step = cw / ms.length;
+    const y = v => pt + ch - v / nice * ch;
+    const kfmt = v => v >= 1000 ? Math.round(v/1000) + ' тыс' : String(v);
+    let g = '';
+    for (let i = 0; i <= 4; i++) { const v = nice * i / 4, yy = y(v); g += '<line x1="' + pl + '" x2="' + (W-pr) + '" y1="' + yy + '" y2="' + yy + '" stroke="var(--line)" stroke-width="1"/><text x="' + (pl-6) + '" y="' + (yy+4) + '" text-anchor="end" font-size="11" fill="var(--muted)">' + kfmt(v) + '</text>'; }
+    let bars = '', hits = '';
+    ms.forEach((k, j) => {
+      const x = pl + step * j + (step - bw) / 2, dim = sel !== 'all' && sel !== k;
+      let acc = 0; const segs = [];
+      L.forEach((p, i) => { const v = Math.max(0, (p.months[k]||zero).com); if (v > 0) segs.push({i, v}); });
+      segs.forEach((s, n) => {
+        const y0 = y(acc), y1 = y(acc + s.v); acc += s.v;
+        const top = n === segs.length - 1, hgt = Math.max(0, y0 - y1 - (top ? 0 : 2));
+        const yTop = y1 + (top ? 0 : 2);
+        if (hgt <= 0) return;
+        const r = top ? Math.min(4, hgt, bw/2) : 0;
+        const d = 'M' + x + ',' + (yTop + hgt) + 'V' + (yTop + r) + (r ? 'Q' + x + ',' + yTop + ' ' + (x + r) + ',' + yTop : '') + 'H' + (x + bw - r) + (r ? 'Q' + (x + bw) + ',' + yTop + ' ' + (x + bw) + ',' + (yTop + r) : '') + 'V' + (yTop + hgt) + 'Z';
+        bars += '<path d="' + d + '" fill="' + COL(s.i) + '"' + (dim ? ' opacity="0.35"' : '') + '/>';
+      });
+      bars += '<text x="' + (x + bw/2) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="var(--muted)">' + mShort(k) + '</text>';
+      if (sel === k || (sel === 'all' && j === ms.length - 1) || (sel === 'all' && tot[j] === max)) bars += '<text x="' + (x + bw/2) + '" y="' + (y(tot[j]) - 5) + '" text-anchor="middle" font-size="11" font-weight="600" fill="var(--ink)">' + kfmt(Math.round(tot[j])) + '</text>';
+      hits += '<rect class="ov-hit" data-k="' + k + '" x="' + (pl + step * j) + '" y="' + pt + '" width="' + step + '" height="' + ch + '" fill="transparent" tabindex="0" role="button" aria-label="' + mLabel(k) + ': ' + fmt(tot[j]) + ' бат"/>';
+    });
+    box.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Начисления партнёрам по месяцам">' + g + bars + hits + '</svg><div class="ov-tip" hidden></div>';
+    const tip = box.querySelector('.ov-tip');
+    box.querySelectorAll('.ov-hit').forEach(h => {
+      const show = () => {
+        const k = h.dataset.k, rows = L.map((p,i) => ({p,i,v:(p.months[k]||zero).com})).filter(r => r.v);
+        tip.innerHTML = '<b>' + mLabel(k) + ' · ' + thb(rows.reduce((a,r) => a + r.v, 0)) + '</b>' + rows.map(r => '<div><i style="background:' + COL(r.i) + '"></i>' + esc(r.p.name) + ': ' + thb(r.v) + '</div>').join('');
+        tip.hidden = false;
+        const bb = box.getBoundingClientRect(), hb = h.getBoundingClientRect();
+        let left = hb.left - bb.left + hb.width / 2 - tip.offsetWidth / 2;
+        left = Math.max(4, Math.min(left, bb.width - tip.offsetWidth - 4));
+        tip.style.left = left + 'px'; tip.style.top = '8px';
+      };
+      h.addEventListener('pointerenter', show); h.addEventListener('focus', show);
+      h.addEventListener('pointerleave', () => { tip.hidden = true; }); h.addEventListener('blur', () => { tip.hidden = true; });
+      h.addEventListener('click', () => { sel = sel === h.dataset.k ? 'all' : h.dataset.k; renderAll(); });
+    });
+  }
+  function renderTable(){
+    const t = document.getElementById('ov-table');
+    const rows = L.map((p,i) => ({p,i,v:valOf(p,sel)})).sort((a,b) => b.v.com - a.v.com);
+    const s = sum(sel);
+    const rule = p => p.type === 'perpax' ? 'за гостя' : p.type === 'network' ? 'сеть агентов' : 'по учёту';
+    const paidS = L.reduce((a,p) => a + pdOf(p), 0);
+    const lead = p => p.leads ? fmt(p.leads.leads) + ' → ' + p.leads.clients + ' (' + pct(p.leads.conv) + ')' : '—';
+    t.innerHTML = '<thead><tr><th>Партнёр</th><th>Условия</th><th class="r">Брони</th><th class="r">Гостей</th><th class="r">Начислено, ฿</th><th class="r">Выплачено, ฿</th><th class="r">Остаток, ฿</th><th class="r">В пути, ฿</th><th class="r">Лиды → броней (всё время)</th></tr></thead><tbody>'
+      + rows.map(r => { const pd = pdOf(r.p), ern = (r.v.com||0) - (r.v.plan||0), due = ern - pd; return '<tr class="clickable" data-p="' + esc(r.p.name) + '" tabindex="0"><td><i class="ov-dot" style="background:' + COL(r.i) + '"></i>' + esc(r.p.name) + (r.p.tg ? '' : ' <span class="tag">нет входа</span>') + '</td><td>' + rule(r.p) + '</td><td class="r">' + (r.v.n||0) + '</td><td class="r">' + (r.v.pax||0) + '</td><td class="r"><b>' + fmt(ern) + '</b></td><td class="r">' + (pd ? fmt(pd) : '—') + '</td><td class="r">' + (due < 0 ? '−' + fmt(-due) : fmt(due)) + '</td><td class="r">' + (r.v.plan ? fmt(r.v.plan) : '—') + '</td><td class="r">' + lead(r.p) + '</td></tr>'; }).join('')
+      + '</tbody><tfoot><tr><td>Итого</td><td></td><td class="r">' + s.n + '</td><td class="r">' + (s.pax||0) + '</td><td class="r">' + fmt(s.com - s.plan) + '</td><td class="r">' + fmt(paidS) + '</td><td class="r">' + ((s.com - s.plan - paidS) < 0 ? '−' + fmt(paidS - s.com + s.plan) : fmt(s.com - s.plan - paidS)) + '</td><td class="r">' + (s.plan ? fmt(s.plan) : '—') + '</td><td></td></tr></tfoot>';
+    t.querySelectorAll('tr.clickable').forEach(tr => {
+      const go = () => { const sp = document.getElementById('as-partner'); if (sp) sp.value = tr.dataset.p; gate('<div class="spin"></div><div>Загружаем ' + esc(tr.dataset.p) + '…</div>'); KEEP = Object.assign({}, snapUI(), {y:0}); load(tr.dataset.p); };
+      tr.addEventListener('click', go); tr.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+  }
+  function renderAttn(){
+    const items = [];
+    L.forEach(p => { if (!p.tg) items.push('<b>' + esc(p.name) + '</b> — нет Telegram ID, партнёр не может войти в кабинет.'); });
+    const prevK = (() => { let [yy,mm] = curK.split('-').map(Number); mm--; if (!mm) { mm = 12; yy--; } return yy + '-' + String(mm).padStart(2,'0'); })();
+    const noLeads = L.filter(p => p.leadMonths && p.leadMonths.length && p.leadMonths[p.leadMonths.length-1] < prevK).map(p => '<b>' + esc(p.name) + '</b>');
+    if (noLeads.length) items.push('Лиды за ' + mLabel(prevK) + ' не внесены во вкладку «Лиды»: ' + noLeads.join(', ') + '.');
+    Object.keys(D.unknown || {}).forEach(nm => items.push('В листах «СС» партнёр «<b>' + esc(nm) + '</b>» (' + D.unknown[nm] + ' ' + plural(D.unknown[nm],['бронь','брони','броней']) + ') не найден во вкладке «Партнёры» — новый партнёр или опечатка.'));
+    L.forEach(p => {
+      const pb = p.paidBy || {};
+      Object.keys(pb).sort().forEach(k => { if (pb[k] > 0 && !((p.months[k]||{}).com > 0)) items.push('<b>' + esc(p.name) + '</b> — за ' + mLabel(k) + ' выплачено ' + thb(pb[k]) + ', а начислений нет.'); });
+      const pm = p.months[prevK];
+      if (pm && pm.com > 0 && !(pb[prevK] > 0) && !(D.debt && D.debt.name === p.name && D.debt.now > 0)) items.push('<b>' + esc(p.name) + '</b> — за ' + mLabel(prevK) + ' начислено ' + thb(pm.com - (pm.plan||0)) + ', выплат пока нет.');
+    });
+    if (D.debt && D.debt.now > 0) items.push('<b>' + esc(D.debt.name) + '</b> — долг ' + thb(D.debt.now) + ' (правило 30/70 с 16.11)' + (D.debt.plan && D.debt.plan.left > 0 ? ', можно взять ' + thb(D.debt.plan.left) : '') + '.');
+    const sec = document.getElementById('ov-attn-sec');
+    sec.hidden = !items.length;
+    document.getElementById('ov-attn').innerHTML = items.map(x => '<li>' + x + '</li>').join('');
+  }
+  function renderDebt(){
+    const dt = D.debt, sec = document.getElementById('ov-debt-sec');
+    if (!dt || !dt.months || !dt.months.length) { sec.hidden = true; return; }
+    sec.hidden = false;
+    const cur = dt.months[dt.months.length-1], prev = dt.months.length > 1 ? dt.months[dt.months.length-2] : null;
+    document.getElementById('ov-debt-title').textContent = 'Долг ' + dt.name;
+    document.getElementById('ov-debt-kpis').innerHTML = [
+      {cls:'lead', l: dt.now < 0 ? 'Мы должны Дуо' : 'Долг сейчас', v: thb(Math.abs(dt.now)), s: dt.plan ? 'по правилу 30/70 с 16.11' : 'на конец периода: ' + mLabel(cur.m)},
+      {l:'Заработал в этом месяце', v: thb(dt.plan ? dt.plan.earned : cur.earned), s: dt.plan ? 'по дате продажи · 30% в долг: ' + thb(dt.plan.toDebt) : 'доля по броням, уменьшает долг'},
+      dt.plan ? {l:'Можно взять сейчас', v: thb(Math.max(dt.plan.left, 0)), s: dt.plan.left < 0 ? 'взял сверх ' + thb(-dt.plan.left) + ' — минус в следующую зарплату' : '70% заработка минус выдачи'} : {l:'Выплачено и выдано в этом месяце', v: thb(cur.paid + cur.loans), s: 'партнёрские ' + thb(cur.paid) + ' · займы ' + thb(cur.loans)}
+    ].map(x => '<div class="kpi ' + (x.cls||'') + '"><span class="l">' + x.l + '</span><span class="v">' + x.v + '</span><span class="s">' + x.s + '</span></div>').join('');
+    document.getElementById('ov-debt-table').innerHTML = '<thead><tr><th>Месяц</th><th class="r">Заработал, ฿</th><th class="r">Выплачено, ฿</th><th class="r">Займы, ฿</th><th class="r">Вернул, ฿</th><th class="r">Долг на конец, ฿</th></tr></thead><tbody>'
+      + dt.months.slice().reverse().map(x => '<tr><td>' + mLabel(x.m) + '</td><td class="r">' + fmt(x.earned) + '</td><td class="r">' + fmt(x.paid) + '</td><td class="r">' + fmt(x.loans) + '</td><td class="r">' + fmt(x.back) + '</td><td class="r"><b>' + fmt(x.debt) + '</b></td></tr>').join('') + '</tbody>';
+  }
+  function renderAll(){ renderBar(); renderKpis(); renderChart(); renderTable(); }
+  renderLegend(); renderDebt(); renderAttn(); renderAll();
+}
+
+/* Блок «Цель» для Достона и Дуо (решение Сардора 16.11): наперёд не берём, расчёт 1-го и 16-го, цель — закрыть долг и забирать 100%. */
+function goalBlock(P, today){
+  const RU_G = ['январю','февралю','марту','апрелю','маю','июню','июлю','августу','сентябрю','октябрю','ноябрю','декабрю'];
+  const fmt = n => (Math.round(n||0)||0).toLocaleString('ru-RU').replace(/,/g,' '), thb = n => fmt(n) + '\u00a0฿';
+  const debt = Math.max(P.debt, 0), paid = Math.max(P.debt0 - debt, 0), pct = P.debt0 > 0 ? Math.min(100, paid / P.debt0 * 100) : 100;
+  const cm = P.months[P.months.length-1] || {earned:0};
+  const d = +today.slice(8,10), y = +today.slice(0,4), m = +today.slice(5,7), dim = new Date(y, m, 0).getDate();
+  const startDay = cm.k === P.earnFrom.slice(0,7) ? +P.earnFrom.slice(8,10) : 1;
+  const perMonth = cm.earned > 0 ? cm.earned / Math.max(1, d - startDay + 1) * dim : 0;
+  const toDebtMonth = perMonth * (P.hold || 0.3);
+  let when = '—';
+  if (debt <= 0) when = 'долг закрыт';
+  else if (toDebtMonth > 0) { const n = Math.ceil(debt / toDebtMonth); const dt = new Date(y, m - 1 + n, 1); when = 'к ' + RU_G[dt.getMonth()] + (dt.getFullYear() !== y ? ' ' + dt.getFullYear() : ''); }
+  const next = (d === 1 || d === 16) ? 'сегодня' : d < 16 ? '16.' + String(m).padStart(2,'0') : '01.' + String(m === 12 ? 1 : m + 1).padStart(2,'0');
+  return '<section class="goal" id="goal"><h2>Цель — закрыть долг и забирать все 100%</h2>'
+    + '<p class="gs">Чем больше продаёшь, тем быстрее долг уходит. Когда он станет 0, все 100% заработка — твои.</p>'
+    + '<div class="gbar" role="img" aria-label="Долг закрыт на ' + Math.round(pct) + '%"><i style="width:' + pct.toFixed(1) + '%"></i></div>'
+    + '<div class="grow"><span>закрыто ' + thb(paid) + ' · ' + Math.round(pct) + '%</span><span>осталось ' + thb(debt) + '</span></div>'
+    + '<div class="gbig"><div><span>Долг закроется</span><b>' + when + '</b></div><div><span>' + (next === 'сегодня' ? 'Расчёт' : 'Следующий расчёт') + '</span><b>' + next + '</b></div></div>'
+    + '<ul class="grules"><li><b>Наперёд не берём.</b> Берёшь только то, что уже заработал.</li>'
+    + '<li><b>Расчёт обычно каждые 2 недели — 1-го и 16-го.</b> Нужно раньше — попроси, рассчитаем по уже заработанному.</li>'
+    + '<li>30% каждого заработка гасят долг, 70% — твои.</li>'
+    + '<li>«Долг закроется» — прогноз по твоему темпу в этом месяце. Больше продаж — раньше.</li></ul></section>';
+}
+
+function renderDebtPlan(D){
+  const P = D.plan, RU_M = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  const fmt = n => (Math.round(n||0)||0).toLocaleString('ru-RU').replace(/,/g,' '), thb = n => fmt(n) + '\u00a0฿';
+  const mName = k => RU_M[+k.slice(5)-1], dShort = s => s ? s.slice(8,10)+'.'+s.slice(5,7) : '—';
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const ln = (l, a, o) => { o = o || {}; return '<div class="hl' + (o.cls ? ' ' + o.cls : '') + '"><div class="hl-t">' + l + (o.sub ? '<small>' + o.sub + '</small>' : '') + '</div><div class="hl-a">' + a + '</div></div>'; };
+  const card = (t, h, b) => '<section class="hc"><div class="hc-h"><h2>' + t + '</h2>' + (h ? '<p>' + h + '</p>' : '') + '</div>' + b + '</section>';
+  const cm = P.months[P.months.length-1] || {k: D.today.slice(0,7), earned:0, toDebt:0, avail:0, taken:[], diff:0};
+  const left = cm.end != null ? cm.end : cm.diff;
+  let b = ln('Заработал за ' + mName(cm.k), thb(cm.earned), {sub:'по дате продажи' + (cm.k === (P.earnFrom||'').slice(0,7) ? ' (и проданное раньше, если тур с ' + dShort(P.earnFrom) + ')' : '') + '; отменённые не считаются. Это главная цифра, из неё 30% в долг'});
+  b += ln('30% в погашение долга', '−' + thb(cm.toDebt));
+  b += ln('Можно взять за месяц', thb(cm.avail), {cls:'sum'});
+  if (cm.prevLeft) b += ln('Остаток с прошлых месяцев', '+' + thb(cm.prevLeft));
+  if (cm.carryIn) b += ln('Минус с прошлого месяца', '−' + thb(-cm.carryIn), {sub:'отмена брони или взял больше'});
+  cm.taken.forEach(t => { b += ln(esc(t.what), (t.amount >= 0 ? '−' : '+') + thb(Math.abs(t.amount)), {sub: dShort(t.date)}); });
+  if (!cm.taken.length) b += ln('Пока ничего не брал', thb(0), {cls:'small mute'});
+  b += ln(left >= 0 ? 'Заработано и можно взять' : 'Взято наперёд — так нельзя, вычтем из следующего расчёта', thb(Math.abs(left)), {cls:'total'});
+  let d = '<details class="hd"><summary>' + ln('Долг на черте 16.11', thb(P.debt0)) + '</summary>' + ln('Долг на 01.11', thb(P.snap.debtNov1), {cls:'small'}) + ln('Взял 1–15 ноября (без квартиры)', '+' + thb(P.snap.novTaken), {cls:'small'}) + '</details>';
+  P.months.forEach(m => { d += ln('30% за ' + mName(m.k), '−' + thb(m.toDebt)); });
+  d += ln(P.debt > 0 ? 'Остаток долга' : 'Долга нет', thb(Math.max(P.debt,0)), {cls:'total'});
+  const cond = '<ul class="hcond"><li>Черта 16.11: всё, что взято до неё, стало долгом — ' + thb(P.debt0) + '.</li><li>С ноября каждый месяц 30% твоего заработка гасят долг, остальные 70% можно брать.</li><li>Всё, что Сардор даёт или платит за тебя (деньги, квартира, покупки), — выдача из этих 70%.</li><li>Заработок — по дате продажи брони.</li><li>Наперёд не берём. Расчёт обычно 1-го и 16-го; раньше — можно, но только из уже заработанного.</li><li>Если проданную бронь отменили — её сумму вычитаем из следующего расчёта.</li></ul>';
+  const el = document.getElementById('dplan');
+  el.innerHTML = goalBlock(P, D.today) + card('Расчёт за ' + mName(cm.k), 'всё, что Сардор даёт или платит за тебя, вычитается отсюда', b) + card('Долг', 'гасится сам — 30% с каждого заработка', d) + card('Условия', '', cond);
+  el.hidden = false;
+}
+
+function renderCabinet(D){
+  const RU_M = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь'];
+  const fmt = n => (n==null||isNaN(n)) ? '—' : (Math.round(n)||0).toLocaleString('ru-RU').replace(/,/g,' ');
+  const thb = n => fmt(n) + '\u00a0฿';
+  const mLabel = k => { const [y,m] = k.split('-'); return RU_M[+m-1] + ' ' + y; };
+  const dShort = s => s ? s.slice(8,10)+'.'+s.slice(5,7)+'.'+s.slice(2,4) : '—';
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const today = D.today;
+
+  document.getElementById('pname').textContent = D.partner;
+  document.getElementById('updated').textContent = dShort(D.updated.slice(0,10)) + ' ' + D.updated.slice(11);
+  document.getElementById('clean').textContent = dShort(D.today);
+  document.getElementById('pre-note').textContent = 'Суммы — из нашего учёта по каждой брони, обновляются каждые 5–10 минут. Отмена без штрафа — 0, отмена со штрафом начисляется по правилам.';
+  document.getElementById('bk-hint').textContent = (D.ptype === 'margin' ? 'Ваша доля — уже после комиссии менеджера. ' : 'Суммы — ваша доля. ') + 'Отмена без штрафа — 0, отмена со штрафом — доля по правилам. Экскурсия сегодняшнего дня считается состоявшейся.';
+  document.getElementById('rule-formula').textContent = D.rule.formula;
+  document.getElementById('rule-note').textContent = D.rule.note;
+  document.getElementById('foot').textContent = 'Данные берутся из учёта продаж Sardor Travel и обновляются каждые 10 минут. Бронь попадает сюда, когда менеджер отмечает вас партнёром.';
+  document.title = D.partner + ' · кабинет партнёра';
+  if (D.plan) renderDebtPlan(D);
+  document.getElementById('mat-list').innerHTML = matHtml(D.materials);
+  (function renderEx(){
+    const L = (D.exchanges || []).slice().sort((a,b) => String(b.d).localeCompare(String(a.d)));
+    if (!L.length) return;
+    document.getElementById('ex-sec').hidden = false;
+    const tot = L.reduce((a,x) => a + (x.com||0), 0);
+    document.getElementById('ex').innerHTML = '<p class="pay-sum">Ваша доля с обменов: <b>' + thb(tot) + '</b> · ' + L.length + ' ' + plural(L.length,['обмен','обмена','обменов']) + '.</p>'
+      + '<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>№</th><th class="r">Сумма обмена</th><th class="r">Ваша доля, ฿</th></tr></thead><tbody>'
+      + L.map(x => '<tr><td class="num">' + dShort(x.d) + '</td><td>' + esc(x.no) + '</td><td class="r">' + fmt(x.amt) + ' ' + esc(x.cur) + '</td><td class="r"><b>' + fmt(x.com) + '</b></td></tr>').join('')
+      + '</tbody></table></div>';
+  })();
+
+  const rows = D.rows.map(r => Object.assign({}, r, { mk: (r.ed||r.bd||'').slice(0,7), done: (r.ed||'') <= today }));
+  perksInto('perks-sec','perks',rows,today,null);
+  calcInto('calc-sec','calc',D.rule,rows);
+  const months = {};
+  rows.forEach(r => {
+    const m = months[r.mk] || (months[r.mk] = { k:r.mk, n:0, pax:0, com:0, plan:0, cl:new Set() });
+    if (r.c) m.cl.add(r.c.toLowerCase());
+    m.n++; m.pax += (r.ad||0)+(r.ch||0); m.com += r.com||0;
+    if (!r.done) m.plan += r.com||0;
+  });
+  const mk = Object.keys(months).sort().reverse();
+  const first = mk[mk.length-1], last = mk[0];
+  document.getElementById('period').textContent = rows.length ? ('Экскурсии: ' + mLabel(first) + ' — ' + mLabel(last)) : 'Броней пока нет';
+
+  // payouts
+  const paidOf = k => (D.payouts && D.payouts[k]) || 0;
+  const tot = rows.reduce((a,r)=>{a.com+=r.com||0; if(!r.done)a.plan+=r.com||0; else a.earned+=r.com||0; a.pax+=(r.ad||0)+(r.ch||0); return a},{com:0,plan:0,earned:0,pax:0});
+  const paidTotal = Object.keys(D.payouts||{}).reduce((s,k)=>s+paidOf(k),0);   // все выплаты, даже за месяц без броней
+  const due = tot.earned - paidTotal;   // начисляем только по прошедшим экскурсиям
+  const curK = today.slice(0,7);
+  const prevK = (()=>{let [y,m]=curK.split('-').map(Number); m--; if(!m){m=12;y--;} return y+'-'+String(m).padStart(2,'0');})();
+  const cur = months[curK] || {com:0,n:0};
+
+  const hasPay = !D.plan;   // у должников (правило 30/70) «к выплате» считает блок расчёта вверху, старую плашку не показываем
+  function renderKpis(){
+    let kpis;
+    if (selMonth === 'all') {
+    kpis = [
+    hasPay ? {cls:'lead', l: due < 0 ? 'Аванс сверх начисленного' : 'К выплате', v:thb(Math.abs(due)), s:'начислено ' + thb(tot.earned) + ' − выплачено ' + thb(paidTotal)} : {cls:'lead', l:'Туры · ' + RU_M[+curK.slice(5)-1], v:thb(cur.com), s: cur.n + ' ' + plural(cur.n,['бронь','брони','броней']) + ' · по дате тура, не по дате продажи'},
+    {l: D.plan ? 'Туры впереди' : 'В пути', v:'≈ '+thb(tot.plan), s: (function(n){return n + ' ' + plural(n,['бронь','брони','броней']) + (D.plan ? ' впереди — уже засчитаны в расчёте по дате продажи' : ' впереди — начислим после экскурсии');})(rows.filter(r=>!r.done).length)},
+    hasPay ? {l:'Этот месяц', v:thb(cur.com - (cur.plan||0)), s: (cur.plan ? 'ещё ≈ ' + thb(cur.plan) + ' в пути' : cur.n + ' ' + plural(cur.n,['бронь','брони','броней']))} : {l:'Прошлый месяц', v:thb((months[prevK]||{com:0}).com), s: RU_M[+prevK.slice(5)-1]},
+    {l:'Всего начислено', v:thb(tot.earned), s: rows.filter(r=>r.done).length + ' ' + plural(rows.filter(r=>r.done).length,['бронь','брони','броней']) + ' прошли'}
+  ];
+    } else {
+      const m = months[selMonth], earned = m.com - m.plan, p = paidOf(selMonth), nm = RU_M[+selMonth.slice(5)-1];
+      // баланс прошлых месяцев: начислено − выплачено (аванс даёт минус), чтобы «к выплате» на вкладке месяца сходилось с общим
+      const carry = Object.keys(months).filter(k => k < selMonth).reduce((a,k) => a + months[k].com - months[k].plan, 0)
+        - Object.keys(D.payouts||{}).filter(k => k < selMonth).reduce((a,k) => a + paidOf(k), 0);
+      const due = earned + carry - p;
+      kpis = [
+        {cls:'lead', l:'Начислено · ' + nm, v:thb(earned), s: 'по прошедшим экскурсиям'},
+        {l:'В пути', v: m.plan > 0 ? '≈ ' + thb(m.plan) : '—', s: m.plan > 0 ? 'начислим после экскурсий' : 'все экскурсии прошли'},
+        {l:'Гостей', v:String(m.pax), s: m.n + ' ' + plural(m.n,['бронь','брони','броней'])},
+        {l:'Выплачено', v: p ? thb(p) : '—', s: D.plan ? 'сколько можно взять — в расчёте вверху' : hasPay ? ((due < 0 ? 'выдано сверх ' : 'к выплате ') + thb(Math.abs(due)) + (Math.abs(carry) >= 1 ? ' · с учётом ' + (carry < 0 ? 'аванса ' : 'остатка ') + thb(Math.abs(carry)) + ' за прошлые месяцы' : '')) : 'выплаты пока не отмечены'}
+      ];
+    }
+  document.getElementById('kpis').innerHTML = kpis.map(k=>`<div class="kpi ${k.cls||''}"><span class="l">${k.l}</span><span class="v">${k.v}</span><span class="s">${k.s}</span></div>`).join('');
+  }
+  function renderBar(){
+    const b = document.getElementById('mbar');
+    b.innerHTML = ['all'].concat(mk).map(function(k){ return '<button type="button" data-k="' + k + '" aria-pressed="' + (selMonth === k) + '">' + (k === 'all' ? 'Все месяцы' : mLabel(k)) + '</button>'; }).join('');
+    b.querySelectorAll('button').forEach(function(x){ x.addEventListener('click', function(){ selMonth = x.dataset.k; fm.value = selMonth; renderAll(); }); });
+    const act = b.querySelector('[aria-pressed="true"]');
+    if (act) b.scrollLeft = act.offsetLeft - b.offsetLeft - (b.clientWidth - act.offsetWidth) / 2;
+  }
+
+  function plural(n,f){n=Math.abs(n)%100;const n1=n%10;if(n>10&&n<20)return f[2];if(n1>1&&n1<5)return f[1];if(n1==1)return f[0];return f[2]}
+
+  function status(k){
+    const m = months[k]; const earned = m.com - m.plan; const p = paidOf(k);
+    if (m.plan > 0 && earned <= 0) return '<span class="pill plan">Предстоит</span>';
+    if (!hasPay) return m.plan > 0 ? '<span class="pill plan">Идёт</span>' : '<span class="pill" style="background:var(--soft);color:var(--muted)">Не отмечено</span>';
+    if (p >= earned - 1 && earned > 0) return '<span class="pill paid">Выплачено</span>';
+    if (earned > p && due <= 1) return '<span class="pill paid" title="Всего выплачено не меньше, чем начислено: этот месяц покрыт выплатами за другие месяцы">Покрыто авансом</span>';
+    if (p > 0) return '<span class="pill part">Частично</span>';
+    return '<span class="pill due">К выплате</span>';
+  }
+
+  let selMonth = 'all', selSt = 'all', q = '';
+  function renderMonths(){
+    const t = document.getElementById('months');
+    const body = mk.map(k=>{const m=months[k];return `<tr class="clickable${selMonth===k?' sel':''}" data-k="${k}" tabindex="0"><td>${mLabel(k)}</td><td class="r">${m.n}</td><td class="r">${m.pax}</td><td class="r"><b>${fmt(m.com - m.plan)}</b>${m.plan?`<br><small style="color:var(--plan)">+≈${fmt(m.plan)} в пути</small>`:''}</td><td class="r">${paidOf(k)?fmt(paidOf(k)):'—'}</td><td>${status(k)}</td></tr>`}).join('');
+    t.innerHTML = `<thead><tr><th>Месяц</th><th class="r">Ваучеров</th><th class="r" title="Сумма мест по всем ваучерам: один гость на трёх экскурсиях = 3 места">Мест</th><th class="r">Начислено, ฿</th><th class="r">Выплачено, ฿</th><th>Статус</th></tr></thead><tbody>${body||'<tr><td colspan="9" class="empty">Броней пока нет</td></tr>'}</tbody><tfoot><tr><td>Итого</td><td class="r">${rows.length}</td><td class="r">${tot.pax}</td><td class="r">${fmt(tot.earned)}</td><td class="r">${paidTotal?fmt(paidTotal):'—'}</td><td></td></tr></tfoot>`;
+    t.querySelectorAll('tr.clickable').forEach(tr=>{
+      const go=()=>{selMonth = selMonth===tr.dataset.k ? 'all' : tr.dataset.k; document.getElementById('f-month').value=selMonth; renderAll(); document.getElementById('bk-title').scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'start'});};
+      tr.addEventListener('click',go); tr.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+    });
+  }
+  const fm = document.getElementById('f-month');
+  fm.innerHTML = '<option value="all">Все месяцы</option>' + mk.map(k=>`<option value="${k}">${mLabel(k)}</option>`).join('');
+  fm.addEventListener('change',()=>{selMonth=fm.value;renderAll();});
+  document.querySelectorAll('.seg button').forEach(b=>b.addEventListener('click',()=>{selSt=b.dataset.st;document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderBookings();}));
+  document.getElementById('f-q').addEventListener('input',e=>{q=e.target.value.trim().toLowerCase();renderBookings();});
+
+  function renderBookings(){
+    let list = rows.filter(r => (selMonth==='all'||r.mk===selMonth) && (selSt==='all'||(selSt==='done'?r.done:!r.done)) && (!q || (r.v+' '+(r.c||'')+' '+r.t).toLowerCase().includes(q)));
+    list.sort((a,b)=> (b.ed||'').localeCompare(a.ed||''));
+    const sum = list.reduce((a,r)=>{a.c+=r.com||0;a.p+=(r.ad||0)+(r.ch||0);return a},{c:0,p:0});
+    document.getElementById('bk-title').textContent = 'Брони' + (selMonth==='all' ? '' : ' · ' + mLabel(selMonth));
+    const t = document.getElementById('bookings');
+    t.innerHTML = `<thead><tr><th>Экскурсия</th><th>Ваучер</th><th>Тур</th><th class="r">Взр.</th><th class="r">Дет.</th><th class="r">Ваше, ฿</th><th>Статус</th></tr></thead><tbody>${
+      list.map(r=>`<tr><td class="num">${dShort(r.ed)}</td><td>${esc(r.v)||'—'}</td><td class="tour">${esc(r.t)}${r.x?'<span class="tag" style="color:var(--warn);border-color:var(--warn)">'+(r.com>0?'отмена со штрафом':'отменена')+'</span>':''}${r.pre?'<span class="tag pre" title="Условия по этой брони уточняются, сумма может измениться">Предварительно</span>':''}${r.rule?'<span class="tag">'+esc(r.rule)+'</span>':''}</td><td class="r">${r.ad??'—'}</td><td class="r">${r.ch||0}</td><td class="r"><b>${fmt(r.com)}</b></td><td>${r.done?'<span class="pill paid" style="background:var(--soft);color:var(--muted)">Прошла</span>':'<span class="pill plan">Предстоит</span>'}</td></tr>`).join('') || '<tr><td colspan="10" class="empty">Под фильтр ничего не попало</td></tr>'
+    }</tbody>${list.length?`<tfoot><tr><td colspan="3">${list.length} ${plural(list.length,['бронь','брони','броней'])}</td><td class="r" colspan="2">${sum.p} мест</td><td class="r">${fmt(sum.c)}</td><td></td></tr></tfoot>`:''}`;
+  }
+  function renderLeads(){
+    // «Заявки → продажи → деньги» (дизайн одобрен Сардором 15.11.2026). Месяц — по дате продажи брони.
+    const sec = document.getElementById('leads-sec'), LR = D.leadsRaw || {}, FROM = '2026-09';
+    const by = {};
+    rows.forEach(r => {
+      if (r.x && !(r.com > 0)) return;
+      const k = (r.bd || r.ed || '').slice(0,7); if (!k || k < FROM) return;
+      const m = by[k] || (by[k] = { k, n:0, pax:0, com:0 });
+      m.n++; m.pax += (r.ad||0) + (r.ch||0); m.com += r.com || 0;
+    });
+    Object.keys(LR).forEach(k => { if (k >= FROM && LR[k] > 0 && !by[k]) by[k] = { k, n:0, pax:0, com:0 }; });
+    const ks = Object.keys(by).sort().reverse();
+    if (!ks.length) { sec.hidden = true; return; }
+    sec.hidden = false;
+    const sh = sec.querySelector('.sec-head'); if (sh) sh.style.display = 'none';
+    const T = ks.reduce((a,k) => { const m = by[k]; a.n += m.n; a.pax += m.pax; a.com += m.com; if (LR[k] > 0) { a.L += LR[k]; a.nL += m.n; a.comL += m.com; } return a; }, {n:0,pax:0,com:0,L:0,nL:0,comL:0});
+    const mx = Math.max(1, ...ks.map(k => by[k].com));
+    const RUc = k => { const t = RU_M[+k.slice(5)-1]; return t[0].toUpperCase() + t.slice(1); };
+    const pct = (a,b) => b ? Math.round(a*100/b) + '%' : '';
+    const base = T.L || T.n || 1;
+    let h = '<section class="lc"><div class="lc-h"><div class="k">Ваш канал продаж</div><h2>Заявки → продажи → деньги</h2><p>с 1 сентября · по дате продажи: бронь учитывается в том месяце, когда её продали. Не зависит от выбранного месяца и может отличаться от «Начислено» вверху: там по дате тура и только прошедшие экскурсии.</p></div>'
+      + '<div class="money"><div class="k">Вы заработали</div><div class="v">' + thb(T.com) + '</div><div class="s">'
+      + 'по всем броням от вашего имени' + '</div></div><div class="fun">';
+    if (T.L) h += '<div class="fs"><span class="n">' + fmt(T.L) + '</span><span class="t"><i style="width:100%"></i></span><span class="l">заявок</span></div>';
+    h += '<div class="fs"><span class="n">' + fmt(T.n) + '</span><span class="t"><i style="width:' + Math.max(3, Math.min(100, T.n*100/base)) + '%"></i></span><span class="l">броней</span></div>'
+      + '<div class="fs"><span class="n">' + fmt(T.pax) + '</span><span class="t"><i style="width:' + Math.max(3, Math.min(100, T.pax*100/Math.max(base, T.pax))) + '%"></i></span><span class="l">гостей</span></div></div>';
+    h += '<div class="lms">' + ks.map(k => { const m = by[k], L = LR[k] || 0;
+      return '<div class="lm"><div class="lm-top"><span class="lm-m">' + RUc(k) + '</span><span class="lm-e">' + thb(m.com) + '</span></div>'
+        + '<div class="lm-bar"><i style="width:' + Math.round(m.com*100/mx) + '%"></i></div>'
+        + '<div class="lm-s">' + (L ? fmt(L) + ' заявок · ' : '') + m.n + ' ' + plural(m.n,['бронь','брони','броней']) + ' · ' + m.pax + ' ' + plural(m.pax,['гость','гостя','гостей']) + '</div></div>'; }).join('')
+      + '</div>' + (T.L ? '' : '<p class="lc-note">Заявки из CRM появятся здесь скоро.</p>') + '</section>';
+    document.getElementById('leads').innerHTML = h;
+  }
+  function renderPays(){
+    const L = (D.payoutList || []).slice().sort((a,b) => String(b.date||b.month).localeCompare(String(a.date||a.month)));
+    const sec = document.getElementById('pay-sec');
+    if (!L.length) { sec.hidden = true; return; }
+    sec.hidden = false;
+    const total = L.reduce((s,x) => s + (x.amount||0), 0), mon = new Set(L.map(x => x.month)).size;
+    const dd = s => /^\d{4}-\d\d-\d\d/.test(s||'') ? dShort(s) : (s ? esc(s) : '—');
+    const credit = L.filter(x => x.kind === 'credit').reduce((s,x) => s + (x.amount||0), 0), cash = total - credit;
+    const how = x => x.kind === 'credit' ? '<span class="tag">зачтено</span> клиент оплатил напрямую вам' + (x.ref ? ' (' + esc(x.ref) + ')' : '') + ', деньги остались у вас' : 'переведено вам';
+    document.getElementById('pays').innerHTML = '<p class="pay-sum">Выплачено всего <b>' + thb(total) + '</b> · ' + L.length + ' ' + plural(L.length,['выплата','выплаты','выплат']) + ' за ' + mon + ' ' + plural(mon,['месяц','месяца','месяцев']) + '.'
+      + (credit > 0 ? '<br>Из них переведено вам <b>' + thb(cash) + '</b>, зачтено <b>' + thb(credit) + '</b> (клиент заплатил напрямую вам, и по договорённости эти деньги остались у вас в счёт доли).' : '') + '</p>'
+      + '<div class="tbl-wrap"><table><thead><tr><th>Дата</th><th>За месяц</th><th class="r">Сумма, ฿</th><th>Как выплачено</th></tr></thead><tbody>'
+      + L.map(x => '<tr><td>' + dd(x.date) + '</td><td>' + (/^\d{4}-\d\d$/.test(x.month) ? mLabel(x.month) : esc(x.month)) + '</td><td class="r">' + fmt(x.amount) + '</td><td>' + how(x) + esc(x.note) + '</td></tr>').join('')
+      + '</tbody></table></div>';
+  }
+  // Ежедневный отчёт. День можно выбрать; считаем по броням партнёра, которые уже есть на странице.
+  // sold — оформлено в этот день (по дате оформления); tours — экскурсии в этот день (по дате экскурсии).
+  // Статус «заработано» — по состоянию на сегодня: экскурсия уже прошла или сегодня.
+  const addDays = (s, n) => { const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d+n)).toISOString().slice(0,10); };
+  function dayStats(date){
+    const S = {n:0,com:0,earned:0,plan:0,list:[]}, E = {n:0,com:0,soldToday:0,list:[]};
+    rows.forEach(r => {
+      if (r.x) return;
+      const it = {v:r.v, t:r.t, ed:r.ed, bd:r.bd, com:r.com||0, pre:!!r.pre};
+      if (r.bd === date) { S.n++; S.com += it.com; if (r.ed && r.ed <= today) S.earned += it.com; else S.plan += it.com; S.list.push(it); }
+      if (r.ed === date) { E.n++; E.com += it.com; if (r.bd === date) E.soldToday++; E.list.push(it); }
+    });
+    return {S, E};
+  }
+  function renderToday(){
+    const sec = document.getElementById('today-sec');
+    sec.hidden = false;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(DAYSEL || '')) DAYSEL = today;
+    const day = DAYSEL, isToday = day === today, future = day > today;
+    const RU_G = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+    const dLong = s => (+s.slice(8,10)) + ' ' + RU_G[+s.slice(5,7)-1] + (s.slice(0,4) === today.slice(0,4) ? '' : ' ' + s.slice(0,4));
+    document.getElementById('today-title').textContent = isToday ? 'Сегодня · ' + dLong(day) : dLong(day);
+    const inp = document.getElementById('day-input'); inp.value = day;
+    document.getElementById('day-today').disabled = isToday;
+    const {S, E} = dayStats(day);
+    const leads = (D.leadsDaily || {})[day];
+    const conv = (leads && S.n) ? ' · ' + (S.n / leads * 100).toLocaleString('ru-RU',{maximumFractionDigits:1}) + '%' : '';
+    const when = isToday ? 'сегодня' : 'в этот день';
+    // лиды показываем, только если они внесены (вкладка «Лиды по дням»); иначе — число продаж
+    const kp = [
+      leads == null ? {l:'Продаж ' + when, v: String(S.n), s: plural(S.n,['ваучер','ваучера','ваучеров']) + ' оформлено ' + when}
+                    : {l:'Лиды ' + when, v: fmt(leads), s: 'закрыто продаж: ' + S.n + conv},
+      {l:'Продано на', v: thb(S.com), s: 'ваша доля со всех продаж ' + (isToday ? 'за сегодня' : 'этого дня')},
+      {cls:'lead', l: future ? 'Будет заработано' : (isToday ? 'Заработано сегодня' : 'Заработано в этот день'), v: thb(E.com), s: E.n + ' ' + plural(E.n,['экскурсия','экскурсии','экскурсий']) + (isToday ? ' сегодня' : future ? ' в этот день' : ' в этот день') + (E.soldToday ? ' · из них продано в этот день: ' + E.soldToday : '')},
+      {l:'Получите позже', v: '≈ ' + thb(S.plan), s: 'по продажам ' + (isToday ? 'за сегодня' : 'этого дня') + ', экскурсии ещё впереди'}
+    ];
+    document.getElementById('today-kpis').innerHTML = kp.map(x => '<div class="kpi ' + (x.cls||'') + '"><span class="l">' + x.l + '</span><span class="v">' + x.v + '</span><span class="s">' + x.s + '</span></div>').join('');
+    const row = cells => '<tr>' + cells.join('') + '</tr>';
+    document.getElementById('today-sold').innerHTML = '<thead><tr><th>Ваучер</th><th>Экскурсия</th><th>Дата тура</th><th class="r">Ваше, ฿</th><th>Статус</th></tr></thead><tbody>'
+      + (S.list.length ? S.list.map(x => row(['<td>' + esc(x.v) + '</td>','<td class="tour">' + esc(x.t) + (x.pre ? '<span class="tag pre">Предварительно</span>' : '') + '</td>','<td class="num">' + dShort(x.ed) + '</td>','<td class="r"><b>' + fmt(x.com) + '</b></td>', (x.ed && x.ed <= today) ? '<td><span class="pill paid">Заработано</span></td>' : '<td><span class="pill plan">Ждёт экскурсии</span></td>'])).join('') : '<tr><td colspan="5" class="empty">' + (isToday ? 'Сегодня продаж не было' : 'В этот день продаж не было') + '</td></tr>')
+      + '</tbody>' + (S.list.length ? '<tfoot><tr><td colspan="3">Заработано ' + thb(S.earned) + ' · ждёт ' + thb(S.plan) + '</td><td class="r">' + fmt(S.com) + '</td><td></td></tr></tfoot>' : '');
+    document.getElementById('today-tours').innerHTML = '<thead><tr><th>Ваучер</th><th>Экскурсия</th><th>Продано</th><th class="r">Ваше, ฿</th></tr></thead><tbody>'
+      + (E.list.length ? E.list.map(x => row(['<td>' + esc(x.v) + '</td>','<td class="tour">' + esc(x.t) + (x.pre ? '<span class="tag pre">Предварительно</span>' : '') + '</td>','<td class="num">' + (x.bd === day ? (isToday ? 'сегодня' : 'в этот день') : dShort(x.bd)) + '</td>','<td class="r"><b>' + fmt(x.com) + '</b></td>'])).join('') : '<tr><td colspan="4" class="empty">' + (isToday ? 'Сегодня экскурсий нет' : 'В этот день экскурсий нет') + '</td></tr>')
+      + '</tbody>' + (E.list.length ? '<tfoot><tr><td colspan="3">' + (future ? 'Будет заработано' : isToday ? 'Заработано сегодня' : 'Заработано в этот день') + '</td><td class="r">' + fmt(E.com) + '</td></tr></tfoot>' : '');
+  }
+  const setDay = s => { DAYSEL = s; renderToday(); };
+  document.getElementById('day-prev').addEventListener('click', () => setDay(addDays(DAYSEL || today, -1)));
+  document.getElementById('day-next').addEventListener('click', () => setDay(addDays(DAYSEL || today, 1)));
+  document.getElementById('day-today').addEventListener('click', () => setDay(today));
+  document.getElementById('day-input').addEventListener('change', e => { if (e.target.value) setDay(e.target.value); });
+  function renderAll(){renderBar();renderKpis();renderLeads();renderPays();renderMonths();renderBookings();}
+  renderToday();
+  renderAll();
+}
+
+var AUTH = null;
+function gate(html){document.body.classList.remove('net-body');var g=document.getElementById('gate');g.innerHTML=html;g.hidden=false;document.getElementById('app').hidden=true;}
+function esc2(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function show(res){
+  if(!res||!res.ok){
+    var r=res&&res.reason;
+    if(REG&&(r==='not_registered'||r==='no_auth'||r==='bad_key')) return regForm(res);
+    if(r==='not_registered') return gate('<h1>Кабинет ещё не подключён</h1><p>Отправьте Сардору ваш Telegram ID, он подключит доступ:</p><code id="tgid">'+esc2(res.tgId)+'</code><button type="button" id="cp">Скопировать ID</button><p class="hint">После подключения закройте и снова откройте кабинет.</p>'), bindCopy(res.tgId);
+    if(r==='no_partner') return gate('<h1>Партнёр не найден</h1><p>Проверьте вкладку «Партнёры» в таблице.</p>');
+    if(r==='bad_key') return gate('<h1>Ссылка недействительна</h1><p>Попросите у Сардора новую ссылку на кабинет.</p>');
+    if(r==='bad_signature') return gate('<h1>Не удалось подтвердить вход</h1><p>Закройте кабинет и откройте его снова из бота.</p><p class="hint" style="word-break:break-all;font-size:11px">'+esc2(res.debug)+'</p>');
+    return gate('<h1>Откройте кабинет из Telegram</h1><p>Кабинет открывается кнопкой в боте Sardor Travel или по личной ссылке.</p>');
+  }
+  document.getElementById('gate').hidden=true;
+  var app=document.getElementById('app');
+  var net=!res.overview&&!res.manager&&(res.agent||res.ptype==='network');
+  document.body.classList.toggle('net-body',!!net);
+  app.innerHTML=document.getElementById(res.overview?'tpl-ov':res.manager?'tpl-mgr':net?'tpl-net':'tpl').innerHTML;
+  app.hidden=false;
+  if(res.overview) renderOverview(res); else if(res.manager) renderManager(res); else if(net) renderNet(res); else renderCabinet(res);
+  if(!net)tabify(app,(res.manager?'m:':'p:')+(res.partner||res.name||''));
+  var meta=app.querySelector('.meta');
+  if(meta){var rb=document.createElement('button');rb.type='button';rb.id='refresh';rb.textContent='Обновить';rb.addEventListener('click',function(){refresh(false);});meta.appendChild(document.createElement('br'));meta.appendChild(rb);}
+  if(res.admin&&(res.partners||res.managers)){
+    var s=document.createElement('select');s.id='as-partner';s.setAttribute('aria-label','Партнёр');
+    var isM=!!res.manager;
+    s.innerHTML='<option value="__overview"'+(res.overview?' selected':'')+'>Обзор отдела</option>'+(res.partners||[]).map(function(p){return '<option'+(!res.overview&&!isM&&p===res.partner?' selected':'')+'>'+esc2(p)+'</option>';}).join('')+(res.managers&&res.managers.length?'<optgroup label="Менеджеры">'+res.managers.map(function(p){return '<option value="m:'+esc2(p)+'"'+(isM&&p===res.name?' selected':'')+'>'+esc2(p)+'</option>';}).join('')+'</optgroup>':'')+(res.agents&&res.agents.length?'<optgroup label="Агенты сети">'+res.agents.map(function(p){return '<option value="a:'+esc2(p)+'"'+(res.agent&&p===res.name?' selected':'')+'>'+esc2(p)+'</option>';}).join('')+'</optgroup>':'');
+    s.addEventListener('change',function(){gate('<div class="spin"></div><div>Загружаем '+(s.value==='__overview'?'обзор отдела':esc2(s.value.replace(/^m:/,'')))+'…</div>');load(s.value);});
+    var slot=document.getElementById('admin-slot');slot.appendChild(s);slot.appendChild(document.createElement('br'));
+  }
+}
+/* Регистрация агента по ссылке приглашения (?r=код или start_param r_код из Telegram) */
+var REG='';
+function regForm(res,msg){
+  gate('<h1>Регистрация агента</h1><p>Sardor Travel · экскурсии на Пхукете. После регистрации у вас будет свой кабинет: ссылка для клиентов, ваши брони и заработок.</p>'
+    +(msg?'<p style="color:var(--warn)">'+esc2(msg)+'</p>':'')
+    +'<form id="reg" style="display:grid;gap:10px;text-align:left;max-width:360px;margin:12px auto">'
+    +'<label>Имя и фамилия<br><input name="name" required maxlength="50" autocomplete="name" style="width:100%"></label>'
+    +'<label>Телефон<br><input name="phone" type="tel" maxlength="30" autocomplete="tel" style="width:100%"></label>'
+    +'<label>Ник в Telegram<br><input name="tg" maxlength="40" placeholder="@ник" style="width:100%"></label>'
+    +'<p class="hint" style="margin:0">Телефон или Telegram — чтобы с вами могли связаться.</p>'
+    +'<button type="submit">Зарегистрироваться</button></form>');
+  var f=document.getElementById('reg');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var b=f.querySelector('button');b.disabled=true;b.textContent='Регистрируем…';
+    var el=f.elements,form={name:el['name'].value,phone:el['phone'].value,tg:el['tg'].value};
+    google.script.run.withSuccessHandler(function(r){
+      if(!r||!r.ok){
+        if(r&&r.reason==='bad_invite')return gate('<h1>Ссылка недействительна</h1><p>Попросите у того, кто вас пригласил, новую ссылку.</p>');
+        return regForm(res,(r&&r.msg)||'Не получилось, попробуйте ещё раз.');
+      }
+      if(r.key)AUTH.key=r.key;
+      if(r.already)return load(null);
+      gate('<h1>Готово, '+esc2(r.name)+'!</h1><p>Сохраните личную ссылку на кабинет — по ней он откроется в любом браузере:</p>'
+        +(r.links&&r.links.personal?'<code id="tgid" style="word-break:break-all">'+esc2(r.links.personal)+'</code><button type="button" class="copy" data-copy="'+esc2(r.links.personal)+'">Копировать</button>':'')
+        +'<p><button type="button" id="go">Открыть кабинет</button></p>');
+      document.getElementById('go').addEventListener('click',function(){REG='';load(null);});
+    }).withFailureHandler(function(err){regForm(res,'Ошибка: '+(err&&err.message||err));}).registerAgent(AUTH,REG,form);
+  });
+}
+function bindCopy(id){var b=document.getElementById('cp');if(!b)return;b.addEventListener('click',function(){try{navigator.clipboard.writeText(String(id)).then(function(){b.textContent='Скопировано';},function(){sel();});}catch(e){sel();}});function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('tgid'));var w=getSelection();w.removeAllRanges();w.addRange(r);}}
+function fail(err){gate('<h1>Ошибка загрузки</h1><p>'+esc2(err&&err.message||err)+'</p><button type="button" onclick="location.reload()">Обновить</button>');}
+var DAYSEL=null,KEEP=null,CUR=null,LAST='',LASTAT=0,BUSY=false,REFRESH_MS=5*60*1000;
+function sig(res){return JSON.stringify(res,function(k,v){return k==='updated'?undefined:v;});}
+/* «Обновить» не должно сбрасывать выбранный месяц и прокрутку: запоминаем перед перерисовкой, возвращаем после. */
+function snapUI(){
+  var a=document.querySelector('#ov-mbar [aria-pressed="true"], #mbar [aria-pressed="true"]'),v=a&&a.dataset?a.dataset.k:'';
+  if(!v){var f=document.getElementById('mf-month')||document.getElementById('nf-month');v=f?f.value:'';}
+  return {v:v,y:window.scrollY||0};
+}
+function restoreUI(ui){
+  if(!ui)return;
+  if(ui.v&&ui.v!=='all'){
+    var b=document.querySelector('#ov-mbar button[data-k="'+ui.v+'"], #mbar button[data-k="'+ui.v+'"]');
+    if(b)b.click();
+    else{var f=document.getElementById('mf-month')||document.getElementById('nf-month');if(f&&Array.prototype.some.call(f.options,function(o){return o.value===ui.v;})){f.value=ui.v;f.dispatchEvent(new Event('change'));}}
+  }
+  window.scrollTo(0,ui.y);
+}
+function load(asPartner){CUR=asPartner||null;google.script.run.withSuccessHandler(function(res){LAST=sig(res);LASTAT=Date.now();var ui=KEEP;KEEP=null;show(res);if(ui&&res&&res.ok)restoreUI(ui);}).withFailureHandler(fail).getCabinet(AUTH,CUR);}
+/* Перечитать данные. silent=true — тихо, по таймеру: страницу трогаем, только если данные изменились. */
+function refresh(silent){
+  if(BUSY||!AUTH)return;
+  if(silent&&(NET_DIRTY||document.querySelector('#n-modal:not([hidden])')))return;   // не стираем набранные контакты и открытую карточку
+  var want=CUR,btn=document.getElementById('refresh');
+  BUSY=true;if(btn&&!silent){btn.disabled=true;btn.textContent='Обновляем…';}
+  function done(msg){BUSY=false;var b=document.getElementById('refresh');if(b&&!silent){b.disabled=false;b.textContent=msg;setTimeout(function(){var c=document.getElementById('refresh');if(c&&!c.disabled)c.textContent='Обновить';},2500);}}
+  google.script.run.withSuccessHandler(function(res){
+    LASTAT=Date.now();
+    if(want!==CUR)return done('Обновить');          // пока ждали, открыли другой экран
+    if(!res||!res.ok){done('Обновить');if(!silent)show(res);return;}
+    var s=sig(res);
+    if(s===LAST){done('Данные свежие ✓');return;}
+    LAST=s;done('Обновить');var ui=snapUI();show(res);restoreUI(ui);
+  }).withFailureHandler(function(err){done(silent?'Обновить':'Не вышло, ещё раз');}).getCabinet(AUTH,want);
+}
+setInterval(function(){if(document.visibilityState==='visible'&&!document.getElementById('app').hidden)refresh(true);},REFRESH_MS);
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&LASTAT&&Date.now()-LASTAT>REFRESH_MS&&!document.getElementById('app').hidden)refresh(true);});
+google.script.url.getLocation(function(loc){
+  var h=(loc&&loc.hash)||'';if(h.charAt(0)==='#')h=h.slice(1);
+  var initData='';
+  h.split('&').forEach(function(kv){var i=kv.indexOf('=');if(i>0&&kv.slice(0,i)==='tgWebAppData')initData=decodeURIComponent(kv.slice(i+1));});
+  var key=(loc&&loc.parameter&&loc.parameter.k)||'';
+  var sp=/(?:^|&)start_param=([^&]*)/.exec(initData);
+  REG=String((loc&&loc.parameter&&loc.parameter.r)||(sp&&/^r_/.test(decodeURIComponent(sp[1]))?decodeURIComponent(sp[1]).slice(2):'')||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  AUTH={initData:initData,key:key,rawHash:(loc&&loc.hash)||''};
+  load(null);
+});
+</script>
+</body></html>
