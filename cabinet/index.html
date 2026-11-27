@@ -665,7 +665,7 @@ function renderManager(D){
   const pl = (a, b) => b ? (a.slice(5,7) === b.slice(5,7) ? (+a.slice(8)) + '–' + (+b.slice(8)) + ' ' + GEN[+b.slice(5,7)-1] : (+a.slice(8)) + ' ' + GEN[+a.slice(5,7)-1] + ' – ' + (+b.slice(8)) + ' ' + GEN[+b.slice(5,7)-1]) : (+a.slice(8)) + ' ' + GEN[+a.slice(5,7)-1];
   const kp = [
     {cls:'lead', l: T.due < 0 ? 'Выдано сверх заработанного' : 'К выплате', v: thb(Math.abs(T.due)), s: (PR && PR.closedTo ? 'за всё до ' + pl(PR.closedTo) + ': ' : '') + 'начислено ' + thb(T.gross) + ' − выплачено ' + thb(T.paid) + (D.hold ? ' − удержано ' + thb(D.hold.held) : '')},
-    PR && PR.openFrom ? {l:'Копится до выплаты ' + pl(PR.payDate), v: thb(PR.open), s:'за ' + pl(PR.openFrom, PR.openTo) + ': сумма не входит в «К выплате», пока период не закончится'} : {l:'Остаток прошлого месяца', v: thb(T.prev), s:'начислено минус выплачено на конец прошлого месяца'},
+    PR && PR.openFrom ? {l:'Копится до выплаты ' + pl(PR.payDate), v: thb(PR.open), s:'за ' + pl(PR.openFrom, PR.openTo) + (PR.openPaid > 0 ? ': начислено ' + thb(PR.openAccrued) + ', уже выплачено ' + thb(PR.openPaid) + '. Здесь только остаток' : ': сумма не входит в «К выплате», пока период не закончится')} : {l:'Остаток прошлого месяца', v: thb(T.prev), s:'начислено минус выплачено на конец прошлого месяца'},
     {l:'Начислено · ' + RU_M[+curK.slice(5)-1], v: thb(cm.accrued), s: cm.plan ? 'ещё ≈ ' + thb(cm.plan) + ' в пути' : 'по прошедшим турам'},
     {l:'В пути', v: planAll ? '≈ ' + thb(planAll) : '—', s: 'по будущим турам'}
   ];
