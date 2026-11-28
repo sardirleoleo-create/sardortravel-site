@@ -599,7 +599,7 @@ function renderAgent(D){
   document.getElementById('alinks').innerHTML = linksHtml(D.links);
   document.getElementById('amat-list').innerHTML = matHtml(D.materials);
   document.title = D.name + ' · кабинет агента';
-  const rows = D.rows.map(r => Object.assign({}, r, { mk:(r.ed||r.bd||'').slice(0,7), done:(r.ed||'') <= today }));
+  const rows = D.rows.map(r => Object.assign({}, r, { mk:(r.ed||r.bd||'').slice(0,7), done:!!r.ed && r.ed < today }));
   const mk = Array.from(new Set(rows.map(r => r.mk).filter(Boolean))).sort().reverse();
   const curK = today.slice(0,7);
   perksInto('aperks-sec','aperks',rows,today,D.rank);
@@ -1072,7 +1072,7 @@ function renderCabinet(D){
       + '</tbody></table></div>';
   })();
 
-  const rows = D.rows.map(r => Object.assign({}, r, { mk: (r.ed||r.bd||'').slice(0,7), done: (r.ed||'') <= today }));
+  const rows = D.rows.map(r => Object.assign({}, r, { mk: (r.ed||r.bd||'').slice(0,7), done: !!r.ed && r.ed < today }));
   perksInto('perks-sec','perks',rows,today,null);
   calcInto('calc-sec','calc',D.rule,rows);
   const months = {};
@@ -1249,14 +1249,14 @@ function renderCabinet(D){
   }
   // Ежедневный отчёт. День можно выбрать; считаем по броням партнёра, которые уже есть на странице.
   // sold — оформлено в этот день (по дате оформления); tours — экскурсии в этот день (по дате экскурсии).
-  // Статус «заработано» — по состоянию на сегодня: экскурсия уже прошла или сегодня.
+  // Статус «заработано» — по состоянию на сегодня: экскурсия уже прошла. Тур сегодняшнего дня начисляем назавтра (решение Сардора 28.11.2026).
   const addDays = (s, n) => { const [y,m,d] = s.split('-').map(Number); return new Date(Date.UTC(y, m-1, d+n)).toISOString().slice(0,10); };
   function dayStats(date){
     const S = {n:0,com:0,earned:0,plan:0,list:[]}, E = {n:0,com:0,soldToday:0,list:[]};
     rows.forEach(r => {
       if (r.x) return;
       const it = {v:r.v, t:r.t, ed:r.ed, bd:r.bd, com:r.com||0, pre:!!r.pre};
-      if (r.bd === date) { S.n++; S.com += it.com; if (r.ed && r.ed <= today) S.earned += it.com; else S.plan += it.com; S.list.push(it); }
+      if (r.bd === date) { S.n++; S.com += it.com; if (r.ed && r.ed < today) S.earned += it.com; else S.plan += it.com; S.list.push(it); }
       if (r.ed === date) { E.n++; E.com += it.com; if (r.bd === date) E.soldToday++; E.list.push(it); }
     });
     return {S, E};
@@ -1280,17 +1280,17 @@ function renderCabinet(D){
       leads == null ? {l:'Продаж ' + when, v: String(S.n), s: plural(S.n,['ваучер','ваучера','ваучеров']) + ' оформлено ' + when}
                     : {l:'Лиды ' + when, v: fmt(leads), s: 'закрыто продаж: ' + S.n + conv},
       {l:'Продано на', v: thb(S.com), s: 'ваша доля со всех продаж ' + (isToday ? 'за сегодня' : 'этого дня')},
-      {cls:'lead', l: future ? 'Будет заработано' : (isToday ? 'Заработано сегодня' : 'Заработано в этот день'), v: thb(E.com), s: E.n + ' ' + plural(E.n,['экскурсия','экскурсии','экскурсий']) + (isToday ? ' сегодня' : future ? ' в этот день' : ' в этот день') + (E.soldToday ? ' · из них продано в этот день: ' + E.soldToday : '')},
+      {cls:'lead', l: future ? 'Будет заработано' : (isToday ? 'Экскурсии сегодня · начислим завтра' : 'Заработано в этот день'), v: thb(E.com), s: E.n + ' ' + plural(E.n,['экскурсия','экскурсии','экскурсий']) + (isToday ? ' сегодня' : future ? ' в этот день' : ' в этот день') + (E.soldToday ? ' · из них продано в этот день: ' + E.soldToday : '')},
       {l:'Получите позже', v: '≈ ' + thb(S.plan), s: 'по продажам ' + (isToday ? 'за сегодня' : 'этого дня') + ', экскурсии ещё впереди'}
     ];
     document.getElementById('today-kpis').innerHTML = kp.map(x => '<div class="kpi ' + (x.cls||'') + '"><span class="l">' + x.l + '</span><span class="v">' + x.v + '</span><span class="s">' + x.s + '</span></div>').join('');
     const row = cells => '<tr>' + cells.join('') + '</tr>';
     document.getElementById('today-sold').innerHTML = '<thead><tr><th>Ваучер</th><th>Экскурсия</th><th>Дата тура</th><th class="r">Ваше, ฿</th><th>Статус</th></tr></thead><tbody>'
-      + (S.list.length ? S.list.map(x => row(['<td>' + esc(x.v) + '</td>','<td class="tour">' + esc(x.t) + (x.pre ? '<span class="tag pre">Предварительно</span>' : '') + '</td>','<td class="num">' + dShort(x.ed) + '</td>','<td class="r"><b>' + fmt(x.com) + '</b></td>', (x.ed && x.ed <= today) ? '<td><span class="pill paid">Заработано</span></td>' : '<td><span class="pill plan">Ждёт экскурсии</span></td>'])).join('') : '<tr><td colspan="5" class="empty">' + (isToday ? 'Сегодня продаж не было' : 'В этот день продаж не было') + '</td></tr>')
+      + (S.list.length ? S.list.map(x => row(['<td>' + esc(x.v) + '</td>','<td class="tour">' + esc(x.t) + (x.pre ? '<span class="tag pre">Предварительно</span>' : '') + '</td>','<td class="num">' + dShort(x.ed) + '</td>','<td class="r"><b>' + fmt(x.com) + '</b></td>', (x.ed && x.ed < today) ? '<td><span class="pill paid">Заработано</span></td>' : '<td><span class="pill plan">Ждёт экскурсии</span></td>'])).join('') : '<tr><td colspan="5" class="empty">' + (isToday ? 'Сегодня продаж не было' : 'В этот день продаж не было') + '</td></tr>')
       + '</tbody>' + (S.list.length ? '<tfoot><tr><td colspan="3">Заработано ' + thb(S.earned) + ' · ждёт ' + thb(S.plan) + '</td><td class="r">' + fmt(S.com) + '</td><td></td></tr></tfoot>' : '');
     document.getElementById('today-tours').innerHTML = '<thead><tr><th>Ваучер</th><th>Экскурсия</th><th>Продано</th><th class="r">Ваше, ฿</th></tr></thead><tbody>'
       + (E.list.length ? E.list.map(x => row(['<td>' + esc(x.v) + '</td>','<td class="tour">' + esc(x.t) + (x.pre ? '<span class="tag pre">Предварительно</span>' : '') + '</td>','<td class="num">' + (x.bd === day ? (isToday ? 'сегодня' : 'в этот день') : dShort(x.bd)) + '</td>','<td class="r"><b>' + fmt(x.com) + '</b></td>'])).join('') : '<tr><td colspan="4" class="empty">' + (isToday ? 'Сегодня экскурсий нет' : 'В этот день экскурсий нет') + '</td></tr>')
-      + '</tbody>' + (E.list.length ? '<tfoot><tr><td colspan="3">' + (future ? 'Будет заработано' : isToday ? 'Заработано сегодня' : 'Заработано в этот день') + '</td><td class="r">' + fmt(E.com) + '</td></tr></tfoot>' : '');
+      + '</tbody>' + (E.list.length ? '<tfoot><tr><td colspan="3">' + (future ? 'Будет заработано' : isToday ? 'Начислим завтра, после экскурсии' : 'Заработано в этот день') + '</td><td class="r">' + fmt(E.com) + '</td></tr></tfoot>' : '');
   }
   const setDay = s => { DAYSEL = s; renderToday(); };
   document.getElementById('day-prev').addEventListener('click', () => setDay(addDays(DAYSEL || today, -1)));
