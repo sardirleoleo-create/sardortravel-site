@@ -1,6 +1,9 @@
 (function () {
   'use strict';
   var TG = 'ds_sardor';
+  // Клиент по метке партнёра пишет в аккаунт партнёра (поручение Сардора 28.11.2026). Добавлять только аккаунты,
+  // подключённые к CRM («Переписки»): иначе переписку и бронь не видно. Остальные метки — в аккаунт Sardor Travel.
+  var PARTNER_TG = { yuliya: 'phuketjuli', yulia: 'phuketjuli', aziza: 'Aziza_Phuketur', duo: 'Phuket_Duo', duobek: 'Phuket_Duo', ramil: 'ExpatRamil', orlov: 'akeks_thai', maxfok: 'maxfok_phuket' };
   var WA = '66617843046';
   var HASH = !!window.HASH_MODE;
   var T = {
@@ -201,8 +204,18 @@
     text = text.replace(/\s*#p_[a-z0-9_-]+/ig, '');
     var i = text.indexOf('\n'); return i < 0 ? text + ' ' + g : text.slice(0, i) + ' ' + g + text.slice(i);
   }
+  function tgUser() { var u = utmGet().toLowerCase(); return Object.prototype.hasOwnProperty.call(PARTNER_TG, u) ? PARTNER_TG[u] : TG; }
+  // ссылки «написать», зашитые прямо в страницу (шапка, подвал): ведём туда же, куда и кнопки, и подписываем тем же ником
+  function fixStaticTg() {
+    var user = tgUser(); if (user === TG) return;
+    document.querySelectorAll('a[href*="t.me/' + TG + '"]').forEach(function (a) {
+      var url; try { url = new URL(a.href); } catch (e) { return; }
+      a.href = tg(url.searchParams.get('text') || '');
+      if (a.childElementCount === 0 && a.textContent.indexOf('@' + TG) >= 0) a.textContent = a.textContent.replace('@' + TG, '@' + user);
+    });
+  }
   function wa(text) { text = tagText(text); return 'https://wa.me/' + WA + (text ? '?text=' + encodeURIComponent(text) : ''); }
-  function tg(text) { text = tagText(text); return 'https://t.me/' + TG + (text ? '?text=' + encodeURIComponent(text) : ''); }
+  function tg(text) { text = tagText(text); return 'https://t.me/' + tgUser() + (text ? '?text=' + encodeURIComponent(text) : ''); }
   document.addEventListener('click', function (ev) {
     var b = ev.target && ev.target.closest && ev.target.closest('[data-evcity]'); if (!b) return;
     var sec = b.closest('#afisha'), c = b.getAttribute('data-evcity');
@@ -241,6 +254,7 @@
     document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang ? 'true' : 'false'); });
     document.querySelectorAll('[data-href]').forEach(function (a) { a.setAttribute('href', href(a.getAttribute('data-href'))); });
     document.getElementById('chatfab').href = tg(t('msg_general'));
+    fixStaticTg();
     document.getElementById('year').textContent = new Date().getFullYear();
     updateFavCount();
   }

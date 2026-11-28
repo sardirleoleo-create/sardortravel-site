@@ -1,5 +1,8 @@
 (function () {
   var TG = 'ds_sardor', main = document.getElementById('main');
+  // Клиент по метке партнёра пишет в аккаунт партнёра (поручение Сардора 28.11.2026). Добавлять только аккаунты,
+  // подключённые к CRM («Переписки»): иначе переписку и бронь не видно. Остальные метки — в аккаунт Sardor Travel.
+  var PARTNER_TG = { yuliya: 'phuketjuli', yulia: 'phuketjuli', aziza: 'Aziza_Phuketur', duo: 'Phuket_Duo', duobek: 'Phuket_Duo', ramil: 'ExpatRamil', orlov: 'akeks_thai', maxfok: 'maxfok_phuket' };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function rp(n) { return n.toLocaleString('ru-RU').replace(/,/g, ' ') + ' IDR'; }
   function minP(t) { return Math.min.apply(null, t.v.map(function (v) { return v[2]; })); }
@@ -12,11 +15,14 @@
   function tag() { var u = MEM; if (!u) try { u = localStorage.getItem(KEY) || ''; } catch (e) {}
     if (!u) try { var m = document.cookie.match(/(?:^|; )booking_utm=([^;]+)/); u = m ? m[1] : ''; } catch (e) {}
     return RE.test(u) ? '#p_' + u.toLowerCase() : ''; }
-  function tg(text) { var g = tag(); text = (text || 'Здравствуйте! Хочу экскурсию на Бали.').replace(/…/g, '...');
+  function tgUser() { var u = tag().slice(3); return Object.prototype.hasOwnProperty.call(PARTNER_TG, u) ? PARTNER_TG[u] : TG; }
+  function msg(text) { var g = tag(); text = (text || 'Здравствуйте! Хочу экскурсию на Бали.').replace(/…/g, '...');
     if (g) { var i = text.indexOf('\n'); text = i < 0 ? text + ' ' + g : text.slice(0, i) + ' ' + g + text.slice(i); }
-    return 'https://t.me/' + TG + '?text=' + encodeURIComponent(text); }
-  function wa(text) { return tg(text).replace('https://t.me/' + TG + '?text=', 'https://wa.me/66617843046?text='); }
-  function fixTg() { document.querySelectorAll('[data-tg]').forEach(function (a) { a.href = tg(''); }); }
+    return encodeURIComponent(text); }
+  function tg(text) { return 'https://t.me/' + tgUser() + '?text=' + msg(text); }
+  function wa(text) { return 'https://wa.me/66617843046?text=' + msg(text); }
+  function fixTg() { document.querySelectorAll('[data-tg]').forEach(function (a) { a.href = tg('');
+    if (a.childElementCount === 0) a.textContent = a.textContent.replace('@' + TG, '@' + tgUser()); }); }
 
   function card(t) {
     return '<a class="card" href="#/t/' + t.id + '"><div class="card__img"><img src="' + IMG(t.img) + '" alt="' + esc(t.name) + '" loading="lazy">' +
