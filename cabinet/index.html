@@ -34,7 +34,8 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(24px,4vw,34px);lin
 .daypick button,.daypick input{font:inherit;font-size:13px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 10px;min-height:34px}
 .daypick button{cursor:pointer}
 .today-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-@media (max-width:760px){.today-grid{grid-template-columns:1fr}}
+@media (max-width:760px){.today-grid{grid-template-columns:minmax(0,1fr)}}
+.today-grid>*{min-width:0}   /* иначе широкая таблица растягивает страницу на телефоне */
 .today-grid h3{margin:0 0 8px;font-size:15px;font-weight:700}
 #refresh{font:inherit;font-size:12px;color:var(--accent);background:none;border:1px solid var(--line);border-radius:6px;padding:2px 10px;margin-top:6px;cursor:pointer}
 #refresh:disabled{color:var(--muted);cursor:default}
@@ -233,11 +234,15 @@ a{color:inherit;text-decoration-color:#9BBF3A;text-underline-offset:3px}
 .qr svg{display:block;width:180px;height:180px}
 button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:999px;font:inherit;font-size:14px;font-weight:600;padding:9px 16px;cursor:pointer;margin-left:6px}
 #mladder:not([hidden]){background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;color:var(--ink);font-size:14px;margin:0}
+/* Плашка «кабинет может ошибаться»: всегда внизу экрана, поверх прокрутки (поручение Сардора 28.11.2026) */
+.disc{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:9px 16px calc(9px + env(safe-area-inset-bottom,0px));font-size:13px;line-height:1.35;font-weight:600;text-align:center;text-wrap:balance;background:var(--warn-soft);color:var(--ink);border-top:2px solid var(--warn)}
+body.has-disc{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 </head><body>
 <div id="gate" class="gate" role="status"><div class="spin" aria-hidden="true"></div><div>Загружаем кабинет…</div></div>
 <div id="app" hidden></div>
+<div id="disc" class="disc" role="note" hidden>Кабинет может ошибаться. Окончательные цифры уточняйте у Сардора.</div>
 <template id="tpl-ov"><div class="wrap">
   <header class="top">
     <div>
@@ -1277,7 +1282,8 @@ function renderCabinet(D){
 }
 
 var AUTH = null;
-function gate(html){var g=document.getElementById('gate');g.innerHTML=html;g.hidden=false;document.getElementById('app').hidden=true;}
+function gate(html){var g=document.getElementById('gate');g.innerHTML=html;g.hidden=false;document.getElementById('app').hidden=true;disclaimer(false);}
+function disclaimer(on){document.getElementById('disc').hidden=!on;document.body.classList.toggle('has-disc',on);}
 function esc2(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 function show(res){
   if(!res||!res.ok){
@@ -1293,6 +1299,7 @@ function show(res){
   var app=document.getElementById('app');
   app.innerHTML=document.getElementById(res.overview?'tpl-ov':res.manager?'tpl-mgr':res.agent?'tpl-agent':'tpl').innerHTML;
   app.hidden=false;
+  disclaimer(!res.overview);   // обзор отдела смотрит сам Сардор — ему плашка не нужна
   if(res.overview) renderOverview(res); else if(res.manager) renderManager(res); else if(res.agent) renderAgent(res); else renderCabinet(res);
   tabify(app,(res.manager?'m:':res.agent?'a:':'p:')+(res.partner||res.name||''));
   var meta=app.querySelector('.meta');
