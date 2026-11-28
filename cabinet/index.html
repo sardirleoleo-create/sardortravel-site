@@ -237,6 +237,7 @@ button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink
 /* Плашка «кабинет может ошибаться»: всегда внизу экрана, поверх прокрутки (поручение Сардора 28.11.2026) */
 .disc{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:9px 16px calc(9px + env(safe-area-inset-bottom,0px));font-size:13px;line-height:1.35;font-weight:600;text-align:center;text-wrap:balance;background:var(--warn-soft);color:var(--ink);border-top:2px solid var(--warn)}
 body.has-disc{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.ledger td{white-space:normal;vertical-align:top}.ledger td:first-child,.ledger td.r{white-space:nowrap}.ledger th,.ledger td{padding:9px 8px}.ledger small{display:block;color:var(--muted);font-size:12px;font-weight:400}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
 </head><body>
@@ -1014,8 +1015,28 @@ function renderDebtPlan(D){
   P.months.forEach(m => { d += ln('30% за ' + mName(m.k), '−' + thb(m.toDebt)); });
   d += ln(P.debt > 0 ? 'Остаток долга' : 'Долга нет', thb(Math.max(P.debt,0)), {cls:'total'});
   const cond = '<ul class="hcond"><li>Черта 16.11: всё, что взято до неё, стало долгом — ' + thb(P.debt0) + '.</li><li>С ноября каждый месяц 30% твоего заработка гасят долг, остальные 70% можно брать.</li><li>Всё, что Сардор даёт или платит за тебя (деньги, квартира, покупки), — выдача из этих 70%.</li><li>Заработок — по дате продажи брони.</li><li>Наперёд не берём. Расчёт обычно 1-го и 16-го; раньше — можно, но только из уже заработанного.</li><li>Если проданную бронь отменили — её сумму вычитаем из следующего расчёта.</li></ul>';
+  // расписка: всё полученное с 01.11 по строкам
+  const L = P.ledger || [], C = P.cash || [];
+  const money = n => { const v = Math.round((n||0)*100)/100; return v.toLocaleString('ru-RU', {minimumFractionDigits: Number.isInteger(v) ? 0 : 2, maximumFractionDigits: 2}); };
+  const toName = k => k === 'debt' ? 'в долг' : '70% ' + ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'][+k.slice(5)-1];
+  let led = '';
+  if (L.length) {
+    const sums = {}; L.forEach(r => { sums[r.to] = (sums[r.to]||0) + r.thb; });
+    led = '<div class="tbl-wrap"><table class="ledger"><thead><tr><th>Дата</th><th>Что и откуда</th><th class="r">Сумма</th></tr></thead><tbody>'
+      + L.map(r => '<tr><td>' + dShort(r.d) + '</td><td>' + esc(r.what) + '<small>' + esc(r.kas) + ' · ' + toName(r.to) + '</small></td><td class="r">' + money(r.thb) + '\u00a0฿'
+        + (r.cur !== 'THB' ? '<small>' + money(r.amt) + '\u00a0' + esc(r.cur) + '</small>' : '') + '</td></tr>').join('')
+      + '</tbody></table></div>';
+    Object.keys(sums).sort((a,z) => a === 'debt' ? -1 : z === 'debt' ? 1 : a.localeCompare(z)).forEach(k => { led += ln(k === 'debt' ? 'Вошло в долг (взято до 16.11)' : 'Из ' + toName(k), money(sums[k]) + '\u00a0฿', {cls:'small'}); });
+    led += ln('Всего получил с ' + dShort(P.earnFrom) + ' · строк: ' + L.length, money(L.reduce((a,r) => a + r.thb, 0)) + '\u00a0฿', {cls:'total'});
+  }
+  let cash = '';
+  if (C.length) cash = C.map(x => ln((x.thb < 0 ? 'Сдал' : 'Наличные клиента') + (x.doc ? ' · ' + esc(x.doc) : ''), money(x.thb) + '\u00a0฿', {sub: dShort(x.d)})).join('')
+    + ln('На руках', money(C.reduce((a,x) => a + x.thb, 0)) + '\u00a0฿', {cls:'total'});
   const el = document.getElementById('dplan');
-  el.innerHTML = goalBlock(P, D.today) + card('Расчёт за ' + mName(cm.k), 'всё, что Сардор даёт или платит за тебя, вычитается отсюда', b) + card('Долг', 'гасится сам — 30% с каждого заработка', d) + card('Условия', '', cond);
+  el.innerHTML = goalBlock(P, D.today) + card('Расчёт за ' + mName(cm.k), 'всё, что Сардор даёт или платит за тебя, вычитается отсюда', b)
+    + (led ? card('Расписка: всё, что ты получил', 'каждая выдача отдельной строкой, по журналу учёта', led) : '')
+    + (cash ? card('Деньги клиентов у тебя', 'в расчёт выше не входят', cash) : '')
+    + card('Долг', 'гасится сам — 30% с каждого заработка', d) + card('Условия', '', cond);
   el.hidden = false;
 }
 
