@@ -401,7 +401,7 @@ button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink
     <div id="mhold"></div>
   </section>
   <section class="sec" data-tab="Брони">
-    <div class="sec-head"><h2>Начисления по месяцам</h2><span class="hint">Месяц — по дате тура. Нажмите на месяц, чтобы увидеть брони.</span></div>
+    <div class="sec-head"><h2>Начисления по месяцам</h2><span class="hint">С 01.11 месяц — по дате продажи брони (проданное до 01.11 — по дате тура). Нажмите на месяц, чтобы увидеть брони.</span></div>
     <div class="tbl-wrap"><table id="mmonths"></table></div>
   </section>
   <section class="sec" data-tab="Выплаты">
@@ -419,7 +419,7 @@ button.ghost{background:transparent;border:1px solid var(--line);color:var(--ink
     <div id="mex"></div>
   </section>
   <section class="sec" id="mplan-sec" data-tab="Брони" hidden>
-    <div class="sec-head"><h2>Брони наперёд</h2><span class="hint">Ожидаемая комиссия по будущим турам: начислим после тура.</span></div>
+    <div class="sec-head"><h2>Брони наперёд</h2><span class="hint">Брони, проданные до 01.11, с турами впереди: начислим после тура. Проданное с 01.11 уже в «Начислено», даже если тур впереди.</span></div>
     <div class="tbl-wrap"><table id="mplan"></table></div>
   </section>
   <div class="foot">Показываем только вашу комиссию. Данные из учёта Sardor Travel, обновляются каждые 10 минут. Если сумма не сходится, напишите Сардору номер ваучера.</div>
@@ -664,10 +664,10 @@ function renderManager(D){
   const PR = D.period, GEN = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
   const pl = (a, b) => b ? (a.slice(5,7) === b.slice(5,7) ? (+a.slice(8)) + '–' + (+b.slice(8)) + ' ' + GEN[+b.slice(5,7)-1] : (+a.slice(8)) + ' ' + GEN[+a.slice(5,7)-1] + ' – ' + (+b.slice(8)) + ' ' + GEN[+b.slice(5,7)-1]) : (+a.slice(8)) + ' ' + GEN[+a.slice(5,7)-1];
   const kp = [
-    {cls:'lead', l: T.due < 0 ? 'Выдано сверх заработанного' : 'К выплате', v: thb(Math.abs(T.due)), s: (PR && PR.closedTo ? 'за всё до ' + pl(PR.closedTo) + ': ' : '') + 'начислено ' + thb(T.gross) + ' − выплачено ' + thb(T.paid) + (D.hold ? ' − удержано ' + thb(D.hold.held) : '')},
+    {cls:'lead', l: T.due < 0 ? 'Выдано сверх заработанного' : 'К выплате', v: thb(Math.abs(T.due)), s: (T.due > 0 && PR && PR.payDate ? 'выплатим ' + pl(PR.payDate) + '. ' : '') + (PR && PR.closedTo ? 'за всё до ' + pl(PR.closedTo) + ': ' : '') + 'начислено ' + thb(T.gross) + ' − выплачено ' + thb(T.paid) + (D.hold ? ' − удержано ' + thb(D.hold.held) : '')},
     PR && PR.openFrom ? {l:'Копится до выплаты ' + pl(PR.payDate), v: thb(PR.open), s:'за ' + pl(PR.openFrom, PR.openTo) + (PR.openPaid > 0 ? ': начислено ' + thb(PR.openAccrued) + ', уже выплачено ' + thb(PR.openPaid) + '. Здесь только остаток' : ': сумма не входит в «К выплате», пока период не закончится')} : {l:'Остаток прошлого месяца', v: thb(T.prev), s:'начислено минус выплачено на конец прошлого месяца'},
-    {l:'Начислено · ' + RU_M[+curK.slice(5)-1], v: thb(cm.accrued), s: cm.plan ? 'ещё ≈ ' + thb(cm.plan) + ' в пути' : 'по прошедшим турам'},
-    {l:'В пути', v: planAll ? '≈ ' + thb(planAll) : '—', s: 'по будущим турам'}
+    {l:'Начислено · ' + RU_M[+curK.slice(5)-1], v: thb(cm.accrued), s: cm.plan ? 'по продажам месяца; ещё ≈ ' + thb(cm.plan) + ' в пути' : 'по продажам месяца'},
+    {l:'В пути', v: planAll ? '≈ ' + thb(planAll) : '—', s: 'проданное до 01.11, туры впереди'}
   ];
   document.getElementById('mkpis').innerHTML = kp.map(k => '<div class="kpi ' + (k.cls||'') + '"><span class="l">' + k.l + '</span><span class="v">' + k.v + '</span><span class="s">' + k.s + '</span></div>').join('');
   (function renderLadder(){
@@ -711,9 +711,9 @@ function renderManager(D){
     const list = D.rows.filter(r => (r.sd || r.ed) <= D.today && (sel === 'all' || r.k === sel)).sort((a,b) => b.ed.localeCompare(a.ed));
     document.getElementById('mbk-title').textContent = 'Брони' + (sel === 'all' ? '' : ' · ' + mLabel(sel));
     const sum = list.reduce((s,r) => s + r.com, 0);
-    document.getElementById('mbookings').innerHTML = '<thead><tr><th>Дата тура</th><th>Ваучер</th><th class="r">Комиссия, ฿</th><th>Тур</th></tr></thead><tbody>'
-      + (list.map(r => '<tr><td class="num">' + dShort(r.ed) + '</td><td>' + esc(r.v) + '</td><td class="r"><b>' + fmt(r.com) + '</b></td><td class="tour">' + esc(r.t) + (r.x ? '<span class="tag" style="color:var(--warn);border-color:var(--warn)">' + (r.com > 0 ? 'отмена со штрафом' : 'отменена') + '</span>' : '') + '</td></tr>').join('') || '<tr><td colspan="4" class="empty">Броней нет</td></tr>')
-      + '</tbody>' + (list.length ? '<tfoot><tr><td colspan="2">' + list.length + ' ' + plural(list.length,['бронь','брони','броней']) + '</td><td class="r">' + fmt(sum) + '</td><td></td></tr></tfoot>' : '');
+    document.getElementById('mbookings').innerHTML = '<thead><tr><th>Продано</th><th>Дата тура</th><th>Ваучер</th><th class="r">Комиссия, ฿</th><th>Тур</th></tr></thead><tbody>'
+      + (list.map(r => '<tr><td class="num">' + (r.sd ? dShort(r.sd) : '—') + '</td><td class="num">' + dShort(r.ed) + '</td><td>' + esc(r.v) + '</td><td class="r"><b>' + fmt(r.com) + '</b></td><td class="tour">' + esc(r.t) + (r.x ? '<span class="tag" style="color:var(--warn);border-color:var(--warn)">' + (r.com > 0 ? 'отмена со штрафом' : 'отменена') + '</span>' : '') + '</td></tr>').join('') || '<tr><td colspan="5" class="empty">Броней нет</td></tr>')
+      + '</tbody>' + (list.length ? '<tfoot><tr><td colspan="3">' + list.length + ' ' + plural(list.length,['бронь','брони','броней']) + '</td><td class="r">' + fmt(sum) + '</td><td></td></tr></tfoot>' : '');
   }
   function renderPays(){
     const L = D.payoutList.slice().sort((a,b) => String(b.date).localeCompare(String(a.date)));
